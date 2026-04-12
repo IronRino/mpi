@@ -9,7 +9,7 @@ import os
 class MPIDatasetGenerator:
     """Генератор датасета для обучения CNN на MPI реконструкции"""
 
-    def __init__(self, system_matrix_path='./../DATA/SystemMatrix.h5'):
+    def __init__(self, system_matrix_path='./../Chinese data/SystemMatrix.h5'):
         self.load_system_matrix(system_matrix_path)
 
     def load_system_matrix(self, path):

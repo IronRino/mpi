@@ -1,4 +1,4 @@
-"""Сравнение методов реконструкции MPI"""
+"""Сравнение методов реконструкции MPI: Тихонов vs CNN vs MoDL vs Diffusion vs Hybrid"""
 
 import numpy as np
 import time
@@ -10,15 +10,31 @@ from .visualization import Visualization
 
 
 class MPIReconstructionComparator:
-    """Сравнение методов реконструкции: Тихонов vs CNN"""
+    """Сравнение методов реконструкции"""
 
-    def __init__(self, system_matrix_path="""./../Chinese data/SystemMatrix.h5"""):
+    def __init__(self, system_matrix_path=None):
         self.load_system_matrix(system_matrix_path)
         self.cnn_trainer = None
+        self.modl_trainer = None
+        self.diffusion_trainer = None
+        self.hybrid_trainer = None
         self.results = []
 
     def load_system_matrix(self, path):
         """Загрузка системной матрицы"""
+        if path is None:
+            possible_paths = [
+                './DATA/SystemMatrix.h5',
+                '../DATA/SystemMatrix.h5',
+                './SystemMatrix.h5',
+            ]
+            for p in possible_paths:
+                if os.path.exists(p):
+                    path = p
+                    break
+            else:
+                raise FileNotFoundError("Не найден файл SystemMatrix.h5")
+
         fSM = h5py.File(path, 'r')
         S_data_r = fSM['/measurement/data/r'][:]
         S_data_i = fSM['/measurement/data/i'][:]
@@ -39,8 +55,16 @@ class MPIReconstructionComparator:
         print(f"Размер системной матрицы: {self.SM.shape}")
 
     def set_cnn_model(self, cnn_trainer):
-        """Установка обученной CNN модели"""
         self.cnn_trainer = cnn_trainer
+
+    def set_modl_model(self, modl_trainer):
+        self.modl_trainer = modl_trainer
+
+    def set_diffusion_model(self, diffusion_trainer):
+        self.diffusion_trainer = diffusion_trainer
+
+    def set_hybrid_model(self, hybrid_trainer):
+        self.hybrid_trainer = hybrid_trainer
 
     def generate_test_case(self, radius=0.2, distance=0.2, intensity1=0.7, intensity2=0.7):
         """Генерация тестового случая с двумя каплями"""
@@ -74,242 +98,306 @@ class MPIReconstructionComparator:
         return measurement_reshaped
 
     def tikhonov_reconstruction(self, measurement, mu=0.001, kmax=100):
-        """Реконструкция методом Тихонова"""
         return self.tikhonov_reconstructor.reconstruct(measurement, mu, kmax)
 
     def cnn_reconstruction(self, measurement):
-        """Реконструкция с помощью CNN"""
         if self.cnn_trainer is None:
             raise ValueError("CNN модель не установлена")
 
         reconstructed = self.cnn_trainer.predict(measurement)
-        reconstructed = reconstructed[0, 0, :, :]
+
+        # Обработка разных форматов вывода
+        if isinstance(reconstructed, tuple):
+            reconstructed = reconstructed[0]
+
+        if reconstructed.ndim == 4:
+            reconstructed = reconstructed[0, 0, :, :]
+        elif reconstructed.ndim == 3:
+            reconstructed = reconstructed[0, :, :]
+        elif reconstructed.ndim == 2:
+            pass  # уже правильная форма
+        else:
+            raise ValueError(f"Неожиданная форма вывода: {reconstructed.shape}")
 
         # Изменение размера до нужного
         if reconstructed.shape != self.image_shape:
-            if reconstructed.shape[0] > self.nx:
-                start_x = (reconstructed.shape[0] - self.nx) // 2
-                reconstructed = reconstructed[start_x:start_x + self.nx, :]
-            if reconstructed.shape[1] > self.ny:
-                start_y = (reconstructed.shape[1] - self.ny) // 2
-                reconstructed = reconstructed[:, start_y:start_y + self.ny]
-
-            if reconstructed.shape[0] < self.nx or reconstructed.shape[1] < self.ny:
-                from scipy import ndimage
-                reconstructed = ndimage.zoom(reconstructed,
-                                             (self.nx / reconstructed.shape[0],
-                                              self.ny / reconstructed.shape[1]),
-                                             order=1)
+            from scipy import ndimage
+            reconstructed = ndimage.zoom(reconstructed,
+                                         (self.nx / reconstructed.shape[0],
+                                          self.ny / reconstructed.shape[1]),
+                                         order=1)
 
         if reconstructed.max() > 0:
             reconstructed = reconstructed / reconstructed.max()
 
         return reconstructed
 
-    def compare_methods(self, radius=0.2, distance=0.2):
-        """Сравнение методов для конкретного случая"""
+    def modl_reconstruction(self, measurement):
+        """Реконструкция методом MoDL"""
+        if self.modl_trainer is None:
+            raise ValueError("MoDL модель не установлена")
+
+        import torch
+
+        # Измерения имеют форму (2, n_measurements)
+        # Для MoDL нужно объединить реальную и мнимую части в вектор
+        real_part = measurement.real  # (2, n_measurements)
+        imag_part = measurement.imag  # (2, n_measurements)
+
+        # Объединяем: сначала реальные части обеих катушек, затем мнимые
+        # Размер: 2 * 2 * n_measurements = 4 * n_measurements
+        # Но в системной матрице уже учтено, что M = 2550, а мы ожидаем 5100?
+        # Проверим: real_part.flatten() имеет размер 2 * n_measurements
+        # n_measurements = 1275 (так как SM имеет размер 2550, а reshape(2, -1) дает 2x1275)
+        # Тогда meas_vector будет 4 * 1275 = 5100, что соответствует M=5100 в MoDL
+
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+
+        print(f"modl_reconstruction: measurement shape={measurement.shape}, "
+              f"real_part shape={real_part.shape}, "
+              f"meas_vector shape={meas_vector.shape}")
+
+        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0)
+        meas_tensor = meas_tensor.to(self.modl_trainer.device)
+
+        self.modl_trainer.model.eval()
+        with torch.no_grad():
+            reconstructed = self.modl_trainer.model(meas_tensor)
+
+        # Обработка вывода
+        if isinstance(reconstructed, tuple):
+            reconstructed = reconstructed[0]
+
+        if reconstructed.ndim == 4:
+            reconstructed = reconstructed[0, 0].cpu().numpy()
+        elif reconstructed.ndim == 3:
+            reconstructed = reconstructed[0].cpu().numpy()
+        else:
+            reconstructed = reconstructed.cpu().numpy()
+
+        # Нормализация
+        if reconstructed.max() > 0:
+            reconstructed = reconstructed / reconstructed.max()
+
+        # Изменение размера при необходимости
+        if reconstructed.shape != self.image_shape:
+            from scipy import ndimage
+            reconstructed = ndimage.zoom(reconstructed,
+                                         (self.nx / reconstructed.shape[0],
+                                          self.ny / reconstructed.shape[1]),
+                                         order=1)
+
+        return reconstructed
+
+    def diffusion_reconstruction(self, measurement):
+        """Реконструкция методом диффузионной модели"""
+        if self.diffusion_trainer is None:
+            raise ValueError("Diffusion модель не установлена")
+
+        import torch
+
+        real_part = measurement.real
+        imag_part = measurement.imag
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0).to(self.diffusion_trainer.device)
+
+        self.diffusion_trainer.model.eval()
+        with torch.no_grad():
+            # Для диффузионной модели нужен обратный процесс
+            batch_size = meas_tensor.shape[0]
+            x_t = torch.randn(batch_size, 1, self.nx, self.ny).to(self.diffusion_trainer.device)
+
+            # Упрощенная версия обратного процесса
+            for t in reversed(range(min(50, self.diffusion_trainer.model.n_steps))):
+                t_tensor = torch.full((batch_size,), t, device=self.diffusion_trainer.device, dtype=torch.long)
+                x_t = self.diffusion_trainer.model.p_sample(x_t, t_tensor)
+
+            reconstructed = x_t[0, 0].cpu().numpy()
+
+        if reconstructed.max() > 0:
+            reconstructed = reconstructed / reconstructed.max()
+
+        return reconstructed
+
+    def hybrid_reconstruction(self, measurement):
+        """Реконструкция гибридной моделью (MoDL + Diffusion)"""
+        if self.hybrid_trainer is None:
+            raise ValueError("Hybrid модель не установлена")
+
+        import torch
+
+        real_part = measurement.real
+        imag_part = measurement.imag
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0).to(self.hybrid_trainer.device)
+
+        self.hybrid_trainer.model.eval()
+        with torch.no_grad():
+            reconstructed = self.hybrid_trainer.model(meas_tensor)
+
+        if isinstance(reconstructed, tuple):
+            reconstructed = reconstructed[0]
+
+        reconstructed = reconstructed[0, 0].cpu().numpy()
+
+        if reconstructed.max() > 0:
+            reconstructed = reconstructed / reconstructed.max()
+
+        if reconstructed.shape != self.image_shape:
+            from scipy import ndimage
+            reconstructed = ndimage.zoom(reconstructed,
+                                         (self.nx / reconstructed.shape[0],
+                                          self.ny / reconstructed.shape[1]),
+                                         order=1)
+
+        return reconstructed
+
+    def compare_all_methods(self, radius=0.2, distance=0.2):
+        """Сравнение всех доступных методов"""
         print(f"\nСравнение методов для radius={radius}, distance={distance}")
-        print("-" * 50)
+        print("-" * 70)
 
         original_image = self.generate_test_case(radius, distance)
         measurement = self.generate_measurement(original_image)
 
-        # Тихонов
-        print("Реконструкция методом Тихонова...")
-        tikhonov_start = time.time()
-        tikhonov_recon = self.tikhonov_reconstruction(measurement)
-        tikhonov_time = time.time() - tikhonov_start
+        results = {}
+        methods = [
+            ('Тихонов', self.tikhonov_reconstruction),
+            ('CNN', self.cnn_reconstruction if self.cnn_trainer else None),
+            ('MoDL', self.modl_reconstruction if self.modl_trainer else None),
+            ('Diffusion', self.diffusion_reconstruction if self.diffusion_trainer else None),
+            ('Hybrid', self.hybrid_reconstruction if self.hybrid_trainer else None),
+        ]
 
-        # CNN
-        print("Реконструкция методом CNN...")
-        cnn_start = time.time()
-        cnn_recon = self.cnn_reconstruction(measurement)
-        cnn_time = time.time() - cnn_start
+        print(f"\n{'Метод':<12} {'SSIM':<8} {'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}")
+        print("-" * 70)
 
-        # Метрики
-        tikhonov_metrics = MetricsCalculator.calculate_all_metrics(original_image, tikhonov_recon)
-        cnn_metrics = MetricsCalculator.calculate_all_metrics(original_image, cnn_recon)
+        for name, method in methods:
+            if method is None:
+                continue
 
-        # Добавляем время
-        tikhonov_metrics['time'] = tikhonov_time
-        cnn_metrics['time'] = cnn_time
+            print(f"Реконструкция методом {name}...")
+            start_time = time.time()
+            recon = method(measurement)
+            elapsed_time = time.time() - start_time
 
-        # Вывод
-        print(f"\nРезультаты:")
-        print(f"{'Метод':<10} {'SSIM':<8} {'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}")
-        print("-" * 50)
-        print(f"{'Тихонов':<10} {tikhonov_metrics['ssim']:<8.4f} "
-              f"{tikhonov_metrics['psnr']:<12.2f} {tikhonov_metrics['fwhm']:<8.2f} "
-              f"{tikhonov_metrics['time']:<10.4f}")
-        print(f"{'CNN':<10} {cnn_metrics['ssim']:<8.4f} "
-              f"{cnn_metrics['psnr']:<12.2f} {cnn_metrics['fwhm']:<8.2f} "
-              f"{cnn_metrics['time']:<10.4f}")
+            metrics = MetricsCalculator.calculate_all_metrics(original_image, recon)
+            metrics['time'] = elapsed_time
+
+            results[name] = {
+                'image': recon,
+                'metrics': metrics
+            }
+
+            print(f"{name:<12} {metrics['ssim']:<8.4f} {metrics['psnr']:<12.2f} "
+                  f"{metrics['fwhm']:<8.2f} {metrics['time']:<10.4f}")
 
         # Визуализация
-        Visualization.plot_comparison(
-            original_image, tikhonov_recon, cnn_recon,
-            radius, distance, tikhonov_metrics, cnn_metrics,
-            save_path=f'./DATA/results/comparison_r{radius}_d{distance}.png'
-        )
+        self._visualize_all_comparison(original_image, results, radius, distance)
 
         return {
             'original': original_image,
-            'tikhonov': tikhonov_recon,
-            'cnn': cnn_recon,
-            'metrics': {
-                'tikhonov': tikhonov_metrics,
-                'cnn': cnn_metrics
-            }
+            'results': results,
+            'radius': radius,
+            'distance': distance
         }
 
-    def run_comparison_experiments(self, radius_list=[0.2], distance_list=[0.2, 0.1, 0.05]):
-        """Запуск серии экспериментов"""
-        print("=" * 60)
-        print("СРАВНЕНИЕ МЕТОДОВ РЕКОНСТРУКЦИИ MPI")
-        print("=" * 60)
+    def _visualize_all_comparison(self, original, results, radius, distance):
+        """Визуализация сравнения всех методов"""
+        from .visualization import Visualization
 
-        results = []
+        save_path = f'./DATA/results/all_methods_r{radius}_d{distance}.png'
 
-        for radius in radius_list:
-            for distance in distance_list:
-                if distance >= 0:
-                    print(f"\n{'=' * 50}")
-                    print(f"Эксперимент: радиус={radius}, расстояние={distance}")
-                    print(f"{'=' * 50}")
+        Visualization.plot_all_methods_comparison(
+            original, results, radius, distance,
+            save_path=save_path, show_plot=False
+        )
 
-                    result = self.compare_methods(radius, distance)
-                    results.append({
-                        'radius': radius,
-                        'distance': distance,
-                        'results': result
-                    })
+    def run_full_comparison(self, radius=0.2, distances=[0.2, 0.15, 0.1, 0.05]):
+        """Запуск полного сравнения для разных расстояний"""
+        print("=" * 70)
+        print("ПОЛНОЕ СРАВНЕНИЕ МЕТОДОВ РЕКОНСТРУКЦИИ MPI")
+        print("=" * 70)
 
-        self.results = results
-        return results
+        all_results = []
 
-    def print_summary(self):
+        for distance in distances:
+            print(f"\n{'=' * 50}")
+            print(f"Эксперимент: радиус={radius}, расстояние={distance}")
+            print(f"{'=' * 50}")
+
+            result = self.compare_all_methods(radius, distance)
+            all_results.append(result)
+
+        self.results = all_results
+        return all_results
+
+    def print_summary_table(self):
         """Вывод сводной таблицы результатов"""
         if not self.results:
             print("Нет результатов для вывода")
             return
 
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 100)
         print("СВОДНАЯ ТАБЛИЦА РЕЗУЛЬТАТОВ")
-        print("=" * 80)
+        print("=" * 100)
 
-        print(f"{'Radius':<8} {'Distance':<10} {'Метод':<10} {'SSIM':<8} "
-              f"{'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}")
-        print("-" * 80)
+        header = f"{'Расст.':<8} {'Метод':<12} {'SSIM':<8} {'PSNR':<10} {'FWHM':<8} {'Время':<8}"
+        print(header)
+        print("-" * 100)
 
-        for item in self.results:
-            radius = item['radius']
-            distance = item['distance']
-            tik_metrics = item['results']['metrics']['tikhonov']
-            cnn_metrics = item['results']['metrics']['cnn']
-
-            print(f"{radius:<8.3f} {distance:<10.3f} {'Тихонов':<10} "
-                  f"{tik_metrics['ssim']:<8.4f} {tik_metrics['psnr']:<12.2f} "
-                  f"{tik_metrics['fwhm']:<8.2f} {tik_metrics['time']:<10.4f}")
-
-            print(f"{'':<8} {'':<10} {'CNN':<10} "
-                  f"{cnn_metrics['ssim']:<8.4f} {cnn_metrics['psnr']:<12.2f} "
-                  f"{cnn_metrics['fwhm']:<8.2f} {cnn_metrics['time']:<10.4f}")
-            print("-" * 80)
+        for result in self.results:
+            distance = result['distance']
+            for name, data in result['results'].items():
+                m = data['metrics']
+                print(f"{distance:<8.3f} {name:<12} {m['ssim']:<8.4f} "
+                      f"{m['psnr']:<10.2f} {m['fwhm']:<8.2f} {m['time']:<8.4f}")
 
         # Статистика
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 100)
         print("СТАТИСТИКА ПО ВСЕМ ЭКСПЕРИМЕНТАМ")
-        print("=" * 80)
+        print("=" * 100)
 
-        tik_ssim_avg = np.mean([r['results']['metrics']['tikhonov']['ssim'] for r in self.results])
-        cnn_ssim_avg = np.mean([r['results']['metrics']['cnn']['ssim'] for r in self.results])
+        # Собираем метрики по методам
+        methods_metrics = {}
+        for result in self.results:
+            for name, data in result['results'].items():
+                if name not in methods_metrics:
+                    methods_metrics[name] = {'ssim': [], 'psnr': [], 'fwhm': [], 'time': []}
+                methods_metrics[name]['ssim'].append(data['metrics']['ssim'])
+                methods_metrics[name]['psnr'].append(data['metrics']['psnr'])
+                methods_metrics[name]['fwhm'].append(data['metrics']['fwhm'])
+                methods_metrics[name]['time'].append(data['metrics']['time'])
 
-        tik_psnr_avg = np.mean([r['results']['metrics']['tikhonov']['psnr'] for r in self.results])
-        cnn_psnr_avg = np.mean([r['results']['metrics']['cnn']['psnr'] for r in self.results])
+        for name, metrics in methods_metrics.items():
+            print(f"\n{name}:")
+            print(f"  Средний SSIM: {np.mean(metrics['ssim']):.4f} ± {np.std(metrics['ssim']):.4f}")
+            print(f"  Средний PSNR: {np.mean(metrics['psnr']):.2f} ± {np.std(metrics['psnr']):.2f} дБ")
+            print(f"  Средний FWHM: {np.mean(metrics['fwhm']):.2f} ± {np.std(metrics['fwhm']):.2f} пикс.")
+            print(f"  Среднее время: {np.mean(metrics['time']):.4f} ± {np.std(metrics['time']):.4f} с")
 
-        tik_time_avg = np.mean([r['results']['metrics']['tikhonov']['time'] for r in self.results])
-        cnn_time_avg = np.mean([r['results']['metrics']['cnn']['time'] for r in self.results])
-
-        print(f"Средний SSIM:")
-        print(f"  Тихонов: {tik_ssim_avg:.4f}")
-        print(f"  CNN:     {cnn_ssim_avg:.4f}")
-        if tik_ssim_avg > 0:
-            print(f"  Улучшение: +{(cnn_ssim_avg - tik_ssim_avg):.4f} "
-                  f"({(cnn_ssim_avg / tik_ssim_avg - 1) * 100:.1f}%)")
-
-        print(f"\nСредний PSNR:")
-        print(f"  Тихонов: {tik_psnr_avg:.2f} дБ")
-        print(f"  CNN:     {cnn_psnr_avg:.2f} дБ")
-        print(f"  Улучшение: +{(cnn_psnr_avg - tik_psnr_avg):.2f} дБ")
-
-        print(f"\nСреднее время реконструкции:")
-        print(f"  Тихонов: {tik_time_avg:.4f} с")
-        print(f"  CNN:     {cnn_time_avg:.4f} с")
-        if cnn_time_avg > 0:
-            print(f"  Ускорение: {tik_time_avg / cnn_time_avg:.1f}x")
-
-    def save_results_to_file(self, filename='./DATA/results/summary_results.txt'):
+    def save_results_to_file(self, filename='./DATA/results/all_methods_summary.txt'):
         """Сохранение результатов в файл"""
         if not self.results:
             print("Нет результатов для сохранения")
             return
 
         with open(filename, 'w', encoding='utf-8') as f:
-            f.write("=" * 80 + "\n")
-            f.write("РЕЗУЛЬТАТЫ СРАВНЕНИЯ МЕТОДОВ РЕКОНСТРУКЦИИ MPI\n")
-            f.write("=" * 80 + "\n\n")
+            f.write("=" * 100 + "\n")
+            f.write("СРАВНЕНИЕ МЕТОДОВ РЕКОНСТРУКЦИИ MPI\n")
+            f.write("=" * 100 + "\n\n")
 
-            for item in self.results:
-                radius = item['radius']
-                distance = item['distance']
-                tik_metrics = item['results']['metrics']['tikhonov']
-                cnn_metrics = item['results']['metrics']['cnn']
-
-                f.write(f"ЭКСПЕРИМЕНТ: radius={radius}, distance={distance}\n")
+            for result in self.results:
+                distance = result['distance']
+                f.write(f"ЭКСПЕРИМЕНТ: radius={result['radius']}, distance={distance}\n")
                 f.write("-" * 60 + "\n")
-                f.write(f"{'Метод':<10} {'SSIM':<8} {'PSNR (дБ)':<12} "
-                        f"{'FWHM':<8} {'Время (с)':<10}\n")
-                f.write(f"{'Тихонов':<10} {tik_metrics['ssim']:<8.4f} "
-                        f"{tik_metrics['psnr']:<12.2f} {tik_metrics['fwhm']:<8.2f} "
-                        f"{tik_metrics['time']:<10.4f}\n")
-                f.write(f"{'CNN':<10} {cnn_metrics['ssim']:<8.4f} "
-                        f"{cnn_metrics['psnr']:<12.2f} {cnn_metrics['fwhm']:<8.2f} "
-                        f"{cnn_metrics['time']:<10.4f}\n\n")
+                f.write(f"{'Метод':<12} {'SSIM':<8} {'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}\n")
+                f.write("-" * 60 + "\n")
 
-            # Итоговая статистика
-            f.write("\n" + "=" * 80 + "\n")
-            f.write("ОБЩАЯ СТАТИСТИКА\n")
-            f.write("=" * 80 + "\n\n")
-
-            tik_ssim_avg = np.mean([r['results']['metrics']['tikhonov']['ssim'] for r in self.results])
-            cnn_ssim_avg = np.mean([r['results']['metrics']['cnn']['ssim'] for r in self.results])
-
-            tik_psnr_avg = np.mean([r['results']['metrics']['tikhonov']['psnr'] for r in self.results])
-            cnn_psnr_avg = np.mean([r['results']['metrics']['cnn']['psnr'] for r in self.results])
-
-            tik_time_avg = np.mean([r['results']['metrics']['tikhonov']['time'] for r in self.results])
-            cnn_time_avg = np.mean([r['results']['metrics']['cnn']['time'] for r in self.results])
-
-            f.write(f"Средний SSIM:\n")
-            f.write(f"  Тихонов: {tik_ssim_avg:.4f}\n")
-            f.write(f"  CNN:     {cnn_ssim_avg:.4f}\n")
-            if tik_ssim_avg > 0:
-                f.write(f"  Улучшение: +{(cnn_ssim_avg - tik_ssim_avg):.4f} "
-                        f"({(cnn_ssim_avg / tik_ssim_avg - 1) * 100:.1f}%)\n\n")
-
-            f.write(f"Средний PSNR:\n")
-            f.write(f"  Тихонов: {tik_psnr_avg:.2f} дБ\n")
-            f.write(f"  CNN:     {cnn_psnr_avg:.2f} дБ\n")
-            f.write(f"  Улучшение: +{(cnn_psnr_avg - tik_psnr_avg):.2f} дБ\n\n")
-
-            f.write(f"Среднее время реконструкции:\n")
-            f.write(f"  Тихонов: {tik_time_avg:.4f} с\n")
-            f.write(f"  CNN:     {cnn_time_avg:.4f} с\n")
-            if cnn_time_avg > 0:
-                f.write(f"  Ускорение: {tik_time_avg / cnn_time_avg:.1f}x\n")
+                for name, data in result['results'].items():
+                    m = data['metrics']
+                    f.write(f"{name:<12} {m['ssim']:<8.4f} {m['psnr']:<12.2f} "
+                            f"{m['fwhm']:<8.2f} {m['time']:<10.4f}\n")
+                f.write("\n")
 
         print(f"\nРезультаты сохранены в файл: {filename}")
-
-    def plot_summary_results(self, save_path='./DATA/results/summary_plot.png'):
-        """Построение сводных графиков"""
-        Visualization.plot_summary_results(self.results, save_path)
