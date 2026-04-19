@@ -12,7 +12,7 @@ from src.main import run_pipeline
 if __name__ == '__main__':
     # Параметры запуска
     NUM_SAMPLES = 2000          # Количество образцов для генерации
-    TRAIN_MODELS = True        # False - загружать сохраненные модели, True - обучать новые
+    TRAIN_MODELS = False        # False - загружать сохраненные модели, True - обучать новые
 
     results = run_pipeline(num_samples=NUM_SAMPLES, train_models=TRAIN_MODELS)
 
