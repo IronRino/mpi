@@ -1,7 +1,7 @@
 """Визуализация результатов реконструкции"""
 
 import matplotlib
-matplotlib.use('Agg')  # Используем бэкенд без GUI для предотвращения ошибок HTTP
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -82,12 +82,10 @@ class Visualization:
         plt.suptitle('Сравнение методов реконструкции MPI', fontsize=14, fontweight='bold')
         plt.tight_layout()
 
-        # Сохраняем в файл
         if save_path:
             plt.savefig(save_path, dpi=150, bbox_inches='tight')
             print(f"График сохранен: {save_path}")
 
-        # Показываем только если явно запрошено
         if show_plot:
             plt.show()
         else:
@@ -101,7 +99,7 @@ class Visualization:
         plt.plot(val_losses, label='Validation Loss')
         plt.xlabel('Epoch')
         plt.ylabel('Loss (MSE)')
-        plt.title('CNN Training Progress')
+        plt.title('Training Progress')
         plt.legend()
         plt.grid(True)
 
@@ -121,10 +119,8 @@ class Visualization:
             print("Нет данных для построения графиков")
             return
 
-        # Подготовка данных
         distances = [item['distance'] for item in results]
 
-        # Собираем метрики для всех методов
         methods_data = {}
         for result in results:
             for name, data in result['results'].items():
@@ -135,63 +131,66 @@ class Visualization:
                 methods_data[name]['time'].append(data['metrics']['time'])
                 methods_data[name]['fwhm'].append(data['metrics']['fwhm'])
 
-        fig, axes = plt.subplots(2, 2, figsize=(14, 10))
+        fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 
-        colors = {'Тихонов': 'red', 'CNN': 'blue', 'MoDL': 'green', 'Diffusion': 'orange', 'Hybrid': 'purple'}
-        markers = {'Тихонов': 'o', 'CNN': 's', 'MoDL': '^', 'Diffusion': 'D', 'Hybrid': 'v'}
+        colors = {'Тихонов': 'red', 'KatsMarc': 'brown', 'Chae(2017)': 'purple',
+                  'DIP(2020)': 'orange', 'Shang(2020)': 'pink', 'PGNet(2023)': 'cyan',
+                  'DEQ-MPI(2024)': 'magenta', 'CNN': 'blue', 'MoDL': 'green',
+                  'Diffusion': 'olive', 'Hybrid': 'darkblue'}
+        markers = {'Тихонов': 'o', 'KatsMarc': 's', 'Chae(2017)': '^',
+                   'DIP(2020)': 'D', 'Shang(2020)': 'v', 'PGNet(2023)': '<',
+                   'DEQ-MPI(2024)': '>', 'CNN': 'p', 'MoDL': '*',
+                   'Diffusion': 'h', 'Hybrid': 'X'}
 
         # SSIM
         for name in methods_data:
-            axes[0, 0].plot(distances, methods_data[name]['ssim'],
-                           color=colors.get(name, 'gray'),
-                           marker=markers.get(name, 'o'),
-                           label=name, linewidth=2, markersize=8)
+            if name in colors:
+                axes[0, 0].plot(distances, methods_data[name]['ssim'],
+                               color=colors[name], marker=markers.get(name, 'o'),
+                               label=name, linewidth=2, markersize=8)
         axes[0, 0].set_xlabel('Расстояние между каплями')
         axes[0, 0].set_ylabel('SSIM')
         axes[0, 0].set_title('Сравнение SSIM')
-        axes[0, 0].legend()
+        axes[0, 0].legend(loc='lower right', fontsize=8)
         axes[0, 0].grid(True, alpha=0.3)
         axes[0, 0].invert_xaxis()
 
         # PSNR
         for name in methods_data:
-            axes[0, 1].plot(distances, methods_data[name]['psnr'],
-                           color=colors.get(name, 'gray'),
-                           marker=markers.get(name, 'o'),
-                           label=name, linewidth=2, markersize=8)
+            if name in colors:
+                axes[0, 1].plot(distances, methods_data[name]['psnr'],
+                               color=colors[name], marker=markers.get(name, 'o'),
+                               label=name, linewidth=2, markersize=8)
         axes[0, 1].set_xlabel('Расстояние между каплями')
         axes[0, 1].set_ylabel('PSNR (дБ)')
         axes[0, 1].set_title('Сравнение PSNR')
-        axes[0, 1].legend()
+        axes[0, 1].legend(loc='lower right', fontsize=8)
         axes[0, 1].grid(True, alpha=0.3)
         axes[0, 1].invert_xaxis()
 
-        # Время
-        bar_width = 0.25
-        x_indices = np.arange(len(distances))
-        for i, name in enumerate(methods_data):
-            offset = (i - len(methods_data)/2) * bar_width
-            axes[1, 0].bar(x_indices + offset, methods_data[name]['time'],
-                          bar_width, label=name, alpha=0.8,
-                          color=colors.get(name, 'gray'))
+        # Время (логарифмическая шкала из-за больших различий)
+        for name in methods_data:
+            if name in colors:
+                axes[1, 0].semilogy(distances, methods_data[name]['time'],
+                                   color=colors[name], marker=markers.get(name, 'o'),
+                                   label=name, linewidth=2, markersize=8)
         axes[1, 0].set_xlabel('Расстояние между каплями')
         axes[1, 0].set_ylabel('Время реконструкции (с)')
-        axes[1, 0].set_title('Сравнение времени выполнения')
-        axes[1, 0].set_xticks(x_indices)
-        axes[1, 0].set_xticklabels([f'd={d}' for d in distances])
-        axes[1, 0].legend()
+        axes[1, 0].set_title('Сравнение времени выполнения (логарифм. шкала)')
+        axes[1, 0].legend(loc='upper right', fontsize=8)
         axes[1, 0].grid(True, alpha=0.3)
+        axes[1, 0].invert_xaxis()
 
         # FWHM
         for name in methods_data:
-            axes[1, 1].plot(distances, methods_data[name]['fwhm'],
-                           color=colors.get(name, 'gray'),
-                           marker=markers.get(name, 'o'),
-                           label=name, linewidth=2, markersize=8)
+            if name in colors:
+                axes[1, 1].plot(distances, methods_data[name]['fwhm'],
+                               color=colors[name], marker=markers.get(name, 'o'),
+                               label=name, linewidth=2, markersize=8)
         axes[1, 1].set_xlabel('Расстояние между каплями')
         axes[1, 1].set_ylabel('FWHM (пиксели)')
         axes[1, 1].set_title('Сравнение пространственного разрешения')
-        axes[1, 1].legend()
+        axes[1, 1].legend(loc='upper right', fontsize=8)
         axes[1, 1].grid(True, alpha=0.3)
         axes[1, 1].invert_xaxis()
 
@@ -227,9 +226,10 @@ class Visualization:
         for idx, (name, data) in enumerate(results.items()):
             recon = data['image']
             metrics = data['metrics']
+            source = data.get('source', '')
 
             axes[0, idx + 1].imshow(recon, cmap='hot', vmin=vmin, vmax=vmax)
-            axes[0, idx + 1].set_title(name)
+            axes[0, idx + 1].set_title(f'{name}\n{source[:25]}...' if len(source) > 25 else f'{name}\n{source}')
             axes[0, idx + 1].set_xlabel(f"SSIM: {metrics['ssim']:.3f}\nPSNR: {metrics['psnr']:.1f} дБ")
 
             # Разностное изображение

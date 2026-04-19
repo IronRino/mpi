@@ -143,6 +143,10 @@ class MPIDataset:
         self.X = np.load(X_path)
         self.y = np.load(y_path)
 
+        # Проверяем размер изображения
+        print(f"Dataset shapes: X={self.X.shape}, y={self.y.shape}")
+        print(f"Image shape from data: {self.y[0].shape}")
+
         self.n_measurements = self.X.shape[2]
         self.measurement_size = self._find_square_size(self.n_measurements)
 

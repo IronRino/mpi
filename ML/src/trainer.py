@@ -2,6 +2,7 @@
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.utils.data import DataLoader
 import time
 import os
@@ -38,7 +39,7 @@ class MPITrainer:
                 lambda_param=kwargs.get('lambda_param', 0.01)
             )
         elif model_type == 'diffusion':
-            denoiser = DiffusionUNet(in_channels=2, out_channels=1)
+            denoiser = DiffusionUNet(in_channels=2, out_channels=1, image_size=51)
             self.model = DiffusionModel(
                 denoiser=denoiser,
                 n_steps=kwargs.get('n_steps', 1000)
@@ -80,7 +81,20 @@ class MPITrainer:
             model_type_lower = str(self.model_type).lower() if self.model_type else ''
 
             if 'diffusion' in model_type_lower:
-                outputs = self.model(targets, condition=measurements)
+                # Для диффузионной модели:
+                # measurements имеет форму (B, 4, H, W) - 4 канала
+                # targets имеет форму (B, 1, H, W) - 1 канал
+
+                # Изменяем размер измерений под целевое изображение если нужно
+                if measurements.shape[-2:] != targets.shape[-2:]:
+                    measurements = F.interpolate(measurements, size=targets.shape[-2:],
+                                                 mode='bilinear', align_corners=False)
+
+                # Усредняем каналы измерений до 1 канала для использования как условие
+                # (или можно использовать как есть, но модель ожидает 1 канал условия)
+                condition = measurements.mean(dim=1, keepdim=True)  # (B, 1, H, W)
+
+                outputs = self.model(targets, condition=condition)
                 if isinstance(outputs, tuple):
                     predicted_noise, true_noise = outputs
                     loss = self.criterion(predicted_noise, true_noise)
@@ -110,7 +124,15 @@ class MPITrainer:
                 model_type_lower = str(self.model_type).lower() if self.model_type else ''
 
                 if 'diffusion' in model_type_lower:
-                    outputs = self.model(targets, condition=measurements)
+                    # Для диффузионной модели
+                    if measurements.shape[-2:] != targets.shape[-2:]:
+                        measurements = F.interpolate(measurements, size=targets.shape[-2:],
+                                                     mode='bilinear', align_corners=False)
+
+                    # Усредняем каналы измерений до 1 канала
+                    condition = measurements.mean(dim=1, keepdim=True)  # (B, 1, H, W)
+
+                    outputs = self.model(targets, condition=condition)
                     if isinstance(outputs, tuple):
                         predicted_noise, true_noise = outputs
                         loss = self.criterion(predicted_noise, true_noise)
@@ -264,9 +286,9 @@ class ModelTrainerFactory:
         return trainer
 
     @staticmethod
-    def create_diffusion_trainer(n_steps=1000, learning_rate=1e-4):
+    def create_diffusion_trainer(n_steps=1000, learning_rate=1e-4, image_size=51):
         trainer = MPITrainer()
-        trainer.create_model('diffusion', n_steps=n_steps)
+        trainer.create_model('diffusion', n_steps=n_steps, image_size=image_size)
         trainer.setup_training(learning_rate=learning_rate)
         return trainer
 

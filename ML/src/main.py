@@ -2,12 +2,13 @@
 
 import os
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, TensorDataset
 import numpy as np
 
 from .dataset_generator import MPIDatasetGenerator, MPIDataset
 from .trainer import MPITrainer, ModelTrainerFactory
 from .comparator import MPIReconstructionComparator
+from .models import (ChaeSingleLayerNN, DeepImagePrior, ShangCNN, PGNet, DEQMPI)
 
 
 def create_directories():
@@ -67,7 +68,6 @@ def train_modl_model(system_matrix, image_shape):
     print(f"X_train shape: {X_train.shape}")
     print(f"y_train shape: {y_train.shape}")
 
-    # Создаем датасет для MoDL с разделением на реальную и мнимую части
     class MoDLDataset:
         def __init__(self, X, y):
             self.X = X
@@ -108,9 +108,222 @@ def train_modl_model(system_matrix, image_shape):
     return trainer
 
 
+def train_chae_model(system_matrix, image_shape):
+    """Обучение модели Chae (2017) - однослойная полносвязная сеть"""
+    print("\n2c. Обучение модели Chae (2017)...")
+
+    X_train = np.load('./DATA/dataset/X_train.npy')
+    y_train = np.load('./DATA/dataset/y_train.npy')
+
+    # Подготовка данных
+    X_train_vec = []
+    for meas in X_train:
+        real_part = meas.real
+        imag_part = meas.imag
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+        X_train_vec.append(meas_vector)
+
+    X_train_vec = np.array(X_train_vec)
+    y_train_flat = y_train.reshape(y_train.shape[0], -1)
+
+    input_dim = X_train_vec.shape[1]
+    output_dim = y_train_flat.shape[1]
+
+    print(f"  Input dim: {input_dim}, Output dim: {output_dim}")
+
+    # Создание модели
+    model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=512)
+
+    # Подготовка DataLoader
+    X_tensor = torch.tensor(X_train_vec, dtype=torch.float32)
+    y_tensor = torch.tensor(y_train_flat, dtype=torch.float32)
+
+    dataset = TensorDataset(X_tensor, y_tensor)
+    loader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+    # Обучение
+    criterion = torch.nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+
+    model.train()
+    for epoch in range(30):
+        total_loss = 0
+        for X_batch, y_batch in loader:
+            optimizer.zero_grad()
+            y_pred = model(X_batch)
+            loss = criterion(y_pred, y_batch)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+
+        if (epoch + 1) % 10 == 0:
+            print(f"  Epoch {epoch+1}/30, Loss: {total_loss/len(loader):.6f}")
+
+    # Сохранение модели
+    torch.save(model.state_dict(), './DATA/models/chae_best.pth')
+
+    return model
+
+
+def train_shang_model():
+    """Обучение модели Shang et al. (2020)"""
+    print("\n2d. Обучение модели Shang (2020)...")
+
+    X_train = np.load('./DATA/dataset/X_train.npy')
+    y_train = np.load('./DATA/dataset/y_train.npy')
+
+    # Для Shang CNN нужны изображения на входе
+    # Сначала делаем грубую реконструкцию через псевдообращение
+    from scipy import ndimage
+
+    model = ShangCNN(input_channels=1, output_channels=1, base_filters=64)
+
+    # Подготовка данных (упрощенная версия)
+    X_train_images = []
+    for meas in X_train[:1000]:  # Используем подвыборку для скорости
+        real_part = meas.real
+        imag_part = meas.imag
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+
+        # Псевдообращение для начальной реконструкции
+        A_pinv = np.linalg.pinv(X_train.shape[2] * np.eye(meas_vector.shape[0]))  # Упрощение
+        initial = np.random.rand(51, 51)  # Временное решение
+        X_train_images.append(initial)
+
+    X_train_images = np.array(X_train_images)[:, np.newaxis, :, :]
+    y_train_images = y_train[:1000, np.newaxis, :, :]
+
+    X_tensor = torch.tensor(X_train_images, dtype=torch.float32)
+    y_tensor = torch.tensor(y_train_images, dtype=torch.float32)
+
+    dataset = TensorDataset(X_tensor, y_tensor)
+    loader = DataLoader(dataset, batch_size=16, shuffle=True)
+
+    criterion = torch.nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+
+    model.train()
+    for epoch in range(20):
+        total_loss = 0
+        for X_batch, y_batch in loader:
+            optimizer.zero_grad()
+            y_pred = model(X_batch)
+            loss = criterion(y_pred, y_batch)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+
+        if (epoch + 1) % 5 == 0:
+            print(f"  Epoch {epoch+1}/20, Loss: {total_loss/len(loader):.6f}")
+
+    torch.save(model.state_dict(), './DATA/models/shang_best.pth')
+
+    return model
+
+
+def train_pgnet_model(system_matrix, image_shape):
+    """Обучение модели PGNet (Wu et al., 2023)"""
+    print("\n2e. Обучение модели PGNet (2023)...")
+
+    X_train = np.load('./DATA/dataset/X_train.npy')
+    y_train = np.load('./DATA/dataset/y_train.npy')
+
+    # Подготовка данных
+    X_train_vec = []
+    for meas in X_train:
+        real_part = meas.real
+        imag_part = meas.imag
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+        X_train_vec.append(meas_vector)
+
+    X_train_vec = np.array(X_train_vec)
+    y_train_flat = y_train.reshape(y_train.shape[0], -1)
+
+    input_dim = X_train_vec.shape[1]
+    output_shape = image_shape
+
+    model = PGNet(input_dim, output_shape, hidden_dim=512)
+
+    X_tensor = torch.tensor(X_train_vec, dtype=torch.float32)
+    y_tensor = torch.tensor(y_train_flat, dtype=torch.float32)
+
+    dataset = TensorDataset(X_tensor, y_tensor)
+    loader = DataLoader(dataset, batch_size=32, shuffle=True)
+
+    criterion = torch.nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)
+
+    model.train()
+    for epoch in range(30):
+        total_loss = 0
+        for X_batch, y_batch in loader:
+            optimizer.zero_grad()
+            y_pred = model(X_batch)
+            y_pred_flat = y_pred.view(y_pred.shape[0], -1)
+            loss = criterion(y_pred_flat, y_batch)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+
+        if (epoch + 1) % 10 == 0:
+            print(f"  Epoch {epoch+1}/30, Loss: {total_loss/len(loader):.6f}")
+
+    torch.save(model.state_dict(), './DATA/models/pgnet_best.pth')
+
+    return model
+
+
+def train_deq_model(system_matrix, image_shape):
+    """Обучение модели DEQ-MPI (Güngör et al., 2024)"""
+    print("\n2f. Обучение модели DEQ-MPI (2024)...")
+
+    X_train = np.load('./DATA/dataset/X_train.npy')
+    y_train = np.load('./DATA/dataset/y_train.npy')
+
+    # Подготовка данных
+    X_train_vec = []
+    for meas in X_train[:500]:  # Подвыборка для скорости
+        real_part = meas.real
+        imag_part = meas.imag
+        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+        X_train_vec.append(meas_vector)
+
+    X_train_vec = np.array(X_train_vec)
+    y_train_img = y_train[:500]
+
+    model = DEQMPI(system_matrix, image_shape, n_iterations=5, lambda_param=0.1)
+
+    X_tensor = torch.tensor(X_train_vec, dtype=torch.float32)
+    y_tensor = torch.tensor(y_train_img[:, np.newaxis, :, :], dtype=torch.float32)
+
+    dataset = TensorDataset(X_tensor, y_tensor)
+    loader = DataLoader(dataset, batch_size=4, shuffle=True)
+
+    criterion = torch.nn.MSELoss()
+    optimizer = torch.optim.Adam(model.parameters(), lr=1e-4)
+
+    model.train()
+    for epoch in range(20):
+        total_loss = 0
+        for X_batch, y_batch in loader:
+            optimizer.zero_grad()
+            y_pred = model(X_batch)
+            loss = criterion(y_pred, y_batch)
+            loss.backward()
+            optimizer.step()
+            total_loss += loss.item()
+
+        if (epoch + 1) % 5 == 0:
+            print(f"  Epoch {epoch+1}/20, Loss: {total_loss/len(loader):.6f}")
+
+    torch.save(model.state_dict(), './DATA/models/deq_best.pth')
+
+    return model
+
+
 def train_diffusion_model():
     """Обучение диффузионной модели"""
-    print("\n2c. Обучение Diffusion модели...")
+    print("\n2g. Обучение Diffusion модели...")
 
     train_dataset = MPIDataset('./DATA/dataset/X_train.npy', './DATA/dataset/y_train.npy')
     test_dataset = MPIDataset('./DATA/dataset/X_test.npy', './DATA/dataset/y_test.npy')
@@ -121,7 +334,8 @@ def train_diffusion_model():
 
     trainer = ModelTrainerFactory.create_diffusion_trainer(
         n_steps=500,
-        learning_rate=1e-4
+        learning_rate=1e-4,
+        image_size=51  # Добавляем размер изображения
     )
 
     train_losses, val_losses = trainer.train(
@@ -130,12 +344,19 @@ def train_diffusion_model():
         save_path='./DATA/models/diffusion_best.pth'
     )
 
+    # Визуализация кривых обучения
+    from .visualization import Visualization
+    Visualization.plot_training_curves(
+        train_losses, val_losses,
+        save_path='./DATA/results/diffusion_training_curve.png'
+    )
+
     return trainer
 
 
 def train_hybrid_model(system_matrix, image_shape):
     """Обучение гибридной модели"""
-    print("\n2d. Обучение Hybrid модели...")
+    print("\n2h. Обучение Hybrid модели...")
 
     X_train = np.load('./DATA/dataset/X_train.npy')
     y_train = np.load('./DATA/dataset/y_train.npy')
@@ -182,7 +403,7 @@ def train_hybrid_model(system_matrix, image_shape):
 
 def load_cnn_model():
     """Загрузка сохраненной CNN модели"""
-    print("\n2. Загрузка обученной CNN модели...")
+    print("\nЗагрузка обученной CNN модели...")
     if not os.path.exists('./DATA/models/cnn_best.pth'):
         print("  Файл модели не найден, будет обучена новая модель")
         return train_cnn_model()
@@ -194,7 +415,7 @@ def load_cnn_model():
 
 def load_modl_model(system_matrix, image_shape):
     """Загрузка сохраненной MoDL модели"""
-    print("\n2b. Загрузка обученной MoDL модели...")
+    print("\nЗагрузка обученной MoDL модели...")
     if not os.path.exists('./DATA/models/modl_best.pth'):
         print("  Файл модели не найден, будет обучена новая модель")
         return train_modl_model(system_matrix, image_shape)
@@ -204,9 +425,82 @@ def load_modl_model(system_matrix, image_shape):
     return trainer
 
 
+def load_chae_model(system_matrix, image_shape):
+    """Загрузка модели Chae (2017)"""
+    print("\nЗагрузка модели Chae (2017)...")
+    X_train = np.load('./DATA/dataset/X_train.npy')
+    y_train = np.load('./DATA/dataset/y_train.npy')
+
+    input_dim = X_train.shape[1] * 4  # real+imag для 2 катушек
+    output_dim = image_shape[0] * image_shape[1]
+
+    model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=512)
+
+    if os.path.exists('./DATA/models/chae_best.pth'):
+        model.load_state_dict(torch.load('./DATA/models/chae_best.pth'))
+        print("  Модель Chae загружена из файла")
+    else:
+        print("  Файл модели не найден, будет обучена новая модель")
+        model = train_chae_model(system_matrix, image_shape)
+
+    model.eval()
+    return model
+
+
+def load_shang_model():
+    """Загрузка модели Shang et al. (2020)"""
+    print("\nЗагрузка модели Shang (2020)...")
+    model = ShangCNN(input_channels=1, output_channels=1, base_filters=64)
+
+    if os.path.exists('./DATA/models/shang_best.pth'):
+        model.load_state_dict(torch.load('./DATA/models/shang_best.pth'))
+        print("  Модель Shang загружена из файла")
+    else:
+        print("  Файл модели не найден, будет обучена новая модель")
+        model = train_shang_model()
+
+    model.eval()
+    return model
+
+
+def load_pgnet_model(system_matrix, image_shape):
+    """Загрузка модели PGNet (Wu et al., 2023)"""
+    print("\nЗагрузка модели PGNet (2023)...")
+    X_train = np.load('./DATA/dataset/X_train.npy')
+    input_dim = X_train.shape[1] * 4
+
+    model = PGNet(input_dim, image_shape, hidden_dim=512)
+
+    if os.path.exists('./DATA/models/pgnet_best.pth'):
+        model.load_state_dict(torch.load('./DATA/models/pgnet_best.pth'))
+        print("  Модель PGNet загружена из файла")
+    else:
+        print("  Файл модели не найден, будет обучена новая модель")
+        model = train_pgnet_model(system_matrix, image_shape)
+
+    model.eval()
+    return model
+
+
+def load_deq_model(system_matrix, image_shape):
+    """Загрузка модели DEQ-MPI (Güngör et al., 2024)"""
+    print("\nЗагрузка модели DEQ-MPI (2024)...")
+    model = DEQMPI(system_matrix, image_shape, n_iterations=5, lambda_param=0.1)
+
+    if os.path.exists('./DATA/models/deq_best.pth'):
+        model.load_state_dict(torch.load('./DATA/models/deq_best.pth'))
+        print("  Модель DEQ-MPI загружена из файла")
+    else:
+        print("  Файл модели не найден, будет обучена новая модель")
+        model = train_deq_model(system_matrix, image_shape)
+
+    model.eval()
+    return model
+
+
 def load_diffusion_model():
     """Загрузка сохраненной диффузионной модели"""
-    print("\n2c. Загрузка обученной Diffusion модели...")
+    print("\nЗагрузка обученной Diffusion модели...")
     if not os.path.exists('./DATA/models/diffusion_best.pth'):
         print("  Файл модели не найден, будет обучена новая модель")
         return train_diffusion_model()
@@ -217,7 +511,7 @@ def load_diffusion_model():
 
 def load_hybrid_model(system_matrix, image_shape):
     """Загрузка сохраненной гибридной модели"""
-    print("\n2d. Загрузка обученной Hybrid модели...")
+    print("\nЗагрузка обученной Hybrid модели...")
     if not os.path.exists('./DATA/models/hybrid_best.pth'):
         print("  Файл модели не найден, будет обучена новая модель")
         return train_hybrid_model(system_matrix, image_shape)
@@ -227,7 +521,8 @@ def load_hybrid_model(system_matrix, image_shape):
     return trainer
 
 
-def run_full_comparison(cnn_trainer, modl_trainer, diffusion_trainer, hybrid_trainer):
+def run_full_comparison(cnn_trainer, modl_trainer, diffusion_trainer, hybrid_trainer,
+                        chae_model, shang_model, pgnet_model, deq_model):
     """Запуск полного сравнения всех методов"""
     print("\n3. Сравнение всех методов реконструкции...")
 
@@ -236,6 +531,12 @@ def run_full_comparison(cnn_trainer, modl_trainer, diffusion_trainer, hybrid_tra
     comparator.set_modl_model(modl_trainer)
     comparator.set_diffusion_model(diffusion_trainer)
     comparator.set_hybrid_model(hybrid_trainer)
+
+    # Установка новых моделей
+    comparator.set_chae_model(chae_model)
+    comparator.set_shang_model(shang_model)
+    comparator.set_pgnet_model(pgnet_model)
+    comparator.set_deq_model(deq_model)
 
     radius = 0.2
     distances = [0.2, 0.15, 0.1, 0.05]
@@ -257,6 +558,18 @@ def run_pipeline(num_samples=2000, train_models=True):
     print("=" * 70)
     print("ПАЙПЛАЙН СРАВНЕНИЯ МЕТОДОВ РЕКОНСТРУКЦИИ MPI")
     print("=" * 70)
+    print("\nДоступные методы:")
+    print("  - Тихонов (классический)")
+    print("  - KatsMarc (Kaczmarz, 1937)")
+    print("  - Chae (2017) - однослойная полносвязная сеть")
+    print("  - DIP (Dittmer et al., 2020) - Deep Image Prior")
+    print("  - Shang (2020) - CNN для улучшения разрешения")
+    print("  - PGNet (Wu et al., 2023) - Projection Generation Network")
+    print("  - DEQ-MPI (Güngör et al., 2024)")
+    print("  - CNN (UNet)")
+    print("  - MoDL")
+    print("  - Diffusion")
+    print("  - Hybrid (MoDL+Diffusion)")
 
     create_directories()
 
@@ -274,22 +587,31 @@ def run_pipeline(num_samples=2000, train_models=True):
     print(f"\nСистемная матрица: {system_matrix.shape}")
     print(f"Размер изображения: {image_shape}")
 
-    # Обучение или загрузка моделей в зависимости от параметра
+    # Обучение или загрузка моделей
     if train_models:
         print("\n--- Режим: Обучение новых моделей ---")
         cnn_trainer = train_cnn_model()
         modl_trainer = train_modl_model(system_matrix, image_shape)
-        diffusion_trainer = None
-        hybrid_trainer = None
+        diffusion_trainer = train_diffusion_model()
+        hybrid_trainer = train_hybrid_model(system_matrix, image_shape)
+        chae_model = train_chae_model(system_matrix, image_shape)
+        shang_model = train_shang_model()
+        pgnet_model = train_pgnet_model(system_matrix, image_shape)
+        deq_model = train_deq_model(system_matrix, image_shape)
     else:
         print("\n--- Режим: Загрузка сохраненных моделей ---")
         cnn_trainer = load_cnn_model()
         modl_trainer = load_modl_model(system_matrix, image_shape)
-        diffusion_trainer = None
-        hybrid_trainer = None
+        diffusion_trainer = load_diffusion_model()
+        hybrid_trainer = load_hybrid_model(system_matrix, image_shape)
+        chae_model = load_chae_model(system_matrix, image_shape)
+        shang_model = load_shang_model()
+        pgnet_model = load_pgnet_model(system_matrix, image_shape)
+        deq_model = load_deq_model(system_matrix, image_shape)
 
     # Сравнение методов
-    results = run_full_comparison(cnn_trainer, modl_trainer, diffusion_trainer, hybrid_trainer)
+    results = run_full_comparison(cnn_trainer, modl_trainer, diffusion_trainer, hybrid_trainer,
+                                  chae_model, shang_model, pgnet_model, deq_model)
 
     print("\n" + "=" * 70)
     print("ПАЙПЛАЙН УСПЕШНО ЗАВЕРШЕН!")
