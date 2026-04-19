@@ -14,6 +14,7 @@ class MPITrainer:
 
     def __init__(self, device='cuda' if torch.cuda.is_available() else 'cpu'):
         self.device = device
+        print(f"MPITrainer: Используется устройство: {self.device}")
         self.model = None
         self.criterion = None
         self.optimizer = None
