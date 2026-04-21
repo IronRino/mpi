@@ -287,7 +287,7 @@ class ModelTrainerFactory:
         return trainer
 
     @staticmethod
-    def create_diffusion_trainer(n_steps=1000, learning_rate=1e-4, image_size=51):
+    def create_diffusion_trainer(n_steps=500, learning_rate=1e-4, image_size=51):
         trainer = MPITrainer()
         trainer.create_model('diffusion', n_steps=n_steps, image_size=image_size)
         trainer.setup_training(learning_rate=learning_rate)

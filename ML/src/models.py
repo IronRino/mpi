@@ -157,15 +157,18 @@ class ChaeSingleLayerNN(nn.Module):
     Вход: вектор измерений (реальная + мнимая части)
     Выход: вектор изображения
     """
+
     def __init__(self, input_dim, output_dim, hidden_dim=None):
         super().__init__()
 
+        print(f"ChaeSingleLayerNN: input_dim={input_dim}, output_dim={output_dim}, hidden_dim={hidden_dim}")
+
         # По оригинальной статье используется один скрытый слой
         if hidden_dim is None:
-            # По умолчанию: один слой (линейная регрессия)
+            # Один слой (линейная регрессия)
             self.network = nn.Sequential(
                 nn.Linear(input_dim, output_dim),
-                nn.ReLU(inplace=True)
+                nn.Sigmoid()
             )
         else:
             # Два слоя (один скрытый)
@@ -175,6 +178,16 @@ class ChaeSingleLayerNN(nn.Module):
                 nn.Linear(hidden_dim, output_dim),
                 nn.Sigmoid()
             )
+
+        # Инициализация весов
+        self._initialize_weights()
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
         return self.network(x)
@@ -247,12 +260,12 @@ class ShangCNN(nn.Module):
     CNN модель для улучшения пространственного разрешения MPI
     Shang et al. (2020) - Physics in Medicine & Biology
 
-    Архитектура: 5-слойная CNN с residual connections
+    Архитектура: 5-слойная CNN с residual connections (упрощенная версия)
     """
-    def __init__(self, input_channels=1, output_channels=1, base_filters=64):
+    def __init__(self, input_channels=1, output_channels=1, base_filters=32):  # Уменьшил base_filters с 64 до 32
         super().__init__()
 
-        # Сверточные слои
+        # Упрощенная архитектура для ускорения
         self.conv1 = nn.Sequential(
             nn.Conv2d(input_channels, base_filters, kernel_size=3, padding=1),
             nn.BatchNorm2d(base_filters),
@@ -291,7 +304,7 @@ class ShangCNN(nn.Module):
         x = self.conv4(x)
         x = self.conv5(x)
 
-        # Residual connection (как в оригинальной статье)
+        # Residual connection
         x = x + residual
 
         return self.output_activation(x)
@@ -315,6 +328,8 @@ class PGNet(nn.Module):
         self.output_shape = output_shape
         output_dim = output_shape[0] * output_shape[1]
 
+        print(f"  PGNet: input_dim={input_dim}, hidden_dim={hidden_dim}, output_dim={output_dim}")
+
         # Энкодер проекций
         self.projection_encoder = nn.Sequential(
             nn.Linear(input_dim, hidden_dim),
@@ -333,14 +348,11 @@ class PGNet(nn.Module):
             nn.Sigmoid()
         )
 
-        # Восстановление пространственной структуры
-        self.spatial_reshape = lambda x: x.view(-1, 1, output_shape[0], output_shape[1])
-
     def forward(self, measurements):
         # measurements: (batch, input_dim)
         encoded = self.projection_encoder(measurements)
         generated = self.image_generator(encoded)
-        return self.spatial_reshape(generated)
+        return generated.view(-1, 1, self.output_shape[0], self.output_shape[1])
 
 
 # ====================================================================
@@ -353,10 +365,9 @@ class DEQMPI(nn.Module):
     """
     Deep Equilibrium Model для MPI реконструкции
     Güngör et al. (2024) - IEEE Transactions on Medical Imaging
-
-    Идея: Использовать неявные слои для моделирования равновесного состояния
     """
-    def __init__(self, system_matrix, image_shape, n_iterations=10, lambda_param=0.1):
+
+    def __init__(self, system_matrix, image_shape, n_iterations=3, lambda_param=0.1):
         super().__init__()
 
         # Подготовка системной матрицы
@@ -372,30 +383,30 @@ class DEQMPI(nn.Module):
         self.n_iterations = n_iterations
         self.lambda_param = lambda_param
 
+        print(f"  DEQ-MPI: M={self.M}, N={self.N}, iterations={n_iterations}")
+
         # Регистрация матриц
         self.register_buffer('A', torch.tensor(self.system_matrix_extended, dtype=torch.float32))
         self.register_buffer('A_T', self.A.T)
 
-        # Обучаемый оператор согласованности данных
+        # Упрощенный оператор согласованности данных
         self.data_consistency = nn.Sequential(
-            nn.Linear(self.M, self.M),
+            nn.Linear(self.M, self.M // 2),  # Уменьшил размер
             nn.ReLU(inplace=True),
-            nn.Linear(self.M, self.M)
+            nn.Linear(self.M // 2, self.M)
         )
 
-        # Обучаемый денойзер
+        # Упрощенный денойзер
         self.denoiser = nn.Sequential(
-            nn.Conv2d(1, 64, kernel_size=3, padding=1),
+            nn.Conv2d(1, 32, kernel_size=3, padding=1),  # Уменьшил с 64 до 32
             nn.ReLU(inplace=True),
-            nn.Conv2d(64, 64, kernel_size=3, padding=1),
-            nn.ReLU(inplace=True),
-            nn.Conv2d(64, 32, kernel_size=3, padding=1),
+            nn.Conv2d(32, 32, kernel_size=3, padding=1),
             nn.ReLU(inplace=True),
             nn.Conv2d(32, 1, kernel_size=3, padding=1),
             nn.Sigmoid()
         )
 
-        # Начальная реконструкция через псевдообращение
+        # Начальная реконструкция
         self.initial_recon = nn.Linear(self.M, self.N)
         with torch.no_grad():
             self.initial_recon.weight.data = self.A_T.clone()
@@ -415,14 +426,14 @@ class DEQMPI(nn.Module):
         x_flat = self.initial_recon(measurements)
         x = x_flat.view(-1, 1, self.image_shape[0], self.image_shape[1])
 
-        # Итерации DEQ (фиксированная точка)
+        # Итерации DEQ
         for _ in range(self.n_iterations):
-            # Шаг согласованности данных с обученным оператором
+            # Шаг согласованности данных
             Ax = self.forward_operator(x)
             residual = self.data_consistency(Ax - measurements)
             AT_residual = self.adjoint_operator(residual)
 
-            # Обновление с денойзингом
+            # Обновление
             x = x - self.lambda_param * AT_residual
             x = self.denoiser(x)
 
