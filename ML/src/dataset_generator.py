@@ -137,40 +137,60 @@ class MPIDatasetGenerator:
 
 
 class MPIDataset:
-    """PyTorch Dataset для MPI реконструкции"""
+    """PyTorch Dataset для MPI реконструкции - ИСПРАВЛЕННЫЙ"""
 
     def __init__(self, X_path, y_path):
-        self.X = np.load(X_path)
-        self.y = np.load(y_path)
+        self.X = np.load(X_path)  # Измерения: (samples, 2, n_measurements)
+        self.y = np.load(y_path)  # Изображения: (samples, nx, ny)
 
-        # Проверяем размер изображения
         print(f"Dataset shapes: X={self.X.shape}, y={self.y.shape}")
         print(f"Image shape from data: {self.y[0].shape}")
 
         self.n_measurements = self.X.shape[2]
+
+        # Для входных данных CNN нужно 4 канала: real1, imag1, real2, imag2
+        # Измерения: 2 катушки * (real + imag) = 4 канала
+        self.input_channels = 4
+
+        # Находим размер квадратного изображения для измерений
+        # 4 канала * (size * size) должно быть достаточно для размещения всех измерений
         self.measurement_size = self._find_square_size(self.n_measurements)
+        print(f"Measurement square size: {self.measurement_size}")
 
     def _find_square_size(self, n):
         """Находит ближайший квадратный размер"""
-        size = int(np.sqrt(n))
-        if size * size == n:
-            return size
-        return size + 1
+        size = int(np.ceil(np.sqrt(n)))
+        return size
 
     def _prepare_measurement(self, measurement):
         """Подготовка измерений для CNN"""
-        real_part = measurement.real
-        imag_part = measurement.imag
+        # measurement: (2, n_measurements) комплексные
+        real_part = measurement.real  # (2, n_measurements)
+        imag_part = measurement.imag  # (2, n_measurements)
 
-        combined = np.concatenate([real_part, imag_part], axis=0)
+        # Объединяем в 4 канала: real1, imag1, real2, imag2
+        # Формируем как [real1, imag1, real2, imag2] -> (4, n_measurements)
+        combined = np.zeros((4, self.n_measurements), dtype=np.float32)
+        combined[0, :] = real_part[0, :]  # real1
+        combined[1, :] = imag_part[0, :]  # imag1
+        combined[2, :] = real_part[1, :]  # real2
+        combined[3, :] = imag_part[1, :]  # imag2
 
+        # Преобразуем в квадратную форму
         target_size = self.measurement_size * self.measurement_size
+
         if self.n_measurements < target_size:
+            # Дополняем нулями
             padded = np.zeros((4, target_size), dtype=np.float32)
             padded[:, :self.n_measurements] = combined
             combined = padded
+        elif self.n_measurements > target_size:
+            # Обрезаем если нужно
+            combined = combined[:, :target_size]
 
+        # Reshape в квадрат (4, size, size)
         measurement_square = combined.reshape(4, self.measurement_size, self.measurement_size)
+
         return measurement_square
 
     def __len__(self):
@@ -182,7 +202,7 @@ class MPIDataset:
         measurement_prepared = self._prepare_measurement(measurement)
 
         target = self.y[idx]
-        target = np.expand_dims(target, axis=0)
+        target = np.expand_dims(target, axis=0)  # (1, nx, ny)
 
         return (torch.tensor(measurement_prepared, dtype=torch.float32),
                 torch.tensor(target, dtype=torch.float32))

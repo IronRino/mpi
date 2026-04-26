@@ -27,7 +27,7 @@ class MPIReconstructionComparator:
         self.shang_model = None
         self.pgnet_model = None
         self.deq_model = None
-        self.katsmarc = None
+        self.katsmarc = self.katsmarc if hasattr(self, 'katsmarc') else None
 
         self.results = []
 
@@ -163,29 +163,45 @@ class MPIReconstructionComparator:
     # МЕТОД 2: Dittmer et al. (2020) - Deep Image Prior (DIP)
     # ====================================================================
     def dip_reconstruction(self, measurement, n_iterations=500):
-        """
-        Реконструкция Deep Image Prior (Dittmer et al., 2020)
-        Обучается на одном изображении для соответствия измерениям
-        """
+        """Полноценная реконструкция Deep Image Prior"""
         if self.dip_model is None:
             raise ValueError("DIP модель не установлена")
 
         import torch.optim as optim
 
+        # Подготовка измерений
         real_part = measurement.real
         imag_part = measurement.imag
         meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
         meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0)
 
         # Создаем копию модели для этого конкретного измерения
-        dip_model = DeepImagePrior(self.image_shape, latent_dim=100)
+        import copy
+        dip_model = copy.deepcopy(self.dip_model)
+        dip_model.train()
+
+        # Создаем матрицу A для прямого оператора
+        if not hasattr(self, 'A_tensor'):
+            # Создаем расширенную матрицу для комплексных измерений
+            if np.iscomplexobj(self.SM):
+                SM_real = np.real(self.SM)
+                SM_imag = np.imag(self.SM)
+                A_extended = np.vstack([SM_real, SM_imag])
+            else:
+                A_extended = self.SM
+
+            self.A_tensor = torch.tensor(A_extended, dtype=torch.float32)
+            self.A_tensor_T = self.A_tensor.T
+
+        # Оптимизатор
         optimizer = optim.Adam(dip_model.parameters(), lr=0.01)
 
         # Генерируем латентный вектор
         latent_z = dip_model.generate_random_latent()
+        latent_z.requires_grad = True
 
         # Оптимизация
-        dip_model.train()
+        print(f"  Оптимизация DIP (до {n_iterations} итераций)...")
         for iteration in range(n_iterations):
             optimizer.zero_grad()
 
@@ -194,20 +210,20 @@ class MPIReconstructionComparator:
             generated_flat = generated_image.view(1, -1)
 
             # Прямой оператор
-            if hasattr(self, 'SM_extended'):
-                A_tensor = torch.tensor(self.SM_extended, dtype=torch.float32)
-                measurement_pred = generated_flat @ A_tensor.T
-            else:
-                # Упрощенная версия
-                measurement_pred = generated_flat[:, :meas_tensor.shape[1]]
+            measurement_pred = generated_flat @ self.A_tensor_T
 
-            # Loss: несоответствие измерениям
-            loss = torch.mean((measurement_pred - meas_tensor) ** 2)
+            # Loss: несоответствие измерениям + регуляризация тотальной вариации
+            data_loss = torch.mean((measurement_pred - meas_tensor) ** 2)
+
+            # TV регуляризация
+            tv_loss = self._total_variation(generated_image)
+
+            loss = data_loss + 0.01 * tv_loss
             loss.backward()
             optimizer.step()
 
             if iteration % 100 == 0:
-                print(f"  DIP iteration {iteration}, loss: {loss.item():.6f}")
+                print(f"    DIP iteration {iteration}, loss: {loss.item():.6f}")
 
         # Финальная реконструкция
         dip_model.eval()
@@ -216,6 +232,14 @@ class MPIReconstructionComparator:
 
         if reconstructed.max() > 0:
             reconstructed = reconstructed / reconstructed.max()
+
+        # Изменение размера если необходимо
+        if reconstructed.shape != self.image_shape:
+            from scipy import ndimage
+            reconstructed = ndimage.zoom(reconstructed,
+                                         (self.nx / reconstructed.shape[0],
+                                          self.ny / reconstructed.shape[1]),
+                                         order=1)
 
         return reconstructed
 
@@ -304,8 +328,12 @@ class MPIReconstructionComparator:
     # ====================================================================
     # МЕТОД 6: KatsMarc (Алгоритм Кацмарца, 1937)
     # ====================================================================
-    def katsmarc_reconstruction(self, measurement, n_iterations=10, relaxation=1.0):
+    def katsmarc_reconstruction(self, measurement, n_iterations=20, relaxation=1.0):
         """Реконструкция алгоритмом Кацмарца (Kaczmarz, 1937)"""
+        if self.katsmarc is None:
+            print("  KatsMarc алгоритм не инициализирован")
+            return None
+
         meas_vector = np.concatenate([measurement[0, :], measurement[1, :]])
         reconstructed = self.katsmarc.reconstruct(meas_vector, n_iterations, relaxation)
         reconstructed = reconstructed.reshape(self.image_shape)
@@ -470,16 +498,17 @@ class MPIReconstructionComparator:
         # Список всех методов с их источниками
         methods = [
             ('Тихонов', self.tikhonov_reconstruction, "Tikhonov (1963)"),
-            ('KatsMarc', lambda m: self.katsmarc_reconstruction(m, n_iterations=20), "Kaczmarz (1937)"),
+            ('KatsMarc', lambda m: self.katsmarc_reconstruction(m, n_iterations=20) if self.katsmarc else None,
+             "Kaczmarz (1937)"),
             ('Chae(2017)', self.chae_reconstruction if self.chae_model else None, "Chae - Single Layer NN"),
-            ('DIP(2020)', lambda m: self.dip_reconstruction(m, n_iterations=300) if self.dip_model else None, "Dittmer et al. - Deep Image Prior"),
+            ('DIP(2020)', lambda m: self.dip_reconstruction(m, n_iterations=300) if self.dip_model else None,
+             "Dittmer et al. - Deep Image Prior"),
             ('Shang(2020)', self.shang_reconstruction if self.shang_model else None, "Shang et al. - CNN SR"),
             ('PGNet(2023)', self.pgnet_reconstruction if self.pgnet_model else None, "Wu et al. - PGNet"),
             ('DEQ-MPI(2024)', self.deq_reconstruction if self.deq_model else None, "Güngör et al. - DEQ-MPI"),
             ('CNN', self.cnn_reconstruction if self.cnn_trainer else None, "CNN (UNet)"),
             ('MoDL', self.modl_reconstruction if self.modl_trainer else None, "MoDL Network"),
             ('Diffusion', self.diffusion_reconstruction if self.diffusion_trainer else None, "Diffusion Model"),
-            ('Hybrid', self.hybrid_reconstruction if self.hybrid_trainer else None, "Hybrid (MoDL+Diffusion)"),
         ]
 
         print(f"\n{'Метод':<15} {'Источник':<35} {'SSIM':<8} {'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}")
@@ -487,15 +516,19 @@ class MPIReconstructionComparator:
 
         for name, method, source in methods:
             if method is None:
+                print(f"{name:<15} {source:<35} ПРОПУЩЕН (модель не загружена)")
                 continue
 
             print(f"Реконструкция методом {name}...")
             start_time = time.time()
             try:
                 recon = method(measurement)
+                if recon is None:
+                    print(f"  {name}: Ошибка - метод вернул None")
+                    continue
+
                 elapsed_time = time.time() - start_time
 
-                # Проверка на корректность результата
                 if recon is None or np.isnan(recon).any() or np.isinf(recon).any():
                     print(f"  {name}: Ошибка - некорректный результат")
                     continue
@@ -652,3 +685,10 @@ class MPIReconstructionComparator:
                 f.write("\n")
 
         print(f"\nРезультаты сохранены в файл: {filename}")
+
+    def _total_variation(self, img):
+        """Вычисление тотальной вариации для регуляризации"""
+        diff_h = img[:, :, 1:, :] - img[:, :, :-1, :]
+        diff_w = img[:, :, :, 1:] - img[:, :, :, :-1]
+        tv_loss = torch.mean(torch.abs(diff_h)) + torch.mean(torch.abs(diff_w))
+        return tv_loss
