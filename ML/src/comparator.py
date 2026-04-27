@@ -139,21 +139,37 @@ class MPIReconstructionComparator:
     # МЕТОД 1: Chae (2017) - Однослойная полносвязная нейронная сеть
     # ====================================================================
     def chae_reconstruction(self, measurement):
-        """Реконструкция методом Chae (2017)"""
+        """Реконструкция методом Chae (2017) с батчевой обработкой"""
         if self.chae_model is None:
             raise ValueError("Chae модель не установлена")
 
-        real_part = measurement.real
-        imag_part = measurement.imag
-        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
-        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0)
+        # Подготовка входных данных
+        real_part = measurement.real  # (2, n_measurements)
+        imag_part = measurement.imag  # (2, n_measurements)
+
+        # Формирование вектора как при обучении
+        meas_vector = np.concatenate([
+            real_part[0, :],  # real катушка 1
+            imag_part[0, :],  # imag катушка 1
+            real_part[1, :],  # real катушка 2
+            imag_part[1, :]  # imag катушка 2
+        ])
+
+        # Нормализация если есть scaler
+        if hasattr(self.chae_model, 'scaler_mean'):
+            meas_vector = (meas_vector - self.chae_model.scaler_mean) / self.chae_model.scaler_scale
+
+        # Предсказание
+        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32)
 
         self.chae_model.eval()
         with torch.no_grad():
-            reconstructed = self.chae_model(meas_tensor)
+            reconstructed_flat = self.chae_model(meas_tensor.unsqueeze(0))
 
-        reconstructed = reconstructed.numpy().reshape(self.image_shape)
+        # Преобразование в изображение
+        reconstructed = reconstructed_flat.numpy().reshape(self.image_shape)
 
+        # Постобработка
         if reconstructed.max() > 0:
             reconstructed = reconstructed / reconstructed.max()
 

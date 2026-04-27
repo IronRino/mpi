@@ -327,17 +327,23 @@ def train_diffusion_model():
 
 
 def train_chae_model(system_matrix, image_shape):
-    """Обучение модели Chae (2017)"""
-    print("\n" + "="*70)
-    print("5. ОБУЧЕНИЕ CHAE МОДЕЛИ (2017)")
-    print("="*70)
+    """Обучение модели Chae (2017) с батчевой обработкой"""
+    print("\n" + "=" * 70)
+    print("5. ОБУЧЕНИЕ CHAE МОДЕЛИ (2017) - БАТЧЕВАЯ ВЕРСИЯ")
+    print("=" * 70)
 
+    # Загрузка данных
     X_train = np.load('./DATA/dataset/X_train.npy')
     y_train = np.load('./DATA/dataset/y_train.npy')
+    X_test = np.load('./DATA/dataset/X_test.npy')
+    y_test = np.load('./DATA/dataset/y_test.npy')
 
     print(f"  X_train shape: {X_train.shape}")
     print(f"  y_train shape: {y_train.shape}")
+    print(f"  X_test shape: {X_test.shape}")
+    print(f"  y_test shape: {y_test.shape}")
 
+    # Параметры модели
     n_measurements = X_train.shape[2]  # 1275
     input_dim = n_measurements * 4  # 5100
     output_dim = image_shape[0] * image_shape[1]  # 2601
@@ -345,47 +351,104 @@ def train_chae_model(system_matrix, image_shape):
     print(f"  input_dim = {input_dim}")
     print(f"  output_dim = {output_dim}")
 
-    # Используем ВСЮ выборку
-    X_train_vec = []
-    print("  Подготовка данных...")
-    for meas in tqdm(X_train, desc="  Преобразование измерений"):
-        real_part = meas.real
-        imag_part = meas.imag
-        meas_vector = np.concatenate([real_part[0], real_part[1], imag_part[0], imag_part[1]])
-        X_train_vec.append(meas_vector)
+    # Векторизованная подготовка данных (быстро!)
+    print("  Подготовка данных (векторизовано)...")
 
-    X_train_vec = np.array(X_train_vec, dtype=np.float32)
-    y_train_flat = y_train.reshape(y_train.shape[0], -1)
+    # Разделяем реальные и мнимые части
+    real_parts = X_train.real  # (n_samples, 2, 1275)
+    imag_parts = X_train.imag  # (n_samples, 2, 1275)
+
+    # Объединяем в один вектор для всех образцов сразу
+    X_train_vec = np.concatenate([
+        real_parts[:, 0, :],  # real катушка 1
+        imag_parts[:, 0, :],  # imag катушка 1
+        real_parts[:, 1, :],  # real катушка 2
+        imag_parts[:, 1, :]  # imag катушка 2
+    ], axis=1)  # (n_samples, 5100)
+
+    # Нормализация входных данных (важно для сходимости)
+    from sklearn.preprocessing import StandardScaler
+    scaler = StandardScaler()
+    X_train_vec = scaler.fit_transform(X_train_vec)
+
+    # Подготовка выходных данных
+    y_train_flat = y_train.reshape(y_train.shape[0], -1)  # (n_samples, 2601)
+
+    # Подготовка тестовых данных
+    real_parts_test = X_test.real
+    imag_parts_test = X_test.imag
+    X_test_vec = np.concatenate([
+        real_parts_test[:, 0, :],
+        imag_parts_test[:, 0, :],
+        real_parts_test[:, 1, :],
+        imag_parts_test[:, 1, :]
+    ], axis=1)
+    X_test_vec = scaler.transform(X_test_vec)
+    y_test_flat = y_test.reshape(y_test.shape[0], -1)
 
     print(f"  X_train_vec shape: {X_train_vec.shape}")
     print(f"  y_train_flat shape: {y_train_flat.shape}")
 
-    # Создание модели с увеличенным hidden_dim
-    model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=1024)
-
-    # Подготовка DataLoader
-    dataset = TensorDataset(
+    # Создание DataLoader для батчевого обучения
+    train_dataset = TensorDataset(
         torch.tensor(X_train_vec, dtype=torch.float32),
         torch.tensor(y_train_flat, dtype=torch.float32)
     )
-    loader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=0)
+    test_dataset = TensorDataset(
+        torch.tensor(X_test_vec, dtype=torch.float32),
+        torch.tensor(y_test_flat, dtype=torch.float32)
+    )
 
-    # Обучение
+    batch_size = 128  # Можно увеличить для ускорения
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=0)
+    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False, num_workers=0)
+
+    # Создание модели
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    print(f"  Используется устройство: {device}")
+
+    model = ChaeSingleLayerNN(
+        input_dim,
+        output_dim,
+        hidden_dim=1024,
+        dropout_rate=0.2,
+        use_batch_norm=True
+    )
     model = model.to(device)
-    criterion = torch.nn.MSELoss()
-    optimizer = torch.optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-5)
-    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
 
-    print(f"  Начало обучения Chae модели на {device}...")
-    model.train()
-    best_loss = float('inf')
+    # Оптимизатор с AdamW (лучше чем Adam)
+    optimizer = torch.optim.AdamW(
+        model.parameters(),
+        lr=1e-3,
+        weight_decay=1e-5,
+        betas=(0.9, 0.999)
+    )
+
+    # Планировщик обучения
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode='min', factor=0.5, patience=5, verbose=True
+    )
+
+    # Функция потерь
+    criterion = nn.MSELoss()
+
+    # Ранняя остановка
+    best_val_loss = float('inf')
+    patience_counter = 0
+    patience = 15
+
+    print("  Начало батчевого обучения Chae модели...")
     train_losses = []
+    val_losses = []
 
-    epoch_pbar = tqdm(range(100), desc="Обучение Chae")
+    epoch_pbar = tqdm(range(100), desc="Обучение Chae (батчевое)")
     for epoch in epoch_pbar:
-        total_loss = 0
-        for X_batch, y_batch in loader:
+        # Обучение
+        model.train()
+        total_train_loss = 0
+        train_batches = 0
+
+        for X_batch, y_batch in train_loader:
             X_batch = X_batch.to(device)
             y_batch = y_batch.to(device)
 
@@ -393,42 +456,107 @@ def train_chae_model(system_matrix, image_shape):
             y_pred = model(X_batch)
             loss = criterion(y_pred, y_batch)
             loss.backward()
+
+            # Gradient clipping для стабильности
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
 
-            total_loss += loss.item()
+            total_train_loss += loss.item()
+            train_batches += 1
 
-        avg_loss = total_loss / len(loader)
-        train_losses.append(avg_loss)
-        scheduler.step(avg_loss)
+        avg_train_loss = total_train_loss / train_batches
+        train_losses.append(avg_train_loss)
 
-        epoch_pbar.set_postfix({'loss': f'{avg_loss:.6f}'})
+        # Валидация
+        model.eval()
+        total_val_loss = 0
+        val_batches = 0
 
-        if avg_loss < best_loss:
-            best_loss = avg_loss
-            torch.save(model.state_dict(), './DATA/models/chae_best.pth')
+        with torch.no_grad():
+            for X_batch, y_batch in test_loader:
+                X_batch = X_batch.to(device)
+                y_batch = y_batch.to(device)
+                y_pred = model(X_batch)
+                loss = criterion(y_pred, y_batch)
+                total_val_loss += loss.item()
+                val_batches += 1
+
+        avg_val_loss = total_val_loss / val_batches
+        val_losses.append(avg_val_loss)
+
+        # Обновление планировщика
+        scheduler.step(avg_val_loss)
+
+        # Сохранение лучшей модели
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'train_loss': avg_train_loss,
+                'val_loss': avg_val_loss,
+                'input_dim': input_dim,
+                'output_dim': output_dim,
+                'hidden_dim': 1024,
+                'scaler_mean': scaler.mean_,
+                'scaler_scale': scaler.scale_
+            }, './DATA/models/chae_best.pth')
+            patience_counter = 0
+        else:
+            patience_counter += 1
+
+        # Ранняя остановка
+        if patience_counter >= patience:
+            print(f"\n  Ранняя остановка на эпохе {epoch}")
+            break
+
+        # Обновление прогресс-бара
+        epoch_pbar.set_postfix({
+            'train_loss': f'{avg_train_loss:.6f}',
+            'val_loss': f'{avg_val_loss:.6f}',
+            'best': f'{best_val_loss:.6f}',
+            'lr': f'{optimizer.param_groups[0]["lr"]:.2e}'
+        })
+
+    # Сохранение scaler для использования при предсказании
+    np.save('./DATA/models/chae_scaler_mean.npy', scaler.mean_)
+    np.save('./DATA/models/chae_scaler_scale.npy', scaler.scale_)
 
     # Сохранение кривой обучения
     plt.figure(figsize=(10, 6))
-    plt.plot(train_losses, linewidth=2)
+    plt.plot(train_losses, label='Train Loss', linewidth=2)
+    plt.plot(val_losses, label='Validation Loss', linewidth=2)
     plt.xlabel('Epoch')
     plt.ylabel('Loss (MSE)')
-    plt.title('Chae Model Training Progress')
+    plt.title('Chae Model Training Progress (Batch Training)')
+    plt.legend()
     plt.grid(True, alpha=0.3)
+    plt.yscale('log')
     plt.savefig('./DATA/results/training_curves/chae_training.png', dpi=150, bbox_inches='tight')
     plt.close()
 
-    print(f"  ✓ Chae модель обучена, лучшая loss: {best_loss:.6f}")
+    print(f"\n  Chae модель обучена (батчевая версия)")
+    print(f"  Лучшая loss: {best_val_loss:.6f}")
+    print(f"  Всего эпох: {len(train_losses)}")
+
+    # Загрузка лучшей модели
+    checkpoint = torch.load('./DATA/models/chae_best.pth', map_location=device)
+    model.load_state_dict(checkpoint['model_state_dict'])
+
     return model
 
 
 def train_shang_model():
-    """Обучение модели Shang et al. (2020)"""
-    print("\n" + "="*70)
+    """Обучение модели Shang et al. (2020) - УПРОЩЕННАЯ ВЕРСИЯ"""
+    print("\n" + "=" * 70)
     print("6. ОБУЧЕНИЕ SHANG МОДЕЛИ (2020)")
-    print("="*70)
+    print("=" * 70)
 
     X_train = np.load('./DATA/dataset/X_train.npy')
     y_train = np.load('./DATA/dataset/y_train.npy')
+    X_test = np.load('./DATA/dataset/X_test.npy')
+    y_test = np.load('./DATA/dataset/y_test.npy')
 
     print(f"  X_train shape: {X_train.shape}")
     print(f"  y_train shape: {y_train.shape}")
@@ -436,61 +564,118 @@ def train_shang_model():
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"  Используется устройство: {device}")
 
-    # Создаем модель с увеличенными фильтрами
-    model = ShangCNN(input_channels=1, output_channels=1, base_filters=64)
-    model = model.to(device)
-
-    # Подготовка данных с улучшенной начальной реконструкцией
-    X_train_images = []
-    print("  Подготовка данных...")
-
-    # Загружаем системную матрицу для улучшенной начальной реконструкции
+    # Загружаем системную матрицу
     SM = np.load('./DATA/dataset/SM.npy')
+    print(f"  SM shape: {SM.shape}")  # (2550, 2601)
 
-    for meas in tqdm(X_train[:2000], desc="  Обработка измерений"):  # Используем 2000 для скорости
-        real_part = meas.real
-        imag_part = meas.imag
-        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
+    # Используем ограниченное количество образцов
+    n_samples = min(500, len(X_train))
+    indices = np.random.choice(len(X_train), n_samples, replace=False)
+    X_train = X_train[indices]
+    y_train = y_train[indices]
 
-        # Улучшенная начальная реконструкция через псевдообращение
-        try:
-            A_pinv = np.linalg.pinv(SM)
-            initial_recon = (A_pinv @ meas_vector).reshape(51, 51)
-        except:
-            initial_recon = np.zeros((51, 51))
+    # Простой подход: создаем начальные реконструкции через псевдообращение
+    print("  Вычисление начальных реконструкций...")
+
+    # Для каждого образца отдельно (но без цикла по измерениям)
+    X_train_images = []
+
+    # Вычисляем псевдообращение один раз
+    from scipy.linalg import pinv
+    A_pinv = pinv(SM)
+
+    # Обрабатываем образцы с прогресс-баром
+    from tqdm import tqdm
+    for i in tqdm(range(n_samples), desc="  Подготовка изображений"):
+        # Получаем измерения для одного образца
+        meas = X_train[i]  # (2, 1275) комплексные
+
+        # Преобразуем в вектор для реконструкции
+        # Измерения: 2 катушки × 1275 = 2550 комплексных значений
+        # Для реальной части: берем real из обеих катушек
+        real_part = meas.real  # (2, 1275)
+        meas_vector = real_part.flatten()  # (2550,)
+
+        # Реконструкция через псевдообращение
+        recon = A_pinv @ meas_vector  # (2601,)
+        recon = recon.reshape(51, 51)
 
         # Нормализация
-        if initial_recon.max() > 0:
-            initial_recon = initial_recon / initial_recon.max()
+        if recon.max() > recon.min():
+            recon = (recon - recon.min()) / (recon.max() - recon.min())
+        else:
+            recon = np.zeros_like(recon)
 
-        X_train_images.append(initial_recon)
+        X_train_images.append(recon)
 
     X_train_images = np.array(X_train_images)[:, np.newaxis, :, :].astype(np.float32)
-    y_train_images = y_train[:2000][:, np.newaxis, :, :].astype(np.float32)
+
+    # Подготовка тестовых данных
+    n_test_samples = min(100, len(X_test))
+    test_indices = np.random.choice(len(X_test), n_test_samples, replace=False)
+    X_test = X_test[test_indices]
+    y_test = y_test[test_indices]
+
+    X_test_images = []
+    for i in tqdm(range(n_test_samples), desc="  Подготовка тестовых изображений"):
+        meas = X_test[i]
+        real_part = meas.real
+        meas_vector = real_part.flatten()
+        recon = A_pinv @ meas_vector
+        recon = recon.reshape(51, 51)
+
+        if recon.max() > recon.min():
+            recon = (recon - recon.min()) / (recon.max() - recon.min())
+        else:
+            recon = np.zeros_like(recon)
+
+        X_test_images.append(recon)
+
+    X_test_images = np.array(X_test_images)[:, np.newaxis, :, :].astype(np.float32)
+
+    # Целевые изображения
+    y_train_images = y_train[:n_samples, np.newaxis, :, :].astype(np.float32)
+    y_test_images = y_test[:n_test_samples, np.newaxis, :, :].astype(np.float32)
 
     print(f"  X_train_images shape: {X_train_images.shape}")
+    print(f"  y_train_images shape: {y_train_images.shape}")
+    print(f"  X_test_images shape: {X_test_images.shape}")
+    print(f"  y_test_images shape: {y_test_images.shape}")
 
     # DataLoader
-    dataset = TensorDataset(
+    train_dataset = TensorDataset(
         torch.tensor(X_train_images, dtype=torch.float32),
         torch.tensor(y_train_images, dtype=torch.float32)
     )
-    loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=0)
+    test_dataset = TensorDataset(
+        torch.tensor(X_test_images, dtype=torch.float32),
+        torch.tensor(y_test_images, dtype=torch.float32)
+    )
 
-    # Обучение
+    train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True, num_workers=0)
+    test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False, num_workers=0)
+
+    # Создание модели
+    model = ShangCNN(input_channels=1, output_channels=1, base_filters=32)
+    model = model.to(device)
+
+    # Оптимизатор
     criterion = torch.nn.MSELoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-4, weight_decay=1e-5)
-    scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)
+    scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5)
 
     print("  Начало обучения Shang модели...")
     model.train()
     best_loss = float('inf')
     train_losses = []
+    val_losses = []
 
-    epoch_pbar = tqdm(range(50), desc="Обучение Shang")
+    epoch_pbar = tqdm(range(20), desc="Обучение Shang")
     for epoch in epoch_pbar:
-        total_loss = 0
-        for X_batch, y_batch in loader:
+        # Обучение
+        model.train()
+        total_train_loss = 0
+        for X_batch, y_batch in train_loader:
             X_batch = X_batch.to(device)
             y_batch = y_batch.to(device)
 
@@ -500,29 +685,61 @@ def train_shang_model():
             loss.backward()
             optimizer.step()
 
-            total_loss += loss.item()
+            total_train_loss += loss.item()
 
-        avg_loss = total_loss / len(loader)
-        train_losses.append(avg_loss)
-        scheduler.step()
+        avg_train_loss = total_train_loss / len(train_loader)
+        train_losses.append(avg_train_loss)
 
-        epoch_pbar.set_postfix({'loss': f'{avg_loss:.6f}'})
+        # Валидация
+        model.eval()
+        total_val_loss = 0
+        with torch.no_grad():
+            for X_batch, y_batch in test_loader:
+                X_batch = X_batch.to(device)
+                y_batch = y_batch.to(device)
+                y_pred = model(X_batch)
+                loss = criterion(y_pred, y_batch)
+                total_val_loss += loss.item()
 
-        if avg_loss < best_loss:
-            best_loss = avg_loss
-            torch.save(model.state_dict(), './DATA/models/shang_best.pth')
+        avg_val_loss = total_val_loss / len(test_loader)
+        val_losses.append(avg_val_loss)
+
+        scheduler.step(avg_val_loss)
+
+        epoch_pbar.set_postfix({
+            'train_loss': f'{avg_train_loss:.6f}',
+            'val_loss': f'{avg_val_loss:.6f}'
+        })
+
+        if avg_val_loss < best_loss:
+            best_loss = avg_val_loss
+            torch.save({
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'epoch': epoch,
+                'train_loss': avg_train_loss,
+                'val_loss': avg_val_loss
+            }, './DATA/models/shang_best.pth')
 
     # Сохранение кривой обучения
     plt.figure(figsize=(10, 6))
-    plt.plot(train_losses, linewidth=2)
+    plt.plot(train_losses, label='Train Loss', linewidth=2)
+    plt.plot(val_losses, label='Validation Loss', linewidth=2)
     plt.xlabel('Epoch')
     plt.ylabel('Loss (MSE)')
     plt.title('Shang Model Training Progress')
+    plt.legend()
     plt.grid(True, alpha=0.3)
+    plt.yscale('log')
     plt.savefig('./DATA/results/training_curves/shang_training.png', dpi=150, bbox_inches='tight')
     plt.close()
 
-    print(f"  ✓ Shang модель обучена, лучшая loss: {best_loss:.6f}")
+    print(f"\n  Shang модель обучена, лучшая loss: {best_loss:.6f}")
+
+    # Загрузка лучшей модели
+    checkpoint = torch.load('./DATA/models/shang_best.pth', map_location=device)
+    model.load_state_dict(checkpoint['model_state_dict'])
+
     return model
 
 
@@ -541,10 +758,10 @@ def train_dip_model(image_shape):
 
 
 def train_pgnet_model(system_matrix, image_shape):
-    """Обучение модели PGNet (Wu et al., 2023)"""
-    print("\n" + "="*70)
+    """Обучение модели PGNet (Wu et al., 2023) - упрощенная версия"""
+    print("\n" + "=" * 70)
     print("8. ОБУЧЕНИЕ PGMET МОДЕЛИ (2023)")
-    print("="*70)
+    print("=" * 70)
 
     X_train = np.load('./DATA/dataset/X_train.npy')
     y_train = np.load('./DATA/dataset/y_train.npy')
@@ -559,8 +776,8 @@ def train_pgnet_model(system_matrix, image_shape):
     print(f"  input_dim = {input_dim}")
     print(f"  output_shape = {output_shape}")
 
-    # Используем подвыборку для ускорения (2000 образцов)
-    n_samples = min(2000, len(X_train))
+    # Используем подвыборку для ускорения
+    n_samples = min(1000, len(X_train))
     indices = np.random.choice(len(X_train), n_samples, replace=False)
     X_train = X_train[indices]
     y_train = y_train[indices]
@@ -582,6 +799,15 @@ def train_pgnet_model(system_matrix, image_shape):
     print(f"  X_train_vec shape: {X_train_vec.shape}")
     print(f"  y_train_flat shape: {y_train_flat.shape}")
 
+    # Нормализация входных данных
+    from sklearn.preprocessing import StandardScaler
+    scaler = StandardScaler()
+    X_train_vec = scaler.fit_transform(X_train_vec)
+
+    # Сохраняем scaler
+    np.save('./DATA/models/pgnet_scaler_mean.npy', scaler.mean_)
+    np.save('./DATA/models/pgnet_scaler_scale.npy', scaler.scale_)
+
     # Создание модели
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     print(f"  Используется устройство: {device}")
@@ -594,7 +820,7 @@ def train_pgnet_model(system_matrix, image_shape):
         torch.tensor(X_train_vec, dtype=torch.float32),
         torch.tensor(y_train_flat, dtype=torch.float32)
     )
-    loader = DataLoader(dataset, batch_size=32, shuffle=True, num_workers=0)
+    loader = DataLoader(dataset, batch_size=64, shuffle=True, num_workers=0)
 
     # Обучение
     criterion = torch.nn.MSELoss()
@@ -606,7 +832,7 @@ def train_pgnet_model(system_matrix, image_shape):
     best_loss = float('inf')
     train_losses = []
 
-    epoch_pbar = tqdm(range(50), desc="Обучение PGNet")
+    epoch_pbar = tqdm(range(30), desc="Обучение PGNet")
     for epoch in epoch_pbar:
         total_loss = 0
         for X_batch, y_batch in loader:
@@ -619,7 +845,6 @@ def train_pgnet_model(system_matrix, image_shape):
             loss = criterion(y_pred_flat, y_batch)
             loss.backward()
 
-            # Gradient clipping
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
             optimizer.step()
 
@@ -633,7 +858,14 @@ def train_pgnet_model(system_matrix, image_shape):
 
         if avg_loss < best_loss:
             best_loss = avg_loss
-            torch.save(model.state_dict(), './DATA/models/pgnet_best.pth')
+            torch.save({
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': optimizer.state_dict(),
+                'epoch': epoch,
+                'loss': best_loss,
+                'scaler_mean': scaler.mean_,
+                'scaler_scale': scaler.scale_
+            }, './DATA/models/pgnet_best.pth')
 
     # Сохранение кривой обучения
     plt.figure(figsize=(10, 6))
@@ -642,10 +874,16 @@ def train_pgnet_model(system_matrix, image_shape):
     plt.ylabel('Loss (MSE)')
     plt.title('PGNet Training Progress')
     plt.grid(True, alpha=0.3)
+    plt.yscale('log')
     plt.savefig('./DATA/results/training_curves/pgnet_training.png', dpi=150, bbox_inches='tight')
     plt.close()
 
-    print(f"  ✓ PGNet модель обучена, лучшая loss: {best_loss:.6f}")
+    print(f"\n  PGNet модель обучена, лучшая loss: {best_loss:.6f}")
+
+    # Загрузка лучшей модели
+    checkpoint = torch.load('./DATA/models/pgnet_best.pth', map_location=device)
+    model.load_state_dict(checkpoint['model_state_dict'])
+
     return model
 
 
@@ -1208,14 +1446,70 @@ def run_pipeline(num_samples=5000, train_models=True):
             diffusion_trainer = train_diffusion_model()
 
         # Chae модель
-        n_measurements = 1275
-        input_dim = n_measurements * 4
-        output_dim = image_shape[0] * image_shape[1]
-        chae_model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=1024)
         chae_path = './DATA/models/chae_best.pth'
         if os.path.exists(chae_path):
-            chae_model.load_state_dict(torch.load(chae_path, map_location='cpu'), strict=False)
-            print("  Chae модель загружена")
+            checkpoint = torch.load(chae_path, map_location='cpu')
+
+            # Определяем формат сохраненного checkpoint
+            if 'model_state_dict' in checkpoint:
+                # Новый формат (после батчевого обучения)
+                input_dim = checkpoint.get('input_dim', 5100)
+                output_dim = checkpoint.get('output_dim', 2601)
+                hidden_dim = checkpoint.get('hidden_dim', 1024)
+
+                chae_model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=hidden_dim)
+                chae_model.load_state_dict(checkpoint['model_state_dict'], strict=False)
+                print("  Chae модель загружена (батчевая версия)")
+
+                # Загрузка scaler если есть
+                if os.path.exists('./DATA/models/chae_scaler_mean.npy'):
+                    chae_model.scaler_mean = np.load('./DATA/models/chae_scaler_mean.npy')
+                    chae_model.scaler_scale = np.load('./DATA/models/chae_scaler_scale.npy')
+
+            elif isinstance(checkpoint, dict) and 'state_dict' in checkpoint:
+                # Альтернативный формат
+                input_dim = checkpoint.get('input_dim', 5100)
+                output_dim = checkpoint.get('output_dim', 2601)
+                hidden_dim = checkpoint.get('hidden_dim', 1024)
+
+                chae_model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=hidden_dim)
+                chae_model.load_state_dict(checkpoint['state_dict'], strict=False)
+                print("  Chae модель загружена (альтернативный формат)")
+
+            elif isinstance(checkpoint, dict) and all(k in checkpoint for k in ['enc1.weight', 'enc1.bias']):
+                # Старый формат (прямой словарь весов)
+                input_dim = 5100
+                output_dim = 2601
+                hidden_dim = 1024
+
+                chae_model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=hidden_dim)
+
+                # Конвертируем старый формат в новый
+                new_state_dict = {}
+                if 'network.0.weight' in chae_model.state_dict():
+                    new_state_dict['network.0.weight'] = checkpoint['enc1.weight']
+                    new_state_dict['network.0.bias'] = checkpoint['enc1.bias']
+                    new_state_dict['network.3.weight'] = checkpoint['enc2.weight']
+                    new_state_dict['network.3.bias'] = checkpoint['enc2.bias']
+
+                chae_model.load_state_dict(new_state_dict, strict=False)
+                print("  Chae модель загружена (старый формат)")
+
+            else:
+                # Пробуем загрузить как есть
+                input_dim = 5100
+                output_dim = 2601
+                hidden_dim = 1024
+
+                chae_model = ChaeSingleLayerNN(input_dim, output_dim, hidden_dim=hidden_dim)
+
+                # Если checkpoint это просто state_dict
+                try:
+                    chae_model.load_state_dict(checkpoint, strict=False)
+                    print("  Chae модель загружена (прямой state_dict)")
+                except:
+                    print("  Не удалось загрузить Chae модель, создаем новую")
+                    chae_model = train_chae_model(system_matrix, image_shape)
         else:
             print("  Chae модель не найдена, начинаем обучение...")
             chae_model = train_chae_model(system_matrix, image_shape)

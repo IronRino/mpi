@@ -600,151 +600,81 @@ class DiffusionModel(nn.Module):
 
 class ChaeSingleLayerNN(nn.Module):
     """
-    Полноценная однослойная нейронная сеть для MPI реконструкции
+    Однослойная нейронная сеть для MPI реконструкции с батчевым обучением
     Источник: Chae, B. G. (2017). "Neural network image reconstruction for
               magnetic particle imaging." ETRI Journal, 39(5), 651-659.
 
-    Оригинальная архитектура:
-    - Входной слой: полносвязный с tanh активацией
-    - Выходной слой: без активации (линейный)
-    - Обучение: Levenberg-Marquardt алгоритм
+    Улучшенная версия с батчевой нормализацией и dropout для лучшей обобщаемости
     """
 
-    def __init__(self, input_dim, output_dim, hidden_dim=None, use_tanh=True):
+    def __init__(self, input_dim, output_dim, hidden_dim=1024, dropout_rate=0.2, use_batch_norm=True):
         super().__init__()
 
         self.input_dim = input_dim
         self.output_dim = output_dim
+        self.hidden_dim = hidden_dim
 
-        # По статье: один скрытый слой с tanh, выходной слой линейный
-        if hidden_dim is not None:
-            # Два слоя (один скрытый)
-            self.network = nn.Sequential(
-                nn.Linear(input_dim, hidden_dim),
-                nn.Tanh() if use_tanh else nn.ReLU(),
-                nn.Linear(hidden_dim, output_dim)
-            )
-        else:
-            # Один слой (линейная регрессия)
-            self.network = nn.Linear(input_dim, output_dim)
+        # Улучшенная архитектура с batch norm и dropout
+        self.network = nn.Sequential(
+            # Входной слой
+            nn.Linear(input_dim, hidden_dim),
+            nn.BatchNorm1d(hidden_dim) if use_batch_norm else nn.Identity(),
+            nn.Tanh(),
+            nn.Dropout(dropout_rate),
 
-        # Инициализация весов по схеме из статьи (Xavier)
+            # Выходной слой
+            nn.Linear(hidden_dim, output_dim),
+            nn.Sigmoid()  # Для нормализации выхода в [0,1]
+        )
+
+        # Инициализация весов
         self._initialize_weights()
 
-        # Для Levenberg-Marquardt оптимизации (если используется)
-        self.use_lm = False
-
     def _initialize_weights(self):
-        """Инициализация весов Xavier/Glorot"""
+        """Улучшенная инициализация весов"""
         for m in self.modules():
             if isinstance(m, nn.Linear):
-                nn.init.xavier_uniform_(m.weight)
+                # He инициализация для Tanh активации
+                nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='tanh')
                 if m.bias is not None:
-                    nn.init.zeros_(m.bias)
+                    nn.init.constant_(m.bias, 0)
+            elif isinstance(m, nn.BatchNorm1d):
+                nn.init.constant_(m.weight, 1)
+                nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
+        """
+        Args:
+            x: входной тензор формы (batch_size, input_dim)
+        Returns:
+            выходной тензор формы (batch_size, output_dim)
+        """
         return self.network(x)
 
-    def train_with_lm(self, X, y, n_iterations=100, lambda_init=0.01, lambda_factor=10):
+    def predict_image(self, x, image_shape=(51, 51)):
         """
-        Обучение с использованием алгоритма Левенберга-Марквардта
-        (оригинальный метод из статьи)
+        Удобный метод для предсказания с преобразованием в изображение
+
+        Args:
+            x: входной тензор формы (batch_size, input_dim) или (input_dim,)
+            image_shape: форма выходного изображения (height, width)
+        Returns:
+            изображение формы (batch_size, 1, height, width) или (height, width)
         """
-        import torch
-        from scipy.linalg import block_diag
+        single_input = False
+        if x.dim() == 1:
+            x = x.unsqueeze(0)
+            single_input = True
 
-        self.use_lm = True
-        self.train()
+        self.eval()
+        with torch.no_grad():
+            output = self.forward(x)
+            output = output.view(-1, 1, image_shape[0], image_shape[1])
 
-        # Преобразование в numpy для LM
-        if torch.is_tensor(X):
-            X_np = X.cpu().numpy()
-            y_np = y.cpu().numpy()
-        else:
-            X_np = X
-            y_np = y
+        if single_input:
+            output = output.squeeze(0)
 
-        # Получение параметров модели
-        params = [p for p in self.parameters() if p.requires_grad]
-        param_vector = torch.cat([p.view(-1) for p in params])
-
-        lambda_reg = lambda_init
-        best_loss = float('inf')
-
-        def compute_jacobian(x, y_true):
-            """Вычисление Якобиана"""
-            self.zero_grad()
-            y_pred = self.forward(torch.tensor(x, dtype=torch.float32).unsqueeze(0))
-            loss = F.mse_loss(y_pred, torch.tensor(y_true, dtype=torch.float32).unsqueeze(0))
-            loss.backward()
-
-            jacobian = []
-            for p in params:
-                if p.grad is not None:
-                    jacobian.append(p.grad.view(-1).cpu().numpy())
-            return np.concatenate(jacobian)
-
-        for iteration in range(n_iterations):
-            # Вычисление ошибок и Якобиана для всех образцов
-            J_list = []
-            r_list = []
-
-            for i in range(len(X_np)):
-                x_sample = X_np[i:i + 1]
-                y_sample = y_np[i:i + 1]
-
-                y_pred = self.forward(torch.tensor(x_sample, dtype=torch.float32))
-                y_pred_np = y_pred.detach().cpu().numpy()
-
-                residual = (y_sample - y_pred_np).flatten()
-                r_list.append(residual)
-
-                J = compute_jacobian(x_sample[0], y_sample[0])
-                J_list.append(J)
-
-            # Объединение
-            J_matrix = np.vstack(J_list)
-            r_vector = np.concatenate(r_list)
-
-            # Шаг Левенберга-Марквардта
-            JtJ = J_matrix.T @ J_matrix
-            Jtr = J_matrix.T @ r_vector
-
-            # Регуляризация
-            H = JtJ + lambda_reg * np.eye(len(param_vector))
-
-            try:
-                delta = np.linalg.solve(H, Jtr)
-
-                # Обновление параметров
-                new_params = param_vector.detach().cpu().numpy() + delta
-
-                # Расчет новой ошибки
-                new_loss = np.mean(r_vector ** 2)
-                old_loss = np.mean(r_vector ** 2)
-
-                if new_loss < old_loss:
-                    # Успешный шаг - уменьшаем λ
-                    param_vector = torch.tensor(new_params)
-                    lambda_reg /= lambda_factor
-                    best_loss = new_loss
-                else:
-                    # Неудачный шаг - увеличиваем λ
-                    lambda_reg *= lambda_factor
-            except:
-                lambda_reg *= lambda_factor
-
-            if iteration % 10 == 0:
-                print(f"  LM Iteration {iteration}, Loss: {best_loss:.6f}, λ: {lambda_reg:.2e}")
-
-        # Загрузка оптимизированных параметров
-        idx = 0
-        for p in params:
-            numel = p.numel()
-            p.data = param_vector[idx:idx + numel].view(p.shape)
-            idx += numel
-
-        return best_loss
+        return output
 
 
 class DeepImagePrior(nn.Module):
@@ -983,123 +913,132 @@ class ShangCNN(nn.Module):
 
 class PGNet(nn.Module):
     """
-    Полноценная Projection Generation Network
+    Projection Generation Network
     Источник: Wu, X., et al. (2023). "PGNet: Projection generative network for
               sparse-view reconstruction of projection-based magnetic particle imaging."
               Medical Physics, 50(8), 4928-4942.
-
-    Особенности:
-    - Двойная ветвь: энкодер проекций и генератор изображений
-    - Spatial Attention механизм
-    - Multi-head self-attention для проекций
     """
 
     def __init__(self, input_dim, output_shape, hidden_dim=512, num_heads=8):
         super().__init__()
         self.output_shape = output_shape
         self.num_heads = num_heads
+        self.hidden_dim = hidden_dim
+        self.input_dim = input_dim
 
-        # Энкодер проекций с multi-head attention
-        self.projection_proj = nn.Linear(input_dim, hidden_dim)
-        self.projection_norm1 = nn.LayerNorm(hidden_dim)
+        # Проекция входных измерений
+        self.input_proj = nn.Sequential(
+            nn.Linear(input_dim, hidden_dim),
+            nn.LayerNorm(hidden_dim),
+            nn.GELU(),
+            nn.Dropout(0.1)
+        )
 
-        # Self-attention для проекций
-        self.projection_attention = nn.MultiheadAttention(hidden_dim, num_heads, batch_first=True)
-        self.projection_norm2 = nn.LayerNorm(hidden_dim)
+        # Self-attention блок для измерений
+        self.self_attention = nn.MultiheadAttention(hidden_dim, num_heads, batch_first=True, dropout=0.1)
+        self.attn_norm = nn.LayerNorm(hidden_dim)
 
-        self.projection_ffn = nn.Sequential(
+        # FFN после attention
+        self.ffn = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim * 4),
             nn.GELU(),
-            nn.Linear(hidden_dim * 4, hidden_dim)
+            nn.Dropout(0.1),
+            nn.Linear(hidden_dim * 4, hidden_dim),
+            nn.Dropout(0.1)
         )
-        self.projection_norm3 = nn.LayerNorm(hidden_dim)
+        self.ffn_norm = nn.LayerNorm(hidden_dim)
 
-        # Spatial attention модуль
-        self.spatial_attention = SpatialAttention(hidden_dim)
-
-        # Генератор изображений с residual блоками
+        # Генератор изображений (MLP)
+        output_dim = output_shape[0] * output_shape[1]
         self.image_generator = nn.Sequential(
             nn.Linear(hidden_dim, hidden_dim * 2),
             nn.GELU(),
             nn.Dropout(0.1),
-
             nn.Linear(hidden_dim * 2, hidden_dim * 4),
             nn.GELU(),
             nn.Dropout(0.1),
-
             nn.Linear(hidden_dim * 4, hidden_dim * 2),
             nn.GELU(),
-
-            nn.Linear(hidden_dim * 2, hidden_dim),
-            nn.GELU(),
-        )
-
-        # Выходной слой с пространственной информацией
-        output_dim = output_shape[0] * output_shape[1]
-        self.output_layer = nn.Sequential(
-            nn.Linear(hidden_dim, output_dim),
+            nn.Linear(hidden_dim * 2, output_dim),
             nn.Sigmoid()
         )
+
+        self._initialize_weights()
+
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.xavier_uniform_(m.weight)
+                if m.bias is not None:
+                    nn.init.constant_(m.bias, 0)
 
     def forward(self, measurements):
         """
         Args:
-            measurements: (batch, input_dim) - вектор измерений
+            measurements: (batch_size, input_dim) - вектор измерений
+        Returns:
+            image: (batch_size, 1, H, W) - реконструированное изображение
         """
         batch_size = measurements.shape[0]
 
-        # Энкодер проекций
-        x = self.projection_proj(measurements)
-        x = self.projection_norm1(x)
+        # Проекция входных данных
+        x = self.input_proj(measurements)  # (batch_size, hidden_dim)
 
-        # Self-attention для проекций (добавляем dimension для последовательности)
-        x_seq = x.unsqueeze(1)  # (batch, 1, hidden_dim)
-        attn_out, _ = self.projection_attention(x_seq, x_seq, x_seq)
+        # Добавляем размерность последовательности для attention
+        x_seq = x.unsqueeze(1)  # (batch_size, 1, hidden_dim)
+
+        # Self-attention
+        attn_out, _ = self.self_attention(x_seq, x_seq, x_seq)
         x = x + attn_out.squeeze(1)
-        x = self.projection_norm2(x)
+        x = self.attn_norm(x)
 
         # FFN
-        ffn_out = self.projection_ffn(x)
+        ffn_out = self.ffn(x)
         x = x + ffn_out
-        x = self.projection_norm3(x)
+        x = self.ffn_norm(x)
 
-        # Spatial attention (расширяем до 2D)
-        x_spatial = self.spatial_attention(x)
-
-        # Генератор изображений
-        x_gen = self.image_generator(x_spatial)
-
-        # Выход
-        output = self.output_layer(x_gen)
+        # Генерация изображения
+        output = self.image_generator(x)  # (batch_size, output_dim)
         output = output.view(batch_size, 1, self.output_shape[0], self.output_shape[1])
 
         return output
 
 
 class SpatialAttention(nn.Module):
-    """Пространственный attention механизм"""
+    """Пространственный attention механизм для PGNet - исправленная версия"""
 
-    def __init__(self, hidden_dim, spatial_dim=49):  # 7x7 пространственная карта
+    def __init__(self, hidden_dim, spatial_dim=7):
         super().__init__()
         self.spatial_dim = spatial_dim
-        self.query = nn.Linear(hidden_dim, spatial_dim)
-        self.key = nn.Linear(hidden_dim, spatial_dim)
-        self.value = nn.Linear(hidden_dim, hidden_dim)
+        self.hidden_dim = hidden_dim
+
+        # Преобразуем hidden_dim в spatial_dim * spatial_dim для создания пространственной карты
+        self.to_spatial = nn.Linear(hidden_dim, spatial_dim * spatial_dim)
+        self.to_value = nn.Linear(hidden_dim, hidden_dim)
+
         self.scale = (hidden_dim ** -0.5)
 
     def forward(self, x):
+        """
+        Args:
+            x: (batch_size, hidden_dim)
+        Returns:
+            out: (batch_size, hidden_dim)
+        """
         batch_size = x.shape[0]
 
-        # Создание пространственных токенов
-        Q = self.query(x).view(batch_size, self.spatial_dim, 1)
-        K = self.key(x).view(batch_size, 1, self.spatial_dim)
-        V = self.value(x).view(batch_size, self.spatial_dim, -1)
+        # Создаем пространственную карту внимания
+        attention_map = self.to_spatial(x)  # (batch_size, spatial_dim * spatial_dim)
+        attention_map = attention_map.view(batch_size, 1, self.spatial_dim * self.spatial_dim)
+        attention_weights = torch.softmax(attention_map * self.scale, dim=-1)
 
-        # Attention веса
-        attn_weights = torch.softmax(Q @ K * self.scale, dim=-1)
+        # Преобразуем значения
+        values = self.to_value(x)  # (batch_size, hidden_dim)
+        values = values.unsqueeze(1)  # (batch_size, 1, hidden_dim)
 
-        # Применение attention
-        out = (attn_weights @ V).view(batch_size, -1)
+        # Применяем внимание
+        out = torch.bmm(attention_weights, values)  # (batch_size, 1, hidden_dim)
+        out = out.squeeze(1)  # (batch_size, hidden_dim)
 
         return out
 
