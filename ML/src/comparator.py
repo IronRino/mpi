@@ -1,11 +1,21 @@
-"""Сравнение методов реконструкции MPI: Тихонов vs KatsMarc vs Chae vs DIP vs Shang vs PGNet vs DEQ-MPI vs CNN vs MoDL vs Diffusion vs Hybrid"""
+"""Сравнение методов реконструкции MPI:
+Tikhonov / Kaczmarz / Chae / DIP / Shang / DEQ-MPI / CNN / MoDL / Diffusion / PMCNet-trio.
+"""
 
 import numpy as np
 import time
 import os
 import h5py
-from .models import (TikhonovReconstructor, KatsMarcAlgorithm, ChaeSingleLayerNN,
-                     DeepImagePrior, ShangCNN, PGNet, DEQMPI)
+from matplotlib import pyplot as plt
+from tqdm import tqdm
+
+from .models import (
+    TikhonovReconstructor, KatsMarcAlgorithm,
+    ChaeSingleLayerNN, ChaeMultiLayerNN,
+    DeepImagePrior, ShangCNN, DEQMPI,
+    PMCNetReconstructor, PMCNetRefinedReconstructor,
+    PMCNetStandard, PMCNetPhysicsEnhanced, PMCNetFinal,
+)
 from .metrics import MetricsCalculator
 from .visualization import Visualization
 import torch
@@ -19,14 +29,21 @@ class MPIReconstructionComparator:
         self.cnn_trainer = None
         self.modl_trainer = None
         self.diffusion_trainer = None
-        self.hybrid_trainer = None
 
-        # Новые модели
+        # Модели по статьям
         self.chae_model = None
         self.dip_model = None
         self.shang_model = None
-        self.pgnet_model = None
         self.deq_model = None
+        # PMCNet (Huang et al., 2026) — три варианта в одной системе координат
+        self.pmcnet_reconstructor = None              # legacy alias for Standard
+        self.pmcnet_refined_reconstructor = None       # legacy alias for Final
+        self.pmcnet_standard = None                    # 1) измеренная SM
+        self.pmcnet_physics_enhanced = None            # 2) аналитическая SM
+        self.pmcnet_final = None                       # 3) аналитическая SM + Debye + multi-color + TV
+
+        # Mixture of Experts поверх остальных методов
+        self.moe = None
         self.katsmarc = self.katsmarc if hasattr(self, 'katsmarc') else None
 
         self.results = []
@@ -78,9 +95,6 @@ class MPIReconstructionComparator:
     def set_diffusion_model(self, diffusion_trainer):
         self.diffusion_trainer = diffusion_trainer
 
-    def set_hybrid_model(self, hybrid_trainer):
-        self.hybrid_trainer = hybrid_trainer
-
     def set_chae_model(self, chae_model):
         """Установка модели Chae (2017)"""
         self.chae_model = chae_model
@@ -93,13 +107,63 @@ class MPIReconstructionComparator:
         """Установка модели Shang et al. (2020)"""
         self.shang_model = shang_model
 
-    def set_pgnet_model(self, pgnet_model):
-        """Установка модели PGNet (Wu et al., 2023)"""
-        self.pgnet_model = pgnet_model
-
     def set_deq_model(self, deq_model):
         """Установка модели DEQ-MPI (Güngör et al., 2024)"""
         self.deq_model = deq_model
+
+    def set_pmcnet_model(self, pmcnet_reconstructor):
+        """[legacy] Алиас для `set_pmcnet_standard`."""
+        self.pmcnet_reconstructor = pmcnet_reconstructor
+        if self.pmcnet_standard is None:
+            self.pmcnet_standard = pmcnet_reconstructor
+
+    def set_pmcnet_refined_model(self, pmcnet_refined_reconstructor):
+        """[legacy] Алиас для `set_pmcnet_final`."""
+        self.pmcnet_refined_reconstructor = pmcnet_refined_reconstructor
+        if self.pmcnet_final is None:
+            self.pmcnet_final = pmcnet_refined_reconstructor
+
+    def set_pmcnet_standard(self, reconstructor):
+        """Установить вариант 1: PMCNet-Standard (Huang et al., 2026).
+
+        Прямой оператор — ИЗМЕРЕННАЯ системная матрица из калибровки
+        сканера. Никаких физических/NN-улучшений.
+        """
+        self.pmcnet_standard = reconstructor
+
+    def set_pmcnet_physics_enhanced(self, reconstructor):
+        """Установить вариант 2: PMCNet-Physics-Enhanced.
+
+        Прямой оператор — АНАЛИТИЧЕСКАЯ системная матрица (стабильный
+        Langevin, радиальная s(r), Лиссажу, центральная разность через
+        фиксированную свёртку). NN не трогаем — single color, без Дебая,
+        без TV.
+        """
+        self.pmcnet_physics_enhanced = reconstructor
+
+    def set_pmcnet_final(self, reconstructor):
+        """Установить вариант 3: PMCNet-Final.
+
+        Аналитическая SM (как в Physics-Enhanced) + полный набор NN-
+        оптимизаций: релаксация Дебая с обучаемой τ_k, multi-color,
+        TV-регуляризация, hard constraints by construction.
+        """
+        self.pmcnet_final = reconstructor
+
+    def set_moe(self, moe):
+        """Установить Mixture of Experts поверх остальных методов.
+
+        MoE сам внутри прогоняет всех своих экспертов и комбинирует их
+        выходы (через mean / scalar / spatial gating).
+        """
+        self.moe = moe
+
+    def moe_reconstruction(self, measurement):
+        """Реконструкция через MoE: эксперты + комбинирование."""
+        if self.moe is None:
+            raise ValueError("MoE модель не установлена")
+        recon = self.moe.reconstruct(measurement)
+        return self._postprocess_recon(recon)
 
     def generate_test_case(self, radius=0.2, distance=0.2, intensity1=0.7, intensity2=0.7):
         """Генерация тестового случая с двумя каплями"""
@@ -291,36 +355,7 @@ class MPIReconstructionComparator:
         return reconstructed
 
     # ====================================================================
-    # МЕТОД 4: Wu et al. (2023) - PGNet (Projection Generation Network)
-    # ====================================================================
-    def pgnet_reconstruction(self, measurement):
-        """Реконструкция методом PGNet (Wu et al., 2023)"""
-        if self.pgnet_model is None:
-            raise ValueError("PGNet модель не установлена")
-
-        real_part = measurement.real
-        imag_part = measurement.imag
-        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
-        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0)
-
-        self.pgnet_model.eval()
-        with torch.no_grad():
-            reconstructed = self.pgnet_model(meas_tensor)[0, 0].numpy()
-
-        if reconstructed.shape != self.image_shape:
-            from scipy import ndimage
-            reconstructed = ndimage.zoom(reconstructed,
-                                         (self.nx / reconstructed.shape[0],
-                                          self.ny / reconstructed.shape[1]),
-                                         order=1)
-
-        if reconstructed.max() > 0:
-            reconstructed = reconstructed / reconstructed.max()
-
-        return reconstructed
-
-    # ====================================================================
-    # МЕТОД 5: Güngör et al. (2024) - DEQ-MPI
+    # МЕТОД 4: Güngör et al. (2024) - DEQ-MPI
     # ====================================================================
     def deq_reconstruction(self, measurement):
         """Реконструкция методом DEQ-MPI (Güngör et al., 2024)"""
@@ -340,6 +375,85 @@ class MPIReconstructionComparator:
             reconstructed = reconstructed / reconstructed.max()
 
         return reconstructed
+
+    # ====================================================================
+    # МЕТОД 5.5: Huang et al. (2026) - PMCNet (Physical Model-Constrained Net)
+    # ====================================================================
+    def _measurement_to_complex_vector(self, measurement):
+        """Стандартный путь: measurement формы (2, n_freq) → комплексный вектор (M,)
+        как в `main.py`: Meas = [u_data[0,:], u_data[1,:]]."""
+        meas = np.asarray(measurement)
+        if meas.ndim == 2 and meas.shape[0] == 2:
+            return np.concatenate([meas[0, :], meas[1, :]])
+        return meas.flatten()
+
+    def _postprocess_recon(self, reconstructed):
+        """Привести реконструкцию к image_shape и нормировать на [0, 1]."""
+        if reconstructed.shape != self.image_shape:
+            from scipy import ndimage
+            reconstructed = ndimage.zoom(
+                reconstructed,
+                (self.nx / reconstructed.shape[0],
+                 self.ny / reconstructed.shape[1]),
+                order=1,
+            )
+        if reconstructed.max() > 0:
+            reconstructed = reconstructed / reconstructed.max()
+        return reconstructed
+
+    # -- Вариант 1: PMCNet-Standard (измеренная SM) ---------------------------
+    def pmcnet_standard_reconstruction(self, measurement, n_iterations=None):
+        """PMCNet-Standard: u = S_measured · c, L1, без улучшений."""
+        if self.pmcnet_standard is None:
+            raise ValueError("PMCNet-Standard модель не установлена")
+        u_complex = self._measurement_to_complex_vector(measurement)
+        recon = self.pmcnet_standard.reconstruct(
+            u_complex, n_iterations=n_iterations, verbose=False,
+        )
+        return self._postprocess_recon(recon)
+
+    # -- Вариант 2: PMCNet-Physics-Enhanced (аналитическая SM) ----------------
+    def pmcnet_physics_enhanced_reconstruction(self, measurement, n_iterations=None):
+        """PMCNet-Physics-Enhanced: u = S_analytical · c, без NN-улучшений.
+
+        Системная матрица собрана из стабильного Langevin, радиальной
+        чувствительности s(r), траектории Лиссажу и центральной разности
+        через фиксированную свёртку. Architecture identical to Standard.
+        """
+        if self.pmcnet_physics_enhanced is None:
+            raise ValueError("PMCNet-Physics-Enhanced модель не установлена")
+        u_complex = self._measurement_to_complex_vector(measurement)
+        recon = self.pmcnet_physics_enhanced.reconstruct(
+            u_complex, n_iterations=n_iterations, verbose=False,
+        )
+        return self._postprocess_recon(recon)
+
+    # -- Вариант 3: PMCNet-Final (физика + все NN-улучшения) -----------------
+    def pmcnet_final_reconstruction(self, measurement, n_iterations=None):
+        """PMCNet-Final: аналитическая SM + Debye + multi-color + TV.
+
+        Оцененные τ_k сохраняются в `self.last_pmcnet_taus_seconds`
+        для отчёта; для multi-color карты концентраций суммируются по
+        цветовым каналам.
+        """
+        if self.pmcnet_final is None:
+            raise ValueError("PMCNet-Final модель не установлена")
+        u_complex = self._measurement_to_complex_vector(measurement)
+        c_np, taus = self.pmcnet_final.reconstruct(
+            u_complex, n_iterations=n_iterations, verbose=False,
+        )
+        self.last_pmcnet_taus_seconds = taus
+        recon = c_np.sum(axis=0) if c_np.ndim == 3 else c_np
+        return self._postprocess_recon(recon)
+
+    # -- legacy-обёртки (сохраняют прежний интерфейс) -------------------------
+    def pmcnet_reconstruction(self, measurement, n_iterations=None):
+        """[legacy] Алиас для `pmcnet_standard_reconstruction`."""
+        return self.pmcnet_standard_reconstruction(measurement, n_iterations)
+
+    def pmcnet_refined_reconstruction(self, measurement, n_iterations=None):
+        """[legacy] Алиас для `pmcnet_final_reconstruction`."""
+        return self.pmcnet_final_reconstruction(measurement, n_iterations)
 
     # ====================================================================
     # МЕТОД 6: KatsMarc (Алгоритм Кацмарца, 1937)
@@ -468,38 +582,241 @@ class MPIReconstructionComparator:
 
         return reconstructed
 
-    def hybrid_reconstruction(self, measurement):
-        """Реконструкция гибридной моделью (MoDL + Diffusion)"""
-        if self.hybrid_trainer is None:
-            raise ValueError("Hybrid модель не установлена")
+    def load_openmpi_data(self, data_dir=None):
+        """Загрузка OpenMPI датасета для проверки моделей.
 
-        import torch
+        data_dir=None — путь определяется автоматически
+        (локальная папка ChineseData/OpenMPIData, без скачивания).
+        """
+        from .data.openmpi import OpenMPIDataManager
 
-        real_part = measurement.real
-        imag_part = measurement.imag
-        meas_vector = np.concatenate([real_part.flatten(), imag_part.flatten()])
-        meas_tensor = torch.tensor(meas_vector, dtype=torch.float32).unsqueeze(0).to(self.hybrid_trainer.device)
+        print("\n" + "=" * 70)
+        print("ЗАГРУЗКА OPENMPI ДАТАСЕТА ДЛЯ ВАЛИДАЦИИ")
+        print("=" * 70)
 
-        self.hybrid_trainer.model.eval()
-        with torch.no_grad():
-            reconstructed = self.hybrid_trainer.model(meas_tensor)
+        data_manager = OpenMPIDataManager(data_dir=data_dir, validation_split=0.2)
+        data = data_manager.load_and_prepare_data()
 
-        if isinstance(reconstructed, tuple):
-            reconstructed = reconstructed[0]
+        self.openmpi_train_dataset = data['train_dataset']
+        self.openmpi_test_dataset = data['test_dataset']
+        self.openmpi_system_matrix = data['system_matrix']
+        self.openmpi_image_shape = data['image_shape']
 
-        reconstructed = reconstructed[0, 0].cpu().numpy()
+        print(f"\n  OpenMPI данные загружены:")
+        print(f"    Обучающая выборка: {data['n_train']} образцов")
+        print(f"    Тестовая выборка: {data['n_test']} образцов")
+        print(f"    Фантомы в обучении: {data['train_phantoms']}")
+        print(f"    Фантомы в тестировании: {data['test_phantoms']}")
 
-        if reconstructed.max() > 0:
-            reconstructed = reconstructed / reconstructed.max()
+        return data
 
-        if reconstructed.shape != self.image_shape:
-            from scipy import ndimage
-            reconstructed = ndimage.zoom(reconstructed,
-                                         (self.nx / reconstructed.shape[0],
-                                          self.ny / reconstructed.shape[1]),
-                                         order=1)
+    def validate_on_openmpi(self, model_name, model_func,
+                            use_train_split=False, n_samples=None):
+        """
+        Валидация модели на OpenMPI датасете
 
-        return reconstructed
+        Args:
+            model_name: имя модели для отчета
+            model_func: функция реконструкции (принимает measurement)
+            use_train_split: использовать обучающую выборку (иначе тестовую)
+            n_samples: ограничить количество образцов
+        """
+        if not hasattr(self, 'openmpi_test_dataset'):
+            self.load_openmpi_data()
+
+        dataset = self.openmpi_train_dataset if use_train_split else self.openmpi_test_dataset
+
+        if n_samples is not None:
+            indices = np.random.choice(len(dataset), min(n_samples, len(dataset)), replace=False)
+        else:
+            indices = range(len(dataset))
+
+        results = []
+
+        print(f"\nВалидация {model_name} на OpenMPI датасете...")
+        print(f"  Выборка: {'обучающая' if use_train_split else 'тестовая'}")
+        print(f"  Количество образцов: {len(indices)}")
+
+        for idx in tqdm(indices):
+            measurement, ground_truth = dataset[idx]
+
+            # Измерение в формате numpy
+            meas_np = measurement.numpy()
+            gt_np = ground_truth.numpy()
+
+            # Преобразование измерения в формат (2, n_measurements)
+            if meas_np.ndim == 3:
+                # (channels, h, w) -> комплексные измерения
+                n_channels, h, w = meas_np.shape
+                real_part = meas_np[:n_channels // 2] if n_channels >= 2 else meas_np
+                imag_part = meas_np[n_channels // 2:] if n_channels >= 2 else np.zeros_like(real_part)
+                measurement_complex = real_part + 1j * imag_part
+                measurement_flat = measurement_complex.reshape(2, -1)
+            else:
+                measurement_flat = meas_np.reshape(2, -1)
+
+            # Реконструкция
+            start_time = time.time()
+            try:
+                recon = model_func(measurement_flat)
+                elapsed_time = time.time() - start_time
+
+                if recon is not None:
+                    # Изменение размера до ground truth
+                    if recon.shape != gt_np.shape[-2:]:
+                        from scipy import ndimage
+                        recon = ndimage.zoom(recon,
+                                             (gt_np.shape[-2] / recon.shape[0],
+                                              gt_np.shape[-1] / recon.shape[1]),
+                                             order=1)
+
+                    metrics = MetricsCalculator.calculate_all_metrics(gt_np[0], recon)
+                    metrics['time'] = elapsed_time
+
+                    results.append({
+                        'idx': idx,
+                        'metrics': metrics,
+                        'reconstruction': recon
+                    })
+            except Exception as e:
+                print(f"  Ошибка на образце {idx}: {e}")
+                continue
+
+        # Агрегация результатов
+        if results:
+            avg_metrics = {
+                'ssim': np.mean([r['metrics']['ssim'] for r in results]),
+                'psnr': np.mean([r['metrics']['psnr'] for r in results]),
+                'mse': np.mean([r['metrics']['mse'] for r in results]),
+                'fwhm': np.mean([r['metrics']['fwhm'] for r in results]),
+                'time': np.mean([r['metrics']['time'] for r in results])
+            }
+
+            print(f"\nРезультаты валидации {model_name} на OpenMPI:")
+            print(f"  Средний SSIM: {avg_metrics['ssim']:.4f}")
+            print(f"  Средний PSNR: {avg_metrics['psnr']:.2f} дБ")
+            print(f"  Средний FWHM: {avg_metrics['fwhm']:.2f} пикс.")
+            print(f"  Среднее время: {avg_metrics['time']:.4f} с")
+
+            return avg_metrics, results
+
+        return None, []
+
+    def compare_all_on_openmpi(self):
+        """Сравнение всех методов на OpenMPI датасете"""
+        print("\n" + "=" * 70)
+        print("СРАВНЕНИЕ МЕТОДОВ НА OPENMPI ДАТАСЕТЕ")
+        print("=" * 70)
+
+        # Загрузка данных
+        self.load_openmpi_data()
+
+        # Определение методов
+        methods = [
+            ('Тихонов', self.tikhonov_reconstruction, "Tikhonov (1963)"),
+            ('KatsMarc', lambda m: self.katsmarc_reconstruction(m) if self.katsmarc else None, "Kaczmarz (1937)"),
+            ('Chae(2017)', self.chae_reconstruction if hasattr(self, 'chae_model') and self.chae_model else None,
+             "Chae - Single Layer NN"),
+            ('DIP(2020)',
+             lambda m: self.dip_reconstruction(m) if hasattr(self, 'dip_model') and self.dip_model else None,
+             "Dittmer et al."),
+            ('Shang(2022)', self.shang_reconstruction if hasattr(self, 'shang_model') and self.shang_model else None,
+             "Shang et al. - FDS-MPI"),
+            ('DEQ-MPI(2024)', self.deq_reconstruction if hasattr(self, 'deq_model') and self.deq_model else None,
+             "Güngör et al."),
+            ('PMCNet-Std(2026)',
+             self.pmcnet_standard_reconstruction if self.pmcnet_standard else None,
+             "Huang et al. - Standard"),
+            ('PMCNet-Phys(2026)',
+             self.pmcnet_physics_enhanced_reconstruction if self.pmcnet_physics_enhanced else None,
+             "Huang et al. - +улучшенная физика"),
+            ('PMCNet-Final(2026)',
+             self.pmcnet_final_reconstruction if self.pmcnet_final else None,
+             "Huang et al. - +физика+NN-оптимизации"),
+            ('CNN', self.cnn_reconstruction if hasattr(self, 'cnn_trainer') and self.cnn_trainer else None, "CNN"),
+            ('MoDL', self.modl_reconstruction if hasattr(self, 'modl_trainer') and self.modl_trainer else None, "MoDL"),
+            ('MoE', self.moe_reconstruction if self.moe else None,
+             "Mixture of Experts (per-pixel gating)"),
+        ]
+
+        openmpi_results = {}
+
+        print("\nОценка на тестовой выборке (непересекающиеся фантомы):")
+        print("-" * 80)
+        print(f"{'Метод':<15} {'Источник':<30} {'SSIM':<8} {'PSNR':<10} {'FWHM':<8} {'Время':<8}")
+        print("-" * 80)
+
+        for name, method, source in methods:
+            if method is None:
+                print(f"{name:<15} {source:<30} ПРОПУЩЕН")
+                continue
+
+            try:
+                avg_metrics, results = self.validate_on_openmpi(
+                    name, method, use_train_split=False, n_samples=20
+                )
+
+                if avg_metrics:
+                    openmpi_results[name] = {
+                        'metrics': avg_metrics,
+                        'source': source,
+                        'n_samples': len(results)
+                    }
+
+                    print(f"{name:<15} {source:<30} {avg_metrics['ssim']:<8.4f} "
+                          f"{avg_metrics['psnr']:<10.2f} {avg_metrics['fwhm']:<8.2f} "
+                          f"{avg_metrics['time']:<8.4f}")
+            except Exception as e:
+                print(f"{name:<15} {source:<30} ОШИБКА: {str(e)[:30]}")
+
+        # Сохранение результатов
+        self.openmpi_results = openmpi_results
+
+        # Визуализация
+        self._visualize_openmpi_results(openmpi_results)
+
+        return openmpi_results
+
+    def _visualize_openmpi_results(self, results):
+        """Визуализация результатов на OpenMPI датасете"""
+        if not results:
+            return
+
+        fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+        methods = list(results.keys())
+        ssims = [results[m]['metrics']['ssim'] for m in methods]
+        psnrs = [results[m]['metrics']['psnr'] for m in methods]
+
+        # SSIM bar plot
+        bars1 = axes[0].bar(methods, ssims, color='steelblue', alpha=0.7)
+        axes[0].set_ylabel('SSIM')
+        axes[0].set_title('SSIM на OpenMPI датасете')
+        axes[0].tick_params(axis='x', rotation=45)
+        axes[0].set_ylim([0, 1])
+
+        # Добавление значений на столбцы
+        for bar, val in zip(bars1, ssims):
+            axes[0].text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.01,
+                         f'{val:.3f}', ha='center', va='bottom', fontsize=8)
+
+        # PSNR bar plot
+        bars2 = axes[1].bar(methods, psnrs, color='coral', alpha=0.7)
+        axes[1].set_ylabel('PSNR (дБ)')
+        axes[1].set_title('PSNR на OpenMPI датасете')
+        axes[1].tick_params(axis='x', rotation=45)
+
+        for bar, val in zip(bars2, psnrs):
+            axes[1].text(bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5,
+                         f'{val:.1f}', ha='center', va='bottom', fontsize=8)
+
+        plt.suptitle('Сравнение методов реконструкции MPI на OpenMPI датасете', fontsize=12)
+        plt.tight_layout()
+
+        save_path = './DATA/results/openmpi_comparison.png'
+        plt.savefig(save_path, dpi=150, bbox_inches='tight')
+        print(f"\nГрафик сохранен: {save_path}")
+        plt.close()
 
     def compare_all_methods(self, radius=0.2, distance=0.2):
         """Сравнение всех доступных методов"""
@@ -519,12 +836,22 @@ class MPIReconstructionComparator:
             ('Chae(2017)', self.chae_reconstruction if self.chae_model else None, "Chae - Single Layer NN"),
             ('DIP(2020)', lambda m: self.dip_reconstruction(m, n_iterations=300) if self.dip_model else None,
              "Dittmer et al. - Deep Image Prior"),
-            ('Shang(2020)', self.shang_reconstruction if self.shang_model else None, "Shang et al. - CNN SR"),
-            ('PGNet(2023)', self.pgnet_reconstruction if self.pgnet_model else None, "Wu et al. - PGNet"),
+            ('Shang(2022)', self.shang_reconstruction if self.shang_model else None, "Shang et al. - FDS-MPI dual-branch"),
             ('DEQ-MPI(2024)', self.deq_reconstruction if self.deq_model else None, "Güngör et al. - DEQ-MPI"),
+            ('PMCNet-Std(2026)',
+             self.pmcnet_standard_reconstruction if self.pmcnet_standard else None,
+             "Huang et al. - Standard (измеренная SM)"),
+            ('PMCNet-Phys(2026)',
+             self.pmcnet_physics_enhanced_reconstruction if self.pmcnet_physics_enhanced else None,
+             "Huang et al. - +улучшенная физика (аналитическая SM)"),
+            ('PMCNet-Final(2026)',
+             self.pmcnet_final_reconstruction if self.pmcnet_final else None,
+             "Huang et al. - +Debye+multi-color+TV (физика+NN)"),
             ('CNN', self.cnn_reconstruction if self.cnn_trainer else None, "CNN (UNet)"),
             ('MoDL', self.modl_reconstruction if self.modl_trainer else None, "MoDL Network"),
             ('Diffusion', self.diffusion_reconstruction if self.diffusion_trainer else None, "Diffusion Model"),
+            ('MoE', self.moe_reconstruction if self.moe else None,
+             "Mixture of Experts (комбинирование моделей)"),
         ]
 
         print(f"\n{'Метод':<15} {'Источник':<35} {'SSIM':<8} {'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}")
@@ -589,17 +916,19 @@ class MPIReconstructionComparator:
         print("ПОЛНОЕ СРАВНЕНИЕ МЕТОДОВ РЕКОНСТРУКЦИИ MPI")
         print("=" * 90)
         print("\nСравниваемые методы и их источники:")
-        print("  1. Тихонов     - Tikhonov regularization (1963)")
-        print("  2. KatsMarc    - Kaczmarz algorithm (1937) - ART")
-        print("  3. Chae(2017)  - Single-layer fully connected network (ETRI Journal)")
-        print("  4. DIP(2020)   - Deep Image Prior (Dittmer et al., arXiv)")
-        print("  5. Shang(2020) - CNN for resolution improvement (Physics in Medicine & Biology)")
-        print("  6. PGNet(2023) - Projection Generation Network (Wu et al., Medical Physics)")
-        print("  7. DEQ-MPI(2024) - Deep Equilibrium Model (Güngör et al., IEEE TMI)")
-        print("  8. CNN         - Standard UNet")
-        print("  9. MoDL        - Model-based Deep Learning")
-        print(" 10. Diffusion   - Diffusion model")
-        print(" 11. Hybrid      - MoDL + Diffusion")
+        print("  1. Тихонов              - Tikhonov regularization (1963)")
+        print("  2. KatsMarc             - Kaczmarz algorithm (1937) - ART")
+        print("  3. Chae(2017)           - Single-layer FC NN (ETRI Journal)")
+        print("  4. DIP(2020)            - Deep Image Prior (Dittmer et al.)")
+        print("  5. Shang(2022)          - FDS-MPI dual-branch CNN (PMB)")
+        print("  6. DEQ-MPI(2024)        - Deep Equilibrium Model (Güngör et al., IEEE TMI)")
+        print("  7. PMCNet-Std(2026)     - PMCNet Standard, измеренная SM (Huang et al.)")
+        print("  8. PMCNet-Phys(2026)    - PMCNet + улучшенная физика (аналитическая SM)")
+        print("  9. PMCNet-Final(2026)   - PMCNet + физика + NN-оптимизации")
+        print(" 10. CNN                  - U-Net baseline")
+        print(" 11. MoDL                 - Model-based Deep Learning")
+        print(" 12. Diffusion            - DDPM baseline")
+        print(" 13. MoE                  - Mixture of Experts (комбинирование моделей)")
         print("=" * 90)
 
         all_results = []
@@ -673,17 +1002,19 @@ class MPIReconstructionComparator:
 
             f.write("СПИСОК МЕТОДОВ И ИСТОЧНИКОВ:\n")
             f.write("-" * 60 + "\n")
-            f.write("1. Тихонов     - Tikhonov regularization (1963)\n")
-            f.write("2. KatsMarc    - Kaczmarz algorithm (1937) - ART\n")
-            f.write("3. Chae(2017)  - Single-layer fully connected network (ETRI Journal)\n")
-            f.write("4. DIP(2020)   - Deep Image Prior (Dittmer et al., arXiv)\n")
-            f.write("5. Shang(2020) - CNN for resolution improvement (Physics in Medicine & Biology)\n")
-            f.write("6. PGNet(2023) - Projection Generation Network (Wu et al., Medical Physics)\n")
-            f.write("7. DEQ-MPI(2024) - Deep Equilibrium Model (Güngör et al., IEEE TMI)\n")
-            f.write("8. CNN         - Standard UNet\n")
-            f.write("9. MoDL        - Model-based Deep Learning\n")
-            f.write("10. Diffusion  - Diffusion model\n")
-            f.write("11. Hybrid     - MoDL + Diffusion\n")
+            f.write("1. Тихонов              - Tikhonov regularization (1963)\n")
+            f.write("2. KatsMarc             - Kaczmarz algorithm (1937) - ART\n")
+            f.write("3. Chae(2017)           - Single-layer FC NN (ETRI Journal)\n")
+            f.write("4. DIP(2020)            - Deep Image Prior (Dittmer et al.)\n")
+            f.write("5. Shang(2022)          - FDS-MPI dual-branch CNN (PMB)\n")
+            f.write("6. DEQ-MPI(2024)        - Deep Equilibrium Model (Güngör et al., IEEE TMI)\n")
+            f.write("7. PMCNet-Std(2026)     - PMCNet Standard, измеренная SM (Huang et al.)\n")
+            f.write("8. PMCNet-Phys(2026)    - PMCNet + улучшенная физика (аналитическая SM)\n")
+            f.write("9. PMCNet-Final(2026)   - PMCNet + физика + NN-оптимизации\n")
+            f.write("10. CNN                  - U-Net baseline\n")
+            f.write("11. MoDL                 - Model-based Deep Learning\n")
+            f.write("12. Diffusion            - DDPM baseline\n")
+            f.write("13. MoE                  - Mixture of Experts (комбинирование моделей)\n")
             f.write("\n" + "=" * 120 + "\n\n")
 
             for result in self.results:
