@@ -1,26 +1,62 @@
 {
   "metadata_train": [
     {
-      "phantom_type": "pattern",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
       "phantom_type": "random",
       "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "rotation",
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
       "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -32,6 +68,192 @@
     },
     {
       "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
       "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -43,61 +265,19 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
       "phantom_type": "concentration",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
       "particle_size_nm": 40,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "shape",
-      "particle_size_nm": 60,
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "two_droplets",
+      "phantom_type": "phantom_4",
       "particle_size_nm": 60,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -109,319 +289,55 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "random",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 20,
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
       "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "concentration",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
       "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
       "particle_size_nm": 60,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -434,55 +350,7 @@
     },
     {
       "phantom_type": "resolution",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
       "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -493,97 +361,19 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "rotation",
-      "particle_size_nm": 60,
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "phantom_4",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
       "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "pattern",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
       "phantom_type": "two_droplets",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
       "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -595,36 +385,6 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "concentration",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
       "phantom_type": "shape",
       "particle_size_nm": 60,
       "method": "system_matrix",
@@ -632,199 +392,7 @@
     },
     {
       "phantom_type": "rotation",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
       "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -842,12 +410,150 @@
     },
     {
       "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
       "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
       "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -859,14 +565,1010 @@
       "snr_db": 30.0
     },
     {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
       "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
       "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -879,6 +1581,666 @@
     {
       "phantom_type": "random",
       "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -895,7 +2257,445 @@
       "snr_db": 30.0
     },
     {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
       "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -907,19 +2707,301 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "resolution",
-      "particle_size_nm": 50,
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "random",
-      "particle_size_nm": 40,
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
       "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -931,7 +3013,1417 @@
       "snr_db": 30.0
     },
     {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
       "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -944,7 +4436,187 @@
     },
     {
       "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
       "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -955,7 +4627,175 @@
       "snr_db": 30.0
     },
     {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
       "particle_size_nm": 60,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -963,128 +4803,8 @@
   ],
   "metadata_test": [
     {
-      "phantom_type": "resolution",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
       "phantom_type": "pattern",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
       "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "random",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 20,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -1095,68 +4815,56 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "shape",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 60,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "rotation",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "resolution",
+      "phantom_type": "phantom_4",
       "particle_size_nm": 40,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
       "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "rotation",
+      "phantom_type": "resolution",
       "particle_size_nm": 40,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
       "phantom_type": "shape",
-      "particle_size_nm": 30,
+      "particle_size_nm": 60,
       "method": "system_matrix",
       "snr_db": 30.0
     },
     {
-      "phantom_type": "resolution",
-      "particle_size_nm": 30,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 50,
-      "method": "system_matrix",
-      "snr_db": 30.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 30,
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -1173,8 +4881,458 @@
       "snr_db": 30.0
     },
     {
-      "phantom_type": "shape",
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
       "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     },
@@ -1185,7 +5343,169 @@
       "snr_db": 30.0
     },
     {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
       "particle_size_nm": 20,
       "method": "system_matrix",
       "snr_db": 30.0
@@ -1197,8 +5517,488 @@
       "snr_db": 30.0
     },
     {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
       "phantom_type": "rotation",
       "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "pattern",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "concentration",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "random",
+      "particle_size_nm": 60,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 20,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 50,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "shape",
+      "particle_size_nm": 30,
+      "method": "system_matrix",
+      "snr_db": 30.0
+    },
+    {
+      "phantom_type": "resolution",
+      "particle_size_nm": 50,
       "method": "system_matrix",
       "snr_db": 30.0
     }
