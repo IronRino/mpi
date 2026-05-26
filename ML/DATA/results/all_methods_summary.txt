@@ -1,0 +1,112 @@
+========================================================================================================================
+СРАВНЕНИЕ МЕТОДОВ РЕКОНСТРУКЦИИ MPI
+========================================================================================================================
+
+СПИСОК МЕТОДОВ И ИСТОЧНИКОВ:
+------------------------------------------------------------
+1. Тихонов              - Tikhonov regularization (1963)
+2. KatsMarc             - Kaczmarz algorithm (1937) - ART
+3. Chae(2017)           - Single-layer FC NN (ETRI Journal)
+4. DIP(2020)            - Deep Image Prior (Dittmer et al.)
+5. Shang(2022)          - FDS-MPI dual-branch CNN (PMB)
+6. DEQ-MPI(2024)        - Deep Equilibrium Model (Güngör et al., IEEE TMI)
+7. PMCNet-Std(2026)     - PMCNet Standard, измеренная SM (Huang et al.)
+8. PMCNet-Phys(2026)    - PMCNet + улучшенная физика (аналитическая SM)
+9. PMCNet-Final(2026)   - PMCNet + физика + NN-оптимизации
+10. CNN                  - U-Net baseline
+11. MoDL                 - Model-based Deep Learning
+12. Diffusion            - DDPM baseline
+13. MoE                  - Mixture of Experts (комбинирование моделей)
+
+========================================================================================================================
+
+ЭКСПЕРИМЕНТ: radius=0.2, distance=0.2
+------------------------------------------------------------------------------------------
+Метод           Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов         Tikhonov (1963)                     0.9798   32.64        8.00     12.1534   
+KatsMarc        Kaczmarz (1937)                     0.9863   43.46        6.00     9.6419    
+Chae(2017)      Chae - Single Layer NN              0.0433   12.44        29.00    0.0030    
+DIP(2020)       Dittmer et al. - Deep Image Prior   0.7359   16.94        3.90     36.8795   
+Shang(2022)     Shang et al. - FDS-MPI dual-branch  0.0023   4.11         23.25    26.9984   
+DEQ-MPI(2024)   Güngör et al. - DEQ-MPI             0.0002   1.82         49.00    0.1578    
+PMCNet-Std(2026) Huang et al. - Standard (измеренная SM) 0.0329   9.29         9.33     1.5718    
+PMCNet-Phys(2026) Huang et al. - +улучшенная физика (аналитическая SM) -0.0014  10.02        4.75     1.0513    
+PMCNet-Final(2026) Huang et al. - +Debye+multi-color+TV (физика+NN) -0.0083  9.34         16.00    1.4652    
+CNN             CNN (UNet)                          0.0001   3.51         50.00    0.0052    
+MoDL            MoDL Network                        0.0364   8.23         6.94     0.0344    
+Diffusion       Diffusion Model                     0.0018   7.45         0.00     0.4343    
+MoE             Mixture of Experts (комбинирование моделей) 0.5184   28.15        8.00     39.5808   
+
+ЭКСПЕРИМЕНТ: radius=0.2, distance=0.15
+------------------------------------------------------------------------------------------
+Метод           Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов         Tikhonov (1963)                     0.9789   32.65        7.00     9.7676    
+KatsMarc        Kaczmarz (1937)                     0.9890   45.56        5.00     7.8794    
+Chae(2017)      Chae - Single Layer NN              0.0336   11.92        3.81     0.0030    
+DIP(2020)       Dittmer et al. - Deep Image Prior   0.6808   17.75        5.50     36.8208   
+Shang(2022)     Shang et al. - FDS-MPI dual-branch  0.0022   4.09         23.25    21.6517   
+DEQ-MPI(2024)   Güngör et al. - DEQ-MPI             0.0006   1.75         49.00    0.1041    
+PMCNet-Std(2026) Huang et al. - Standard (измеренная SM) 0.0231   9.05         18.50    1.1428    
+PMCNet-Phys(2026) Huang et al. - +улучшенная физика (аналитическая SM) -0.0000  9.78         10.50    0.9442    
+PMCNet-Final(2026) Huang et al. - +Debye+multi-color+TV (физика+NN) -0.0087  9.30         3.89     1.9417    
+CNN             CNN (UNet)                          -0.0021  3.37         50.00    0.0053    
+MoDL            MoDL Network                        0.0325   8.29         6.10     0.0020    
+Diffusion       Diffusion Model                     0.0022   7.45         0.00     0.2867    
+MoE             Mixture of Experts (комбинирование моделей) 0.5703   27.78        7.00     34.0984   
+
+ЭКСПЕРИМЕНТ: radius=0.2, distance=0.1
+------------------------------------------------------------------------------------------
+Метод           Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов         Tikhonov (1963)                     0.9682   30.06        6.00     8.2756    
+KatsMarc        Kaczmarz (1937)                     0.9778   41.89        5.00     7.6063    
+Chae(2017)      Chae - Single Layer NN              0.0252   11.47        8.58     0.0020    
+DIP(2020)       Dittmer et al. - Deep Image Prior   0.6104   20.69        0.12     24.9733   
+Shang(2022)     Shang et al. - FDS-MPI dual-branch  0.0020   4.07         23.25    21.5532   
+DEQ-MPI(2024)   Güngör et al. - DEQ-MPI             0.0008   1.68         49.00    0.1020    
+PMCNet-Std(2026) Huang et al. - Standard (измеренная SM) 0.0113   8.61         27.50    1.1944    
+PMCNet-Phys(2026) Huang et al. - +улучшенная физика (аналитическая SM) 0.0007   9.89         4.00     0.9100    
+PMCNet-Final(2026) Huang et al. - +Debye+multi-color+TV (физика+NN) -0.0066  9.37         9.83     1.2679    
+CNN             CNN (UNet)                          -0.0032  3.18         50.00    0.0063    
+MoDL            MoDL Network                        0.0280   8.13         7.05     0.0036    
+Diffusion       Diffusion Model                     0.0024   7.44         0.00     0.2615    
+MoE             Mixture of Experts (комбинирование моделей) 0.6249   26.38        7.00     34.4148   
+
+ЭКСПЕРИМЕНТ: radius=0.2, distance=0.05
+------------------------------------------------------------------------------------------
+Метод           Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов         Tikhonov (1963)                     0.9573   28.96        6.00     8.5257    
+KatsMarc        Kaczmarz (1937)                     0.9687   40.69        4.00     7.6513    
+Chae(2017)      Chae - Single Layer NN              0.0208   11.27        50.00    0.0030    
+DIP(2020)       Dittmer et al. - Deep Image Prior   0.6737   19.41        0.32     24.9743   
+Shang(2022)     Shang et al. - FDS-MPI dual-branch  0.0019   4.05         23.25    21.0614   
+DEQ-MPI(2024)   Güngör et al. - DEQ-MPI             0.0009   1.64         49.00    0.1037    
+PMCNet-Std(2026) Huang et al. - Standard (измеренная SM) 0.0126   8.73         27.75    1.1014    
+PMCNet-Phys(2026) Huang et al. - +улучшенная физика (аналитическая SM) 0.0025   10.03        6.75     0.9128    
+PMCNet-Final(2026) Huang et al. - +Debye+multi-color+TV (физика+NN) -0.0055  8.99         4.10     1.2367    
+CNN             CNN (UNet)                          -0.0032  3.07         50.00    0.0040    
+MoDL            MoDL Network                        0.0237   7.80         6.00     0.0030    
+Diffusion       Diffusion Model                     0.0024   7.43         0.00     0.2998    
+MoE             Mixture of Experts (комбинирование моделей) 0.6405   25.69        7.00     34.3816   
+
+ЭКСПЕРИМЕНТ: radius=0.2, distance=0.025
+------------------------------------------------------------------------------------------
+Метод           Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов         Tikhonov (1963)                     0.9544   28.73        6.00     8.5273    
+KatsMarc        Kaczmarz (1937)                     0.9670   40.88        4.00     7.7818    
+Chae(2017)      Chae - Single Layer NN              0.0198   11.23        50.00    0.0020    
+DIP(2020)       Dittmer et al. - Deep Image Prior   0.7124   19.96        0.77     25.7450   
+Shang(2022)     Shang et al. - FDS-MPI dual-branch  0.0018   4.05         23.25    21.6471   
+DEQ-MPI(2024)   Güngör et al. - DEQ-MPI             0.0009   1.63         49.00    0.1218    
+PMCNet-Std(2026) Huang et al. - Standard (измеренная SM) 0.0144   9.13         27.75    1.8747    
+PMCNet-Phys(2026) Huang et al. - +улучшенная физика (аналитическая SM) 0.0011   10.00        7.00     0.9633    
+PMCNet-Final(2026) Huang et al. - +Debye+multi-color+TV (физика+NN) -0.0051  9.48         5.00     1.2830    
+CNN             CNN (UNet)                          -0.0031  3.04         50.00    0.0055    
+MoDL            MoDL Network                        0.0226   7.74         4.89     0.0025    
+Diffusion       Diffusion Model                     0.0024   7.42         0.00     0.3225    
+MoE             Mixture of Experts (комбинирование моделей) 0.6435   25.54        6.00     34.2987   
+
