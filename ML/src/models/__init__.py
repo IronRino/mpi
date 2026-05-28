@@ -21,21 +21,27 @@ from .moe import MoEReconstructor
 from .pmcnet import (
     PMCNetConfig,
     PMCNet,
-    PMCNetWithRefinedPhysics,
-    PMCNetWithAnalyticalPhysics,
+    PMCNetWithBasicPhysics,
     PMCNetReconstructor,
-    PMCNetRefinedReconstructor,
-    PMCNetAnalyticalReconstructor,
+    PMCNetPaperReconstructor,
     PMCNetStandard,
+    PMCNetPaper,
     PMCNetPhysicsEnhanced,
     PMCNetFinal,
     DebyeRelaxationFilter,
     SystemMatrixForward,
+    # Paper-faithful primitives
+    UniformCoilSensitivity,
+    TimeDerivativeForwardFD,
+    BasicAnalyticalForwardModel,
+    BasicHardConstrainedSpectralForward,
+    # Enhanced primitives
     RadialCoilSensitivity,
     LissajousFFPTrajectory,
     TimeDerivativeFD,
     LangevinMagnetization,
     AnalyticalForwardModel,
+    HardConstrainedSpectralForward,
     build_analytical_system_matrix,
     PMCNetUNet,
     langevin_safe,
@@ -53,15 +59,20 @@ __all__ = [
     'MPIReconstructionCNN', 'MoDLNetwork', 'DiffusionModel',
     # Mixture of Experts
     'MoEReconstructor',
-    # PMCNet (trio + helpers)
+    # PMCNet (quartet + helpers)
     'PMCNetConfig',
-    'PMCNet', 'PMCNetWithRefinedPhysics', 'PMCNetWithAnalyticalPhysics',
-    'PMCNetReconstructor', 'PMCNetRefinedReconstructor',
-    'PMCNetAnalyticalReconstructor',
-    'PMCNetStandard', 'PMCNetPhysicsEnhanced', 'PMCNetFinal',
+    'PMCNet', 'PMCNetWithBasicPhysics',
+    'PMCNetReconstructor', 'PMCNetPaperReconstructor',
+    'PMCNetStandard', 'PMCNetPaper',
+    'PMCNetPhysicsEnhanced', 'PMCNetFinal',
     'DebyeRelaxationFilter', 'SystemMatrixForward',
+    # Paper-faithful primitives
+    'UniformCoilSensitivity', 'TimeDerivativeForwardFD',
+    'BasicAnalyticalForwardModel', 'BasicHardConstrainedSpectralForward',
+    # Enhanced primitives
     'RadialCoilSensitivity', 'LissajousFFPTrajectory',
     'TimeDerivativeFD', 'LangevinMagnetization',
-    'AnalyticalForwardModel', 'build_analytical_system_matrix',
+    'AnalyticalForwardModel', 'HardConstrainedSpectralForward',
+    'build_analytical_system_matrix',
     'PMCNetUNet', 'langevin_safe',
 ]
