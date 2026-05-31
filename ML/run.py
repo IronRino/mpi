@@ -16,8 +16,16 @@ from src.pipeline import run_pipeline  # noqa: E402
 if __name__ == '__main__':
     # Параметры запуска
     NUM_SAMPLES = 3000          # размер синтетического обучающего датасета
-    TRAIN_MODELS = False         # False — загружать сохранённые веса
+    TRAIN_MODELS = True         # False — загружать сохранённые веса
     PMCNET_ITER = 3000          # итераций оптимизации на одно измерение
+
+    # Регенерация синтетического датасета.
+    # По умолчанию False: при первом запуске данные генерируются и
+    # сохраняются в DATA/dataset/synthetic_*.npy; при повторных
+    # запусках они загружаются с диска (секунды вместо минут).
+    # Поставьте True, если меняли типы фантомов, размеры частиц или
+    # хотите принудительно пересоздать с нуля.
+    FORCE_REGENERATE_DATASET = False
 
     # Валидация на OpenMPIData (https://github.com/MagneticParticleImaging/OpenMPIData.jl)
     # ВЫКЛЮЧЕНА по умолчанию. Чтобы включить — поставьте True. Данные
@@ -33,6 +41,7 @@ if __name__ == '__main__':
         train_models=TRAIN_MODELS,
         pmcnet_iterations=PMCNET_ITER,
         validate_openmpi=VALIDATE_OPENMPI,
+        force_regenerate_dataset=FORCE_REGENERATE_DATASET,
     )
 
     synth = results.get('synthetic') if isinstance(results, dict) else results
