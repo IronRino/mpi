@@ -1,0 +1,243 @@
+========================================================================================================================
+СРАВНЕНИЕ МЕТОДОВ РЕКОНСТРУКЦИИ MPI
+========================================================================================================================
+
+СПИСОК МЕТОДОВ И ИСТОЧНИКОВ:
+------------------------------------------------------------
+1. Тихонов              - Tikhonov regularization (1963)
+2. KatsMarc             - Kaczmarz algorithm (1937) - ART
+3. Chae(2017)           - Single-layer FC NN (ETRI Journal)
+4. DIP(2020)            - Deep Image Prior (Dittmer et al.)
+5. PMCNet-Std(2026)        - PMCNet Standard, измеренная SM (Huang et al.)
+6. PMCNet-Paper(2026)      - PMCNet paper-faithful (явная физика)
+7. PMCNet-RadialCoil(2026) - Paper + radial p(r)
+8. PMCNet-Soft(2026)       - Paper + Scheinker 2023 soft constraints
+9. PMCNet-Debye(2026)      - Paper + Debye-релаксация (обучаемая τ)
+10. PMCNet-CentralFD(2026) - Paper + центральная FD (O(Δt²))
+11. CNN                     - U-Net baseline
+12. MoDL                    - Model-based Deep Learning
+13. Diffusion               - DDPM baseline
+14. MoE                     - Mixture of Experts (комбинирование моделей)
+
+========================================================================================================================
+
+ЭКСПЕРИМЕНТ: two_droplets__sm
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.7693   30.11        7.00     5.9079    
+KatsMarc           Kaczmarz (1937)                     0.0181   16.28        0.02     7.1698    
+Chae(2017)         Chae - Single Layer NN              0.3775   26.75        7.50     0.0049    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.9830   34.41        7.00     0.0112    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.8980   21.87        0.17     18.9568   
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.8661   18.84        11.00    57.1705   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0908   18.34        0.94     87.2478   
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.0672   16.07        0.67     130.0848  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0926   18.52        0.75     156.6095  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0726   17.56        2.58     181.0731  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0972   19.06        0.50     172.6650  
+CNN                CNN (UNet)                          0.4326   16.00        4.50     0.0079    
+MoDL               MoDL Network                        0.9595   32.27        6.50     0.0569    
+Diffusion          Diffusion Model                     0.1133   21.67        0.83     31.0449   
+MoE                Mixture of Experts (комбинирование моделей) 0.8000   32.18        7.00     24.1613   
+
+ЭКСПЕРИМЕНТ: two_droplets__physical
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.5318   18.31        0.50     14.6023   
+KatsMarc           Kaczmarz (1937)                     0.0226   15.98        0.01     8.3659    
+Chae(2017)         Chae - Single Layer NN              0.0312   5.26         50.00    0.0057    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.6669   17.17        0.75     0.0125    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.5760   17.60        0.35     10.1480   
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.5413   16.23        2.83     63.3660   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0116   16.70        1.25     148.8389  
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  -0.0031  4.93         3.48     194.9238  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) -0.0005  14.41        1.50     189.5464  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) -0.0038  11.49        1.30     219.8455  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0016   14.74        1.50     212.0540  
+CNN                CNN (UNet)                          0.3471   11.59        4.22     0.0078    
+MoDL               MoDL Network                        0.5677   13.84        6.67     0.0081    
+Diffusion          Diffusion Model                     0.0048   16.66        0.12     26.8443   
+MoE                Mixture of Experts (комбинирование моделей) 0.4849   17.12        1.00     22.6992   
+
+ЭКСПЕРИМЕНТ: phantom_4__sm
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.6683   20.83        5.00     14.1476   
+KatsMarc           Kaczmarz (1937)                     0.0302   16.48        0.01     12.4017   
+Chae(2017)         Chae - Single Layer NN              0.3435   27.67        2.00     0.0058    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.9606   37.89        2.25     0.0128    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.5951   19.97        0.06     28.7388   
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.6554   17.73        6.25     76.8315   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.1896   15.03        2.70     177.6564  
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.1289   12.11        9.20     174.7702  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.2462   13.23        3.55     200.0097  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0622   14.60        1.53     163.3543  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.1867   14.69        2.91     178.7508  
+CNN                CNN (UNet)                          0.4921   19.40        3.25     0.0139    
+MoDL               MoDL Network                        0.8981   32.23        2.88     0.0145    
+Diffusion          Diffusion Model                     0.3970   23.37        1.83     34.8603   
+MoE                Mixture of Experts (комбинирование моделей) 0.7841   31.51        2.88     23.0810   
+
+ЭКСПЕРИМЕНТ: phantom_4__physical
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.4904   18.99        0.00     12.4025   
+KatsMarc           Kaczmarz (1937)                     0.0277   16.30        0.01     8.6245    
+Chae(2017)         Chae - Single Layer NN              0.0302   5.02         50.00    0.0060    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.7126   19.64        0.93     0.0116    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.3343   17.65        0.06     8.2456    
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.5083   18.96        1.00     74.1273   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0143   16.37        0.12     149.2576  
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  -0.0097  3.53         3.23     199.3359  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0036   12.33        0.64     183.2198  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) -0.0039  6.59         1.32     207.7625  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0133   16.76        0.50     160.0880  
+CNN                CNN (UNet)                          0.3523   13.47        5.17     0.0111    
+MoDL               MoDL Network                        0.5523   17.63        2.17     0.0095    
+Diffusion          Diffusion Model                     0.0155   17.36        0.67     37.0507   
+MoE                Mixture of Experts (комбинирование моделей) 0.4208   18.00        0.36     23.5427   
+
+ЭКСПЕРИМЕНТ: rotation_45__sm
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.3863   10.70        1.18     12.2221   
+KatsMarc           Kaczmarz (1937)                     0.0069   7.40         0.01     7.9480    
+Chae(2017)         Chae - Single Layer NN              0.5686   15.36        12.70    0.6749    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.8825   24.95        11.80    0.0095    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.3084   9.55         0.27     33.8931   
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.5800   14.62        10.29    71.9337   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0712   8.60         2.67     139.6242  
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.0885   8.20         3.41     176.8363  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0548   8.48         1.37     178.4888  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0683   8.84         1.16     193.4694  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0795   8.63         1.73     241.6314  
+CNN                CNN (UNet)                          0.1523   7.99         8.12     0.0126    
+MoDL               MoDL Network                        0.7968   18.32        10.90    0.0119    
+Diffusion          Diffusion Model                     0.2450   8.94         1.14     38.8009   
+MoE                Mixture of Experts (комбинирование моделей) 0.7157   16.80        10.70    25.7742   
+
+ЭКСПЕРИМЕНТ: rotation_45__physical
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.0733   7.31         0.17     13.3648   
+KatsMarc           Kaczmarz (1937)                     0.0095   7.35         0.01     8.1877    
+Chae(2017)         Chae - Single Layer NN              0.0702   5.74         50.00    0.6678    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.1074   7.43         0.88     0.0094    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.0504   7.15         1.57     6.4370    
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.0298   5.88         12.40    66.4882   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0191   8.23         0.33     166.6229  
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.0104   6.69         1.23     245.5869  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0146   8.46         1.50     6452.0230 
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0088   7.23         1.45     52.4534   
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0184   8.32         1.50     57.9983   
+CNN                CNN (UNet)                          0.0260   5.38         12.50    0.0040    
+MoDL               MoDL Network                        0.0406   7.18         2.30     0.0030    
+Diffusion          Diffusion Model                     0.0049   7.69         0.45     5.3519    
+MoE                Mixture of Experts (комбинирование моделей) 0.0658   7.29         0.95     7.8309    
+
+ЭКСПЕРИМЕНТ: shape_ring__sm
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.6039   16.85        5.50     4.6172    
+KatsMarc           Kaczmarz (1937)                     0.0141   9.62         0.04     5.8712    
+Chae(2017)         Chae - Single Layer NN              0.1320   10.48        9.62     0.0050    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.1420   10.52        10.00    0.0101    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.5825   12.48        0.31     19.3352   
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.7226   18.97        9.20     40.7570   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0039   8.99         1.32     57.9317   
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  -0.0128  7.80         2.85     63.2148   
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0053   9.13         2.64     74.5268   
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) -0.0066  9.64         1.41     83.0969   
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0370   9.73         1.40     92.3446   
+CNN                CNN (UNet)                          0.2499   10.23        10.75    0.0067    
+MoDL               MoDL Network                        0.8096   20.90        29.50    0.0090    
+Diffusion          Diffusion Model                     0.4125   12.11        1.62     9.4374    
+MoE                Mixture of Experts (комбинирование моделей) 0.6426   18.67        21.50    16.5367   
+
+ЭКСПЕРИМЕНТ: shape_ring__physical
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.2053   9.60         0.15     10.8548   
+KatsMarc           Kaczmarz (1937)                     0.0322   9.67         0.02     8.6686    
+Chae(2017)         Chae - Single Layer NN              0.0509   5.56         50.00    0.0054    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.3912   10.19        0.93     0.0109    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.1857   9.47         1.33     6.7044    
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.1006   5.50         20.50    58.4279   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0018   10.20        0.17     93.1986   
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  -0.0331  6.53         3.48     133.8851  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0005   10.10        1.00     143.1246  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) -0.0133  7.91         1.02     179.0303  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) -0.0038  10.15        0.83     159.4268  
+CNN                CNN (UNet)                          0.0192   5.63         7.94     0.0111    
+MoDL               MoDL Network                        0.1450   8.86         4.11     0.0091    
+Diffusion          Diffusion Model                     0.0184   10.05        0.38     21.4927   
+MoE                Mixture of Experts (комбинирование моделей) 0.1784   9.30         1.20     24.2608   
+
+ЭКСПЕРИМЕНТ: random__sm
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.6677   21.95        4.62     11.7443   
+KatsMarc           Kaczmarz (1937)                     0.0162   16.01        0.02     9.6401    
+Chae(2017)         Chae - Single Layer NN              0.2081   15.86        1.64     0.0056    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.1621   14.39        2.06     0.0111    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.8020   21.46        0.33     17.2079   
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.7067   16.22        7.83     72.0960   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0515   13.98        4.30     87.4100   
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.0264   12.68        4.67     100.4588  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0605   13.89        2.88     114.5648  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0452   14.89        2.00     112.6535  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0597   14.26        3.42     96.1448   
+CNN                CNN (UNet)                          0.4218   17.23        4.00     0.0040    
+MoDL               MoDL Network                        0.8464   25.33        4.00     0.0040    
+Diffusion          Diffusion Model                     0.2458   22.12        2.25     9.6614    
+MoE                Mixture of Experts (комбинирование моделей) 0.6663   23.66        5.33     15.9437   
+
+ЭКСПЕРИМЕНТ: random__physical
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.4568   17.50        0.36     7.9968    
+KatsMarc           Kaczmarz (1937)                     0.0257   16.18        0.00     7.6640    
+Chae(2017)         Chae - Single Layer NN              0.0040   5.72         50.00    0.0060    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.5618   16.77        1.00     0.0105    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.3004   16.41        0.03     6.9832    
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.4298   17.19        2.00     56.3759   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.0209   16.47        1.25     77.4637   
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.0042   6.04         2.50     91.8259   
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0084   14.34        1.75     107.2648  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0103   8.48         1.58     100.1804  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.0183   16.09        0.00     110.9816  
+CNN                CNN (UNet)                          0.2516   11.74        5.80     0.0100    
+MoDL               MoDL Network                        0.5303   15.42        3.38     0.0090    
+Diffusion          Diffusion Model                     0.0056   16.59        0.67     12.7037   
+MoE                Mixture of Experts (комбинирование моделей) 0.4142   16.18        2.60     17.2794   
+
+ЭКСПЕРИМЕНТ: letter_B__real
+------------------------------------------------------------------------------------------
+Метод              Источник                            SSIM     PSNR (дБ)    FWHM     Время (с) 
+------------------------------------------------------------------------------------------
+Тихонов            Tikhonov (1963)                     0.1646   5.98         10.67    9.1527    
+KatsMarc           Kaczmarz (1937)                     0.0148   5.26         0.00     7.9233    
+Chae(2017)         Chae - Single Layer NN              0.0233   6.98         3.07     0.0056    
+Chae-Multi(2017)   Chae - Multi Layer NN (с hidden слоем) 0.2730   5.56         1.38     0.0131    
+DIP(2020)          Dittmer et al. - Deep Image Prior   0.3209   5.09         0.00     5.2336    
+PMCNet-Std(2026)   Huang et al. - SM-baseline (измеренная SM) 0.0251   6.51         0.36     61.1949   
+PMCNet-Paper(2026) Huang et al. - paper-faithful (явная физика) 0.2346   5.27         2.43     143.3281  
+PMCNet-RadialCoil(2026) Paper + radial p(r) = 1/(1+(r/R)²)  0.0929   5.54         2.06     183.4633  
+PMCNet-Soft(2026)  Phys + Scheinker 2023 soft (∇c² + freq-weighted L1) 0.0853   5.91         4.11     147.7738  
+PMCNet-Debye(2026) Phys + Debye-релаксация (обучаемая τ) 0.0933   6.21         0.74     169.0655  
+PMCNet-CentralFD(2026) Phys + центральная FD через Conv1d (O(Δt²)) 0.2262   5.29         2.00     3088.0704 
+CNN                CNN (UNet)                          0.0529   5.41         1.25     0.0036    
+MoDL               MoDL Network                        0.2954   5.22         2.17     0.0030    
+Diffusion          Diffusion Model                     0.1305   5.57         1.19     3.3019    
+MoE                Mixture of Experts (комбинирование моделей) 0.0983   6.12         32.50    6.1300    
+

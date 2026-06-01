@@ -16,7 +16,7 @@ from src.pipeline import run_pipeline  # noqa: E402
 if __name__ == '__main__':
     # Параметры запуска
     NUM_SAMPLES = 3000          # размер синтетического обучающего датасета
-    TRAIN_MODELS = True         # False — загружать сохранённые веса
+    TRAIN_MODELS = False         # False — загружать сохранённые веса
     PMCNET_ITER = 3000          # итераций оптимизации на одно измерение
 
     # Регенерация синтетического датасета.

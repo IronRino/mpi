@@ -1,85 +1,79 @@
 {
   "metadata_train": [
     {
-      "phantom_type": "resolution",
-      "particle_size_nm": 30,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 30,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 30,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "concentration",
+      "phantom_type": "rotation",
       "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "two_droplets",
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "concentration",
-      "particle_size_nm": 30,
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "shape",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 30,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "two_droplets",
+      "phantom_type": "circles",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
       "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "shape",
-      "particle_size_nm": 30,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "shape",
+      "phantom_type": "multi_point",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "pattern",
+      "phantom_type": "two_droplets",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
@@ -92,60 +86,6 @@
     },
     {
       "phantom_type": "phantom_4",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 30,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "two_droplets",
-      "particle_size_nm": 40,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "shape",
-      "particle_size_nm": 40,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "resolution",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "concentration",
-      "particle_size_nm": 40,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "resolution",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
@@ -157,49 +97,193 @@
       "snr_db": 35.0
     },
     {
-      "phantom_type": "concentration",
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "concentration",
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "pattern",
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
       "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "pattern",
-      "particle_size_nm": 40,
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "resolution",
-      "particle_size_nm": 40,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "pattern",
-      "particle_size_nm": 40,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "pattern",
+      "phantom_type": "circles",
       "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "shape",
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
@@ -211,31 +295,25 @@
       "snr_db": 35.0
     },
     {
-      "phantom_type": "concentration",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 50,
-      "method": "physical",
-      "snr_db": 35.0
-    },
-    {
-      "phantom_type": "concentration",
+      "phantom_type": "multi_point",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "shape",
+      "phantom_type": "rotation",
       "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "pattern",
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
@@ -247,13 +325,2005 @@
       "snr_db": 35.0
     },
     {
-      "phantom_type": "pattern",
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "resolution",
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
@@ -261,37 +2331,289 @@
   ],
   "metadata_test": [
     {
-      "phantom_type": "phantom_4",
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "phantom_4",
-      "particle_size_nm": 40,
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "resolution",
+      "phantom_type": "multi_point",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "shape",
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
       "particle_size_nm": 40,
       "method": "physical",
       "snr_db": 35.0
     },
     {
-      "phantom_type": "shape",
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
       "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     },
     {
       "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
       "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
@@ -303,8 +2625,38 @@
       "snr_db": 35.0
     },
     {
-      "phantom_type": "resolution",
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
       "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 30,
       "method": "physical",
       "snr_db": 35.0
     },
@@ -315,7 +2667,19 @@
       "snr_db": 35.0
     },
     {
-      "phantom_type": "concentration",
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
       "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
@@ -323,6 +2687,234 @@
     {
       "phantom_type": "two_droplets",
       "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "two_droplets",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 50,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "lines",
+      "particle_size_nm": 40,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "rotation",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "circles",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "phantom_4",
+      "particle_size_nm": 30,
+      "method": "physical",
+      "snr_db": 35.0
+    },
+    {
+      "phantom_type": "multi_point",
+      "particle_size_nm": 50,
       "method": "physical",
       "snr_db": 35.0
     }
