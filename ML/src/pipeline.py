@@ -342,7 +342,10 @@ def _format_for_modl(X_complex):
 # --- CNN baseline -----------------------------------------------------------
 
 def train_or_load_cnn(X_train, y_train, train: bool = True,
-                      epochs: int = 40, output_size=(51, 51)):
+                      epochs: int = 80, output_size=(51, 51)):
+    # epochs повышен 40 → 80: на полнокартинной reconstruction CNN
+    # доходит до плато только после ~60 эпох. На предыдущем прогоне
+    # CNN давал SSIM 0.15-0.49 — типичные признаки недотренировки.
     print("\n  CNN baseline (UNet)...")
     path = './DATA/models/cnn_best.pth'
     trainer = ModelTrainerFactory.create_cnn_trainer(
@@ -368,7 +371,12 @@ def train_or_load_cnn(X_train, y_train, train: bool = True,
 # --- MoDL baseline ----------------------------------------------------------
 
 def train_or_load_modl(SM, image_shape, X_train, y_train,
-                       train: bool = True, epochs: int = 30):
+                       train: bool = True, epochs: int = 60):
+    # epochs повышен 30 → 60: MoDL с 5 unrolled-итерациями и residual
+    # denoiser требует больше эпох для сходимости — каждая эпоха
+    # тренирует ВСЕ итерации вместе. На предыдущем прогоне на простых
+    # фантомах SSIM уже хорош (0.8-0.96), но на сложных (rotation,
+    # ring physical) проседает до 0.04-0.15.
     print("\n  MoDL baseline...")
     path = './DATA/models/modl_best.pth'
     trainer = ModelTrainerFactory.create_modl_trainer(
@@ -396,7 +404,12 @@ def train_or_load_modl(SM, image_shape, X_train, y_train,
 # --- Diffusion baseline -----------------------------------------------------
 
 def train_or_load_diffusion(y_train, X_train, SM,
-                            train: bool = True, epochs: int = 25):
+                            train: bool = True, epochs: int = 80):
+    # epochs повышен 25 → 80: DDPM с 100 timesteps и единственный пример
+    # на батч учит t-эмбединги ОЧЕНЬ медленно — 25 эпох × 500 примеров
+    # = только ~125 шагов на каждый из 100 timesteps. На предыдущем
+    # прогоне Diffusion давал SSIM 0.01-0.41 (sm режим), на physical
+    # вообще ~0.0. 80 эпох × 500 = 400 шагов/timestep — приемлемо.
     """Conditional DDPM: condition = Tikhonov-реконструкция из измерения.
 
     Без conditioning Diffusion безполезен для нашей задачи (генерирует
@@ -461,7 +474,11 @@ def train_or_load_diffusion(y_train, X_train, SM,
 # --- Chae 2017 (single + multi layer) ---------------------------------------
 
 def train_or_load_chae(SM, image_shape, X_train, y_train,
-                       train: bool = True, epochs: int = 60):
+                       train: bool = True, epochs: int = 120):
+    # epochs повышен 60 → 120: Chae Multi-Layer достигает SSIM 0.98 на
+    # лёгких фантомах, но Single-Layer и Multi на сложных (rotation
+    # physical, shape_ring) проседает до 0.03-0.40. Сетка с sigmoid+MSE
+    # сходится медленно — 120 эпох даёт двойной запас.
     """Возвращает (single_layer_model, multi_layer_model) согласно статье."""
     print("\n  Chae (2017) — single + multi-layer FC...")
     in_dim = _model_input_dim(X_train)
@@ -521,9 +538,16 @@ def build_dip(image_shape):
 # --- PMCNet ablation sextet (data-free) ------------------------------------
 
 def build_pmcnet_variants(SM, image_shape,
-                           n_iterations: int = 1500,
+                           n_iterations: int = 3000,
                            init_tau_seconds: float = 1.0e-9,
                            scanner_h5_path: Optional[str] = None):
+    # n_iterations повышен 1500 → 3000: PMCNet-Paper и 4 ветки —
+    # test-time оптимизация со случайно инициализированным U-Net.
+    # На 1500 итерациях loss падает с 0.31 до 0.006, но качество
+    # ещё не доходит до плато (smoke-test показал SSIM 0.49-0.56).
+    # 3000 итераций дают двукратный запас и согласуются с paper
+    # Sec. III.B (20000 итераций — оригинал, но для compute-budget
+    # в дипломе 3000 — разумный компромисс).
     """Собрать шесть вариантов PMCNet для ablation-сравнения.
 
     Структура: одна общая «база» (PhysicsEnhanced) + три параллельные
@@ -639,9 +663,8 @@ build_pmcnet_quartet = build_pmcnet_variants
 
 def build_moe(comparator, image_shape,
               X_train, y_train,
-              expert_names=('Тихонов', 'KatsMarc',
-                            'Chae(2017)', 'Chae-Multi(2017)',
-                            'CNN'),
+              expert_names=('Тихонов', 'Chae-Multi(2017)',
+                            'CNN', 'MoDL', 'DIP(2020)'),
               n_train_samples: int = 64,
               epochs: int = 30,
               mode: str = 'spatial'):
@@ -658,33 +681,35 @@ def build_moe(comparator, image_shape,
       4. Возвращаем готовый `MoEReconstructor`, чтобы подключить
          его в comparator.
 
-    ## Критерий отбора экспертов в default-списке
+    ## Состав экспертов в default-списке
 
-    В дефолт попали только модели, **быстрые на инференсе после
-    предобучения** (или вовсе не требующие обучения, как классические):
+    Выбраны модели с **наибольшим качеством** на прошлых прогонах,
+    охватывающие разные семейства методов:
 
-      • Тихонов, KatsMarc — без обучения, итеративный inference 2-10 с;
-      • Chae(2017) Single + Multi — FC-сети, ~5 мс на инференс;
-      • CNN (U-Net) — ~10 мс.
+      • **Тихонов** — классический regularization, baseline без обучения,
+        стабильно даёт SSIM ~0.7 на гладких фантомах;
+      • **Chae-Multi(2017)** — FC-сеть с hidden слоем, в прошлом прогоне
+        SOTA на sm-режиме (SSIM 0.98 на two_droplets);
+      • **CNN (U-Net)** — supervised post-processor, SSIM 0.43-0.49;
+      • **MoDL** — model-based unrolling, SSIM 0.55-0.96, очень быстрый;
+      • **DIP(2020)** — test-time training с early stopping, ~4-8 с на
+        сэмпл (прекомпьют 64 образцов ~5 минут), SSIM 0.30-0.90.
 
     НЕ в дефолте (по дизайну):
 
-      • **PMCNet × 4** — требуют 1500-3000 test-time-оптимизации,
+      • **KatsMarc** — на прошлом прогоне SSIM 0.01-0.03, его вклад в MoE
+        был бы шумовым (gating всё равно научится игнорировать);
+      • **Chae(2017) Single** — Multi-Layer бьёт Single везде, держать
+        обе — избыточная корреляция;
+      • **PMCNet × 4 + Paper** — требуют 3000-5000 test-time-оптимизаций,
         прекомпьют 1500+ сэмплов сделает сборку MoE 10+ часов;
-      • **DIP(2020)** — test-time-обучение (3000 итераций с early stop),
-        4-8 с на сэмпл → прекомпьют 64 образцов ~5 минут (ещё допустимо),
-        но эта схема концептуально data-free, а MoE — supervised;
       • **Diffusion** — DDPM-семпл 100 шагов = 13-18 с/сэмпл, прекомпьют
-        64 образцов ~15 минут. Можно добавить вручную: пройдёт в MoE,
-        но gating увидит этого эксперта как «медленный гладкий source»;
-      • **MoDL** — formально fast-after-pretraining (~50 мс), но
-        внутри уже содержит `(AᵀA+λI)⁻¹` data-consistency — то же, что
-        делает Tikhonov в MoE-наборе. На синтетических фантомах его
-        вклад сильно коррелирует с Tikhonov-экспертом → gating-сети
-        нечего разделять. Исключён, чтобы избежать избыточности.
+        64 образцов ~15 минут. Можно добавить вручную, но gating увидит
+        его как «медленный гладкий source».
 
-    Если хочется включить MoDL/PMCNet/DIP/Diffusion — передайте их в
-    `expert_names`. Имена совпадают с теми, что в таблице сравнения.
+    Если хочется добавить других экспертов (KatsMarc, Chae-Single,
+    PMCNet, Diffusion) — передайте их в `expert_names`. Имена
+    должны совпадать с теми, что в таблице сравнения.
     """
     print("\n" + "=" * 70)
     print(f"2.5. MIXTURE OF EXPERTS — комбинирование ({len(expert_names)} экспертов)")
