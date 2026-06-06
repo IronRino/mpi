@@ -1948,13 +1948,27 @@ class _BaseReconstructor:
     подключаются в реконструкторах через флаги PMCNetConfig:
 
       * `_tv_loss`              — L1 на ∇c (paper-style TV);
-      * `_spatial_grad_l2_loss` — L2 на ∇c (Scheinker 2023, Eq. 12-13);
+      * `_spatial_grad_l2_loss` — L2 на ∇c (Sobolev H¹ prior; реализация
+        производных как фиксированных Conv-слоёв — Scheinker 2023, Eq. 12-13);
       * `_data_loss_freq_weighted` — частотно-взвешенный L1 на u_real/imag.
 
-    Все three по архитектуре — soft constraints (auxiliary penalty при
-    оптимизации, не зашиты в forward operator). Hard-constraint
-    эквивалент (zero ∇·B by construction в PCNN-стиле) применён в
-    forward-операторах `HardConstrainedSpectralForward`.
+    Все три — soft constraints (auxiliary penalty при оптимизации, не зашиты
+    в forward operator).
+
+    ## Save/load для PMCNet
+
+    PMCNet работает в data-free режиме: веса U-Net реинициализируются
+    перед каждым новым измерением и оптимизируются под него. Тем не менее
+    после `reconstruct()` веса хранят отпечаток последнего измерения.
+    Методы `save_state(path)` и `load_state(path)` сохраняют:
+      - состояние подсети (state_dict сети),
+      - финальные значения обучаемых физических параметров (R_coil, τ),
+      - последний loss-history (для воспроизводимости отчётности).
+
+    Это полезно для warm-start (продолжить оптимизацию с того же места),
+    для воспроизведения экспериментов с фиксированным random-seed, и для
+    диагностики (выяснить, к каким значениям τ или R обучилась сеть на
+    конкретном фантоме).
     """
 
     def __init__(self, network: nn.Module, config: PMCNetConfig):
@@ -2046,6 +2060,66 @@ class _BaseReconstructor:
         if self.config.lambda_grad > 0:
             loss = loss + self.config.lambda_grad * self._spatial_grad_l2_loss(c)
         return loss
+
+    # ---- save / load --------------------------------------------------------
+    def save_state(self, path: str) -> None:
+        """Сохранить состояние реконструктора (веса U-Net + физ. параметры).
+
+        В файл пишется:
+          • state_dict обучаемой подсети `self.network`,
+          • тип реконструктора (имя класса) — для проверки совместимости,
+          • размер изображения и устройство,
+          • история loss последней реконструкции.
+
+        Args:
+            path: путь к файлу .pt
+        """
+        import os
+        os.makedirs(os.path.dirname(os.path.abspath(path)) or '.',
+                    exist_ok=True)
+        payload = {
+            'class_name': type(self).__name__,
+            'image_shape': tuple(getattr(self, 'image_shape', ())),
+            'state_dict': self.network.state_dict(),
+            'loss_history': list(self.loss_history),
+            'config_image_size': tuple(self.config.image_size),
+        }
+        torch.save(payload, path)
+
+    def load_state(self, path: str, strict: bool = True) -> None:
+        """Загрузить ранее сохранённое состояние.
+
+        Args:
+            path: путь к чекпойнту, созданному `save_state`.
+            strict: если True — требовать совпадения класса реконструктора
+                    и размера изображения; если False — только warn'ить.
+        """
+        payload = torch.load(path, map_location=self.device, weights_only=False)
+        saved_cls = payload.get('class_name')
+        saved_shape = tuple(payload.get('config_image_size', ()))
+        if strict:
+            if saved_cls is not None and saved_cls != type(self).__name__:
+                raise ValueError(
+                    f"PMCNet load: class mismatch — saved {saved_cls!r}, "
+                    f"current {type(self).__name__!r}"
+                )
+            if saved_shape and saved_shape != tuple(self.config.image_size):
+                raise ValueError(
+                    f"PMCNet load: image_size mismatch — saved {saved_shape}, "
+                    f"current {self.config.image_size}"
+                )
+        else:
+            if saved_cls is not None and saved_cls != type(self).__name__:
+                print(f"  PMCNet load WARNING: class mismatch "
+                      f"(saved={saved_cls!r}, current={type(self).__name__!r})")
+        self.network.load_state_dict(payload['state_dict'])
+        self.loss_history = list(payload.get('loss_history', []))
+
+    @classmethod
+    def is_saved(cls, path: str) -> bool:
+        """Проверить существование чекпойнта по `path`."""
+        import os
+        return os.path.isfile(path)
 
 
 class PMCNetReconstructor(_BaseReconstructor):
@@ -2809,36 +2883,47 @@ class PMCNetStdFreqWeighted(PMCNetEnhancedReconstructor):
 
 
 class PMCNetAll(PMCNetEnhancedReconstructor):
-    """PMCNet-Std со ВСЕМИ совместимыми улучшениями одновременно.
+    """PMCNet-Std + три совместимых улучшения одновременно (без radial coil).
 
-    Комбинирует все улучшения, которые ранее по одиночке прикладывались к
-    `PMCNetPaper`, к РАБОЧЕМУ Std-baseline (форвард = измеренная SM сканера):
+    Эмпирически в ablation-серии на батарее из 13 экспериментов было
+    показано, что radial coil correction на измеренной SM **ухудшает**
+    качество (в среднем −20 % SSIM на `__sm`-фантомах). Причина —
+    измеренная системная матрица уже учитывает реальный профиль
+    чувствительности катушки сканера, и дополнительный аналитический
+    множитель `p(r) = 1/(1+(r/R)²)` создаёт двойной учёт одного и
+    того же физического эффекта.
 
-      ▸ **Radial coil correction** (`use_radial_coil=True`) — p(r) = 1/(1+(r/R)²)
-        как поэлементный множитель на концентрации до S·c. R обучается
-        через softplus, что превращает Std-форвард в blind-calibration по
-        радиусу катушки.
+    Поэтому `PMCNetAll` объединяет только те улучшения, которые в
+    одиночку либо нейтральны, либо дают прирост:
 
       ▸ **Debye relaxation** (`use_debye=True`) — частотный фильтр
         H_τ(f) = 1/(1+j·2π·f·τ) поверх S·c. τ обучается через softplus,
-        моделируя инерцию намагниченности SPION.
+        моделируя инерцию намагниченности SPION. Единственное улучшение
+        в наборе, дающее систематический прирост (+0.3 % на __sm,
+        +1.9 % на __physical).
 
-      ▸ **Soft spatial-gradient penalty** (`lambda_grad=1e-4`) —
-        L2-штраф на ‖∇c‖ через central-FD ядро (Scheinker 2023).
+      ▸ **Sobolev-style spatial-gradient penalty** (`lambda_grad=1e-4`) —
+        L2-штраф на ‖∇c‖ через central-FD ядро. Реализация производных
+        как фиксированных Conv-слоёв заимствована из Scheinker & Pokharel
+        2023 (Eq. 12-13); сама же идея штрафа на градиент изображения —
+        классическая регуляризация Соболева H¹.
 
       ▸ **Frequency-weighted L1 loss** (`use_freq_weighting=True`,
-        `freq_weighting_power=0.5`) — взвешивает high-k гармоники,
-        чтобы оптимизатор не игнорировал детали разрешения.
+        `freq_weighting_power=0.5`) — веса `w_k = (k+1)^0.5` компенсируют
+        естественный спад амплитуд гармоник в MPI как ~1/k.
 
-    Зачем все вместе. Раздельные ablation-варианты на Paper-форварде
-    показали SSIM 0.04-0.06 — это нижняя граница, потому что Paper.forward
-    структурно не воспроизводит реальное `S_measured @ c` измерение.
-    Std-форвард совпадает с измерением `__sm`-фантомов по построению
-    (SSIM 0.96 у baseline), и добавление совместимых улучшений сверху
-    даёт прибавку без структурных проблем.
+    **Важно: soft penalty и freq-weighted L1 — антагонисты**, оба
+    действуют на одну и ту же спектральную ось картинки (высокие
+    пространственные частоты), но в противоположные стороны. Soft penalty
+    давит их вниз (приор гладкости), freq-weighted поднимает вверх (data
+    fidelity). При дефолтных значениях `λ_grad = 1e-4`, `p = 0.5` они
+    приблизительно балансируются, что снижает риск катастрофического
+    провала на отдельных фантомах. Тонкая настройка через cross-validation
+    остаётся направлением для дальнейшей работы.
 
-    `use_central_fd` сюда не входит: измеренная SM уже включает свою
-    дискретизацию ∂M/∂t своего сканера — изменить её невозможно.
+    `use_central_fd` и `use_radial_coil` сюда НЕ входят: первое не
+    применимо к измеренной SM (она уже включает свою дискретизацию
+    ∂M/∂t), второе ухудшает качество из-за двойного учёта (см. выше).
     """
 
     def __init__(self, system_matrix: np.ndarray,
@@ -2846,8 +2931,6 @@ class PMCNetAll(PMCNetEnhancedReconstructor):
                  config: Optional[PMCNetConfig] = None,
                  harmonic_frequencies_hz: Optional[np.ndarray] = None):
         cfg = _std_cfg(config, image_shape,
-                       use_radial_coil=True,
-                       learn_coil_radius=True,
                        use_debye=True,
                        lambda_grad=1e-4,
                        use_freq_weighting=True,

@@ -1297,14 +1297,17 @@ def run_pipeline(num_samples: int = 5000, train_models: bool = True,
     # 2.5) Две MoE-сборки, обучение сохраняется на диск.
     #
     # MoE-Classical: дешёвые классические/обучаемые методы без явной
-    # физики измерения. Каждый эксперт быстрый (<10 сек/сэмпл) →
-    # прекомпьют 128 образцов укладывается в ~15 минут.
+    # физики измерения в forward-операторе (Тихонов, DIP, Chae-Multi).
+    # Каждый эксперт относительно быстрый → прекомпьют 64 образцов
+    # укладывается в ~10-15 минут.
     #
-    # MoE-Hybrid: гибридные физико-обучаемые методы. MoDL + PMCNet-All
-    # оба используют системную матрицу в своём forward-операторе, что
-    # даёт лучшую устойчивость к out-of-distribution данным (вроде
-    # реальных букв со сканера). PMCNet-All — test-time оптимизация,
-    # ~30-60 сек/сэмпл, поэтому n_train_samples здесь меньше.
+    # MoE-Hybrid: гибридные физико-обучаемые методы — MoDL, PMCNet-All,
+    # Diffusion. Все три используют какую-то форму встраивания физики:
+    # MoDL и PMCNet-All — через системную матрицу в forward, Diffusion —
+    # через condition из Tikhonov-реконструкции. Это даёт лучшую
+    # устойчивость на out-of-distribution данных (реальные буквы со
+    # сканера). PMCNet-All — test-time оптимизация (~3-6 мин/сэмпл),
+    # поэтому n_train_samples здесь меньше.
     moe_classical = build_moe(
         comparator=cmp,
         image_shape=image_shape,
@@ -1324,7 +1327,7 @@ def run_pipeline(num_samples: int = 5000, train_models: bool = True,
         comparator=cmp,
         image_shape=image_shape,
         X_train=X_train, y_train=y_train,
-        expert_names=('MoDL', 'PMCNet-All(2026)'),
+        expert_names=('MoDL', 'PMCNet-All(2026)', 'Diffusion'),
         n_train_samples=16,
         epochs=60,
         mode='spatial',

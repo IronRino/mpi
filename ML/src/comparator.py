@@ -35,7 +35,8 @@
     • set_pmcnet_std_freq_weighted(...) — Std + freq-weighted L1 на u;
     • set_pmcnet_all(...)              — Std + все 4 улучшения сразу;
     • set_pmcnet_paper(...)            — Paper (физика напрямую, без матрицы);
-    • set_moe(moe) / set_moe_classical / set_moe_hybrid — Mixture of Experts.
+    • set_moe_classical(moe) — MoE: Тихонов + DIP + Chae-Multi;
+    • set_moe_hybrid(moe)    — MoE: MoDL + PMCNet-All + Diffusion.
 
   Метод, не зарегистрированный через сеттер, автоматически пропускается
   и помечается «ПРОПУЩЕН» в таблице.
@@ -95,8 +96,7 @@ class MPIReconstructionComparator:
 
         # Mixture of Experts: две независимые сборки
         #   moe_classical — Тихонов + DIP + Chae-Multi
-        #   moe_hybrid    — MoDL + PMCNet-All
-        self.moe = None                                # legacy-алиас (для старого кода)
+        #   moe_hybrid    — MoDL + PMCNet-All + Diffusion
         self.moe_classical = None
         self.moe_hybrid = None
         self.katsmarc = self.katsmarc if hasattr(self, 'katsmarc') else None
@@ -214,39 +214,24 @@ class MPIReconstructionComparator:
         """
         self.pmcnet_all = reconstructor
 
-    def set_moe(self, moe):
-        """Установить Mixture of Experts поверх остальных методов.
-
-        MoE сам внутри прогоняет всех своих экспертов и комбинирует их
-        выходы (через mean / scalar / spatial gating). Сохраняется как
-        legacy-алиас `self.moe`; для двух раздельных сборок используйте
-        `set_moe_classical` / `set_moe_hybrid`.
-        """
-        self.moe = moe
-
     def set_moe_classical(self, moe):
         """MoE из классических/быстрых методов: Тихонов + DIP + Chae-Multi.
 
         Все три эксперта не требуют физической модели сканера и работают
-        быстро (<10 сек/сэмпл). Подходят как «дешёвая» комбинация.
+        относительно быстро. Подходят как «дешёвая» комбинация.
         """
         self.moe_classical = moe
 
     def set_moe_hybrid(self, moe):
-        """MoE из гибридных физико-обучаемых методов: MoDL + PMCNet-All.
+        """MoE из физико-обучаемых гибридов: MoDL + PMCNet-All + Diffusion.
 
-        Оба эксперта используют физику измерения (системную матрицу) в
-        своём forward-операторе. Это даёт «дорогую» комбинацию с лучшей
-        устойчивостью к out-of-distribution данным.
+        Все три эксперта используют какую-либо форму встраивания физики
+        измерения: MoDL и PMCNet-All — через системную матрицу в forward,
+        Diffusion — через condition из Tikhonov-реконструкции. Это даёт
+        «дорогую» комбинацию с лучшей устойчивостью к out-of-distribution
+        данным.
         """
         self.moe_hybrid = moe
-
-    def moe_reconstruction(self, measurement):
-        """Реконструкция через legacy-MoE: эксперты + комбинирование."""
-        if self.moe is None:
-            raise ValueError("MoE модель не установлена")
-        recon = self.moe.reconstruct(measurement)
-        return self._postprocess_recon(recon)
 
     def moe_classical_reconstruction(self, measurement):
         """Реконструкция через MoE-Classical (Тихонов + DIP + Chae-Multi)."""
@@ -256,7 +241,7 @@ class MPIReconstructionComparator:
         return self._postprocess_recon(recon)
 
     def moe_hybrid_reconstruction(self, measurement):
-        """Реконструкция через MoE-Hybrid (MoDL + PMCNet-All)."""
+        """Реконструкция через MoE-Hybrid (MoDL + PMCNet-All + Diffusion)."""
         if self.moe_hybrid is None:
             raise ValueError("MoE-Hybrid модель не установлена")
         recon = self.moe_hybrid.reconstruct(measurement)
@@ -930,9 +915,7 @@ class MPIReconstructionComparator:
              "MoE: Тихонов + DIP + Chae-Multi"),
             ('MoE-Hybrid',
              self.moe_hybrid_reconstruction if self.moe_hybrid else None,
-             "MoE: MoDL + PMCNet-All"),
-            ('MoE', self.moe_reconstruction if self.moe else None,
-             "Mixture of Experts (legacy)"),
+             "MoE: MoDL + PMCNet-All + Diffusion"),
         ]
 
         openmpi_results = {}
@@ -1087,12 +1070,10 @@ class MPIReconstructionComparator:
             ('Diffusion', self.diffusion_reconstruction if self.diffusion_trainer else None, "Diffusion Model"),
             ('MoE-Classical',
              self.moe_classical_reconstruction if self.moe_classical else None,
-             "MoE: Тихонов + DIP + Chae-Multi (быстрые классические)"),
+             "MoE: Тихонов + DIP + Chae-Multi"),
             ('MoE-Hybrid',
              self.moe_hybrid_reconstruction if self.moe_hybrid else None,
-             "MoE: MoDL + PMCNet-All (физико-обучаемые гибриды)"),
-            ('MoE', self.moe_reconstruction if self.moe else None,
-             "Mixture of Experts (legacy-комбинация)"),
+             "MoE: MoDL + PMCNet-All + Diffusion"),
         ]
 
         print(f"\n{'Метод':<15} {'Источник':<35} {'SSIM':<8} {'PSNR (дБ)':<12} {'FWHM':<8} {'Время (с)':<10}")
@@ -1194,7 +1175,7 @@ class MPIReconstructionComparator:
         print(" 12. CNN                            - U-Net baseline")
         print(" 13. MoDL                           - Model-based Deep Learning")
         print(" 14. Diffusion                       - DDPM baseline")
-        print(" 15. MoE / MoE-Classical / MoE-Hybrid - Mixture of Experts")
+        print(" 15. MoE-Classical / MoE-Hybrid       - Mixture of Experts")
         print("=" * 90)
 
         all_results = []
