@@ -44,7 +44,7 @@
 ## Унификация форматов
 
 Все методы внутри принимают measurement как complex (2, M/2) и
-возвращают reconstruction как (Nx, Ny) float. Compatator скрывает
+возвращают reconstruction как (Nx, Ny) float. Comparator скрывает
 конверсии между разными внутренними форматами моделей.
 
 ## Метрики
@@ -53,7 +53,7 @@
   • **PSNR** — peak signal-to-noise ratio (общее качество в dB);
   • **FWHM** — full width at half maximum точечной функции рассеяния
     (мера разрешения);
-  • **time** — секунды на реконструкцию (для оценки practical
+  • **time** — секунды на реконструкцию (для оценки практической
     применимости).
 """
 
@@ -85,7 +85,10 @@ class MPIReconstructionComparator:
         self.chae_model = None
         self.chae_multi_model = None  # Chae 2017 multi-layer вариант
         self.dip_model = None
-        # PMCNet (Huang et al., 2026) — Std-ablation
+        # PMCNet (Huang et al., 2026) — Std-ablation.
+        # «ablation» = поочерёдное включение/отключение улучшений, чтобы
+        # измерить вклад каждого в отдельности. «Std» = стандартный базовый
+        # форвард (S_measured · c) — от него отталкиваются все варианты.
         self.pmcnet_standard = None                # 1) Std baseline (S_measured · c)
         self.pmcnet_std_radial_coil = None         # 2) Std + radial coil
         self.pmcnet_std_debye = None               # 3) Std + Debye-фильтр
@@ -227,9 +230,9 @@ class MPIReconstructionComparator:
 
         Все три эксперта используют какую-либо форму встраивания физики
         измерения: MoDL и PMCNet-All — через системную матрицу в forward,
-        Diffusion — через condition из Tikhonov-реконструкции. Это даёт
-        «дорогую» комбинацию с лучшей устойчивостью к out-of-distribution
-        данным.
+        Diffusion — через условие из Tikhonov-реконструкции. Это даёт
+        «дорогую» комбинацию с лучшей устойчивостью к данным, не похожим
+        на обучающие (out-of-distribution).
         """
         self.moe_hybrid = moe
 
@@ -312,12 +315,13 @@ class MPIReconstructionComparator:
         Препроцессинг согласован с обучением (см. pipeline._flatten_measurement_batch):
           1. Амплитудный спектр |u| по обеим катушкам (paper Sec. III.1);
           2. Конкатенация в плоский вектор длины 2·M_per_coil;
-          3. Per-sample max-нормировка → значения в [0, 1] под сигмоид.
+          3. Нормировка каждой выборки на свой максимум (per-sample
+             max-нормировка) → значения в [0, 1] под сигмоид.
 
         Re/Im разложение не используется — Chae-веса не сходятся к
         Чебышёв-полиномам на нём.
         """
-        # Амплитудный спектр + per-sample max-нормировка (как в pipeline)
+        # Амплитудный спектр + нормировка каждой выборки на максимум (как в pipeline)
         abs_spec = np.abs(measurement).astype(np.float32)
         meas_vector = abs_spec.flatten()
         max_val = float(meas_vector.max())
@@ -362,18 +366,20 @@ class MPIReconstructionComparator:
     def dip_reconstruction(self, measurement, n_iterations=6000,
                             patience: int = 500):
         # n_iterations 3000 → 6000, patience 250 → 500: на предыдущем
-        # прогоне DIP давал SSIM 0.05-0.90 (огромный разброс), а early
-        # stop часто срабатывал поздно (>2000 итер). Удвоение даёт
-        # запас сходимости на сложных фантомах без риска переобучения
-        # к шуму — patience всё равно остановит, когда loss-plateau.
-        """Реконструкция Deep Image Prior c early stopping и фикс. z.
+        # прогоне DIP давал SSIM 0.05-0.90 (огромный разброс), а досрочная
+        # остановка часто срабатывала поздно (>2000 итераций). Удвоение
+        # даёт запас сходимости на сложных фантомах без риска переобучения
+        # к шуму — остановка по «терпению» (patience) всё равно сработает,
+        # когда функция потерь выйдет на плато.
+        """Реконструкция Deep Image Prior c досрочной остановкой и фикс. z.
 
         Изменения относительно прежней версии (соответствие Dittmer 2020):
           • **Фиксированный z**: убрано `latent_z.requires_grad=True` —
-            paper явно фиксирует вход (Sec. II.C), trainable z ломает
-            spectral-bias регуляризацию DIP.
-          • **Early stopping**: трекаем running-min loss; если за
-            `patience` итераций нет улучшения — останавливаемся и
+            paper явно фиксирует вход (Sec. II.C), обучаемый z ломает
+            частотное смещение (spectral-bias) регуляризацию DIP.
+          • **Досрочная остановка (early stopping)**: следим за минимумом
+            функции потерь на текущий момент (running-min loss); если за
+            `patience` итераций улучшения нет — останавливаемся и
             возвращаем `best_x`. Paper Sec. IV: успех DIP именно
             благодаря выбору момента остановки.
           • **lr=1e-3** (было 0.01) — Adam с lr=0.01 на DIP-генераторе
